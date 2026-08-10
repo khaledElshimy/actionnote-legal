@@ -49,7 +49,7 @@
   .nav-links{display:flex;gap:24px;align-items:center;color:var(--muted);font-weight:500;font-size:15px;}
   .nav-links a:hover{color:var(--text);}
   .nav-cta{background:var(--grad);color:#fff;border-radius:999px;padding:9px 18px;font-size:14px;font-weight:600;box-shadow:var(--glow);}
-  @media (max-width:720px){.nav-links a:not(.nav-cta){display:none;}}
+  @media (max-width:860px){.nav-links a:not(.nav-cta){display:none;}}
 
   /* hero */
   .hero{display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:center;padding:66px 0 50px;position:relative;z-index:1;}
@@ -65,6 +65,7 @@
     box-shadow:var(--glow);display:inline-flex;align-items:center;gap:10px;transition:transform .15s;}
   .btn:hover{transform:translateY(-2px);}
   .btn.ghost{background:var(--ink-3);box-shadow:none;border:1px solid var(--line);}
+  .btn.sm{font-size:15px;padding:14px 24px;}
   .soon{color:var(--muted);font-size:14px;margin-top:16px;}
   .langchips{display:flex;gap:8px;margin-top:26px;flex-wrap:wrap;}
   .lang{font-size:12.5px;font-weight:700;border-radius:999px;padding:6px 13px;background:var(--ink-2);border:1px solid var(--line);}
@@ -94,6 +95,38 @@
     align-items:center;justify-content:center;font-size:26px;margin-bottom:18px;}
   .card h3{font-family:var(--sora);font-size:18px;font-weight:600;}
   .card p{color:var(--muted);font-size:14.5px;margin-top:8px;}
+
+  /* announcement panel (Meeting Mode) */
+  .panel{background:var(--ink-2);border:1px solid rgba(139,123,255,.45);border-radius:32px;padding:56px 42px;
+    position:relative;overflow:hidden;}
+  .panel::before{content:"";position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:520px;height:260px;
+    background:radial-gradient(closest-side,rgba(139,123,255,.22),transparent);}
+  .panel .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:44px;align-items:center;position:relative;}
+  .panel h2{text-align:left;font-size:38px;}
+  .panel h2 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 0 24px rgba(139,123,255,.45));}
+  .panel p{color:var(--muted);font-size:17px;margin-top:16px;max-width:520px;}
+  .panel p.fine{font-size:15px;margin-top:22px;}
+  .panel b{color:var(--text);font-weight:600;}
+  .shotslot{width:300px;aspect-ratio:9/19.5;border-radius:28px;border:1.5px dashed rgba(139,123,255,.5);
+    background:var(--ink-1);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+    text-align:center;padding:24px;margin:0 auto;color:var(--brand-hi);font-size:13px;font-weight:700;letter-spacing:.6px;}
+  .shotslot .em{font-size:26px;letter-spacing:0;}
+  .shotslot .m{color:var(--muted);font-weight:500;letter-spacing:0;}
+
+  /* persona paths */
+  .paths{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:52px;}
+  .path{background:var(--ink-2);border:1px solid var(--line);border-radius:24px;padding:36px;transition:border-color .2s;}
+  .path:hover{border-color:rgba(139,123,255,.4);}
+  .path h3{font-family:var(--sora);font-size:30px;font-weight:700;letter-spacing:-1px;line-height:1.15;margin-top:20px;}
+  .path .story{color:var(--muted);font-size:15.5px;margin-top:14px;}
+  .hls{display:flex;flex-direction:column;gap:14px;margin:26px 0 0;}
+  .hl{display:flex;gap:10px;font-size:15px;}
+  .hl i{color:var(--brand);font-style:normal;line-height:1.5;}
+  .hl b{font-weight:600;}
+  .hl span{color:var(--muted);}
+  .more{display:block;margin-top:16px;color:var(--brand-hi);font-size:14.5px;font-weight:600;}
+  .note{text-align:center;color:var(--muted);font-size:14.5px;margin:26px auto 0;max-width:620px;}
 
   /* screens */
   .shots{display:flex;gap:26px;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:52px;}
@@ -149,6 +182,10 @@
     .cta,.langchips{justify-content:center;}
     .steps,.feat{grid-template-columns:1fr;}
     .plans{grid-template-columns:1fr;}
+    .panel .grid,.paths{grid-template-columns:1fr;}
+    .panel{padding:34px 24px;}
+    .panel h2{font-size:28px;}
+    .path h3{font-size:26px;}
     h2{font-size:32px;}
     section{padding:56px 0;}
     .shots img{width:230px;} .shots img.mid{width:250px;}
@@ -166,9 +203,9 @@
       <div class="logo"><img src="assets/icon.png" alt="ActionNote" /> ActionNote</div>
       <div class="nav-links">
         <a href="#how">How it works</a>
-        <a href="#features">Features</a>
+        <a href="#meeting">Meeting Mode</a>
+        <a href="#paths">Lectures &amp; meetings</a>
         <a href="#pricing">Pricing</a>
-        <a href="#suggest">Suggest a feature</a>
         <a class="nav-cta" href="https://apps.apple.com/us/app/actionnote-voice-to-tasks/id6789915282">Download</a>
       </div>
     </nav>
@@ -204,6 +241,67 @@
       <div class="step"><div class="n">2</div><h3>Get the organized note</h3><p>Seconds later: a title, a short summary, key points, and a task list with reminders that actually fire. The audio stays attached; you'll never need it.</p></div>
       <div class="step"><div class="n">3</div><h3>Ask anytime</h3><p>"What did I promise Sara?" Ask across everything you've ever captured and get the answer with the source note linked.</p></div>
     </div>
+  </section>
+
+  <section id="meeting">
+    <div class="panel">
+      <div class="grid">
+        <div>
+          <div class="kicker">🚧 Version 2.0 · in build, not in the app yet</div>
+          <h2>Next: <span class="g">Meeting Mode.</span></h2>
+          <p>Today ActionNote is built for the note you speak in a minute. Meeting Mode is for the hour you sit through — a full in-person meeting or a whole lecture, recorded end to end, with the note building while it runs instead of after.</p>
+          <div class="chips" style="justify-content:flex-start">
+            <span class="chip">Long recordings</span>
+            <span class="chip">Notes build while you record</span>
+            <span class="chip">Still on your device + iCloud</span>
+          </div>
+          <p class="fine">Arriving on a new <b>Pro+ tier at $9.99/month</b>. Everything else on this page is in the app today.</p>
+          <div class="cta">
+            <a class="btn ghost sm" href="mailto:khaled@khaledelshimy.com?subject=Meeting%20Mode%20early%20access&amp;body=I%20record%20%28meetings%20%2F%20lectures%29%3A%0A%0AWhat%20I%20need%20from%20Meeting%20Mode%3A%0A">Tell me how you'd use it</a>
+            <span style="color:var(--muted);font-size:14px">No waitlist, no email capture — just a reply.</span>
+          </div>
+        </div>
+        <div>
+          <div class="shotslot">
+            <span class="em">🎙️</span>
+            <span>SCREENSHOT — MEETING MODE</span>
+            <span class="m">Drop the real frame in when 2.0 ships.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="paths">
+    <h2>One app, two rooms</h2>
+    <p class="lead">The phone is already on the desk or the table. Pick the room you're in — it's the same ActionNote either way.</p>
+    <div class="paths">
+      <div class="path" id="lectures">
+        <div class="kicker" style="margin-bottom:0">🎓 For lectures</div>
+        <h3>Sit through it once.</h3>
+        <p class="story">Two hours, half in one language and half in another, and a lecturer who never repeats a definition. Put the phone on the desk, then read the summary on the walk out instead of re-listening at 1.5×.</p>
+        <div class="hls">
+          <div class="hl"><i>◆</i><div><b>Bilingual halls are the normal case.</b><span> Code-switch mid-sentence; the note comes back organized in what you spoke.</span></div></div>
+          <div class="hl"><i>◆</i><div><b>Ask it back before the exam.</b><span> "What did she say about the midterm?" — answered with the lecture cited.</span></div></div>
+          <div class="hl"><i>◆</i><div><b>Deadlines become reminders.</b><span> Dates said out loud land in your task list, timed.</span></div></div>
+        </div>
+        <a class="btn ghost sm" style="margin-top:28px" href="https://apps.apple.com/us/app/actionnote-voice-to-tasks/id6789915282">Download on the App Store</a>
+        <a class="more" href="lectures.html">The lectures case in full ›</a>
+      </div>
+      <div class="path" id="meetings">
+        <div class="kicker" style="margin-bottom:0">💼 For meetings</div>
+        <h3>Catch the hallway ask.</h3>
+        <p class="story">The meetings that cost you are the ones with no invite: the stand-up, the hallway ask, the debrief in the car. This isn't a bot that joins your call — it's the phone already in the room with you.</p>
+        <div class="hls">
+          <div class="hl"><i>◆</i><div><b>Works where a meeting bot can't.</b><span> In person, on a table, no link and no invite required.</span></div></div>
+          <div class="hl"><i>◆</i><div><b>Commitments come out as tasks.</b><span> What you promised, with a reminder, not a memory.</span></div></div>
+          <div class="hl"><i>◆</i><div><b>Ask across a quarter of them.</b><span> "What did I promise Sara?" — answered with the note cited.</span></div></div>
+        </div>
+        <a class="btn ghost sm" style="margin-top:28px" href="https://apps.apple.com/us/app/actionnote-voice-to-tasks/id6789915282">Download on the App Store</a>
+        <a class="more" href="meetings.html">The meetings case in full ›</a>
+      </div>
+    </div>
+    <p class="note">Same app, same $4.99 Pro, same download — the only difference is the room you press record in.</p>
   </section>
 
   <section id="features">
@@ -260,6 +358,7 @@
         </ul>
       </div>
     </div>
+    <p class="note">A third tier, <b style="color:var(--text);font-weight:600">Pro+ at $9.99/month</b>, arrives with Meeting Mode in 2.0. Nothing in Free or Pro moves behind it.</p>
   </section>
 
   <section id="faq">
@@ -269,6 +368,8 @@
         <p>Your notes live on your iPhone and in your own iCloud. There is no ActionNote database. Audio is sent to the AI once for processing and is not kept on any server of ours.</p></details>
       <details><summary>Which languages work?</summary>
         <p>Whatever you speak — including two languages mixed in the same sentence. Arabic/English mid-sentence switching was the original reason the app exists. The note comes back organized in the language you spoke.</p></details>
+      <details><summary>Can I record a whole meeting or lecture today?</summary>
+        <p>Today ActionNote is built around shorter notes, and recording survives a locked screen. Full long-session recording with the note building as you go is Meeting Mode, in build for 2.0 — not in the app yet.</p></details>
       <details><summary>Do I have to listen back to my recordings?</summary>
         <p>Never. That's the whole point. The audio stays attached to each note in case you want it, but the summary, key points, and tasks replace listening.</p></details>
       <details><summary>Does recording stop if I lock my phone?</summary>
@@ -286,10 +387,9 @@
       <p>ActionNote is built by one person, in public, and the roadmap is genuinely shaped by users — translate mode, audio markers, and Notion export all started as user suggestions. If the app doesn't do the thing you need, I want to know.</p>
       <div class="chips">
         <span class="chip">🚧 Coming: Siri capture</span>
-        <span class="chip">🚧 Coming: Meeting &amp; lecture mode</span>
         <span class="chip">🚧 Coming: Mac app</span>
       </div>
-      <a class="btn" style="margin-top:32px;position:relative" href="mailto:khaled@khaledelshimy.com?subject=ActionNote%20feature%20idea&body=The%20feature%20I%20wish%20ActionNote%20had%3A%0A%0AWhy%20I%20need%20it%3A%0A">💡 Suggest a feature</a>
+      <a class="btn" style="margin-top:32px;position:relative" href="mailto:khaled@khaledelshimy.com?subject=ActionNote%20feature%20idea&amp;body=The%20feature%20I%20wish%20ActionNote%20had%3A%0A%0AWhy%20I%20need%20it%3A%0A">💡 Suggest a feature</a>
     </div>
   </section>
 
@@ -307,6 +407,8 @@
       <a href="support.html">Support</a>
       <a href="privacy.html">Privacy</a>
       <a href="terms.html">Terms</a>
+      <a href="lectures.html">For lectures</a>
+      <a href="meetings.html">For meetings</a>
       <a href="#suggest">Suggest a feature</a>
       <a href="mailto:khaled@khaledelshimy.com">Contact</a>
     </div>
