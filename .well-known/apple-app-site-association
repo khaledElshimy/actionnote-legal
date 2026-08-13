@@ -1,0 +1,11 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appIDs": ["YVS89VJ7A6.com.actionnote.note"],
+        "components": [{ "/": "/n*" }]
+      }
+    ]
+  }
+}
