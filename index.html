@@ -93,8 +93,52 @@
   .lang b{margin-right:6px;}
   .l-en b{color:#2DD4BF;} .l-ar b{color:#34D399;} .l-es b{color:#F472B6;} .l-fr b{color:#60A5FA;} .l-mix b{color:#F59E0B;}
   .l-more{color:var(--muted);}
-  .hero-phone{justify-self:center;position:relative;}
-  .hero-phone img{width:320px;border-radius:32px;box-shadow:var(--glow),0 50px 110px rgba(0,0,0,.6);transform:rotate(2deg);}
+  .hero-phone{justify-self:center;position:relative;padding:30px 60px;}
+  .phone{width:300px;background:#0B0918;border:1.5px solid rgba(255,255,255,.14);border-radius:40px;padding:14px 14px 10px;
+    box-shadow:var(--glow),0 50px 110px rgba(0,0,0,.6);position:relative;animation:ph-float 7s ease-in-out infinite;}
+  .phone::before{content:"";position:absolute;top:14px;left:50%;transform:translateX(-50%);width:86px;height:24px;
+    background:#000;border-radius:999px;z-index:3;}
+  .ph-screen{background:linear-gradient(180deg,#100C22,#0B0918);border-radius:28px;padding:40px 14px 8px;overflow:hidden;position:relative;}
+  .ph-time{color:var(--text);font-size:11px;font-weight:700;position:absolute;top:16px;left:22px;z-index:4;}
+  .ph-hello{font-family:var(--sora);font-size:19px;font-weight:700;color:var(--text);}
+  .ph-capture{margin-top:12px;background:var(--grad);border-radius:16px;padding:13px 14px;box-shadow:0 0 26px rgba(139,123,255,.45);
+    animation:ph-breathe 4s ease-in-out infinite;}
+  .ph-capture b{display:flex;gap:8px;align-items:center;color:#fff;font-size:14.5px;}
+  .ph-capture span{color:rgba(255,255,255,.85);font-size:11px;display:block;margin-top:2px;}
+  .ph-quick{display:flex;gap:8px;margin-top:10px;}
+  .ph-q{flex:1;background:var(--ink-2);border:1px solid var(--line);border-radius:13px;padding:9px 6px;text-align:center;
+    color:var(--text);font-size:10.5px;font-weight:600;}
+  .ph-q em{display:block;font-style:normal;font-size:15px;margin-bottom:3px;}
+  .ph-sec{color:var(--text);font-family:var(--sora);font-size:13.5px;font-weight:700;margin:14px 2px 8px;}
+  .ph-note{display:flex;align-items:center;gap:9px;background:var(--ink-2);border:1px solid var(--line);border-radius:14px;
+    padding:9px 10px;margin-bottom:7px;}
+  .ph-note.rtl{flex-direction:row-reverse;text-align:right;}
+  .ph-lang{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;
+    font-size:10px;font-weight:800;color:#fff;flex:none;}
+  .ph-note>div{flex:1;min-width:0;}
+  .ph-note b{color:var(--text);font-size:12.5px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .ph-note span.s{color:var(--muted);font-size:10.5px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .ph-ready{flex:none;display:flex;align-items:center;gap:4px;background:rgba(52,211,153,.13);color:var(--ok);
+    font-size:9px;font-weight:700;border-radius:999px;padding:3px 7px;}
+  .ph-ready i{width:5px;height:5px;border-radius:50%;background:var(--ok);animation:blink 1.6s infinite;font-style:normal;}
+  .ph-tabs{display:flex;align-items:center;justify-content:space-around;margin-top:10px;padding:6px 4px 2px;
+    border-top:1px solid var(--line);color:var(--muted);font-size:8.5px;font-weight:600;}
+  .ph-tabs .t{display:flex;flex-direction:column;align-items:center;gap:2px;}
+  .ph-tabs .t em{font-style:normal;font-size:13px;}
+  .ph-tabs .t.on{color:var(--brand-hi);}
+  .ph-mic{width:40px;height:40px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;
+    font-size:16px;margin-top:-18px;box-shadow:0 0 18px rgba(139,123,255,.6);}
+  .ph-card{position:absolute;background:#fff;border-radius:14px;padding:11px 13px;box-shadow:0 18px 44px rgba(0,0,0,.45);z-index:2;}
+  .ph-card .h{color:#059669;font-size:9px;font-weight:800;letter-spacing:.5px;display:flex;gap:5px;align-items:center;margin-bottom:5px;}
+  .ph-card .r{color:#1F2937;font-size:10.5px;font-weight:600;padding:2.5px 0;display:flex;gap:6px;align-items:center;}
+  .ph-card .r i{font-style:normal;color:#10B981;font-size:10px;}
+  .ph-actions{top:150px;right:-34px;animation:ph-drift 6s .8s ease-in-out infinite;}
+  .ph-quote{bottom:110px;left:-34px;max-width:140px;animation:ph-drift 8s 1.6s ease-in-out infinite;}
+  .ph-quote .q{color:#374151;font-size:10.5px;line-height:1.5;font-style:italic;}
+  @keyframes ph-float{0%,100%{transform:translateY(0) rotate(2deg);}50%{transform:translateY(-11px) rotate(2deg);}}
+  @keyframes ph-drift{0%,100%{transform:translateY(0) rotate(-2deg);}50%{transform:translateY(-14px) rotate(-2deg);}}
+  @keyframes ph-breathe{0%,100%{box-shadow:0 0 22px rgba(139,123,255,.4);}50%{box-shadow:0 0 40px rgba(139,123,255,.7);}}
+  @media (prefers-reduced-motion:reduce){.phone,.ph-actions,.ph-quote,.ph-capture,.ph-ready i{animation:none;}}
 
   /* sections */
   section{padding:88px 0;position:relative;}
@@ -333,7 +377,41 @@
         </div>
         <div class="soon">Free for 5 notes a month · Your notes stay on your device + your iCloud</div>
       </div>
-      <div class="hero-phone"><img src="assets/shot-home.jpg" alt="ActionNote home screen with notes in English, Arabic and French" /></div>
+      <div class="hero-phone" aria-label="ActionNote home screen with notes in English, Arabic, French and Spanish">
+        <div class="phone">
+          <div class="ph-screen">
+            <div class="ph-time">9:41</div>
+            <div class="ph-hello">Good morning, Khaled</div>
+            <div class="ph-capture"><b>🎙 Capture an idea</b><span>Tap to record — AI organizes the rest</span></div>
+            <div class="ph-quick">
+              <div class="ph-q"><em>✅</em>My tasks</div>
+              <div class="ph-q"><em>📄</em>My notes</div>
+              <div class="ph-q"><em>☁️</em>Upload</div>
+            </div>
+            <div class="ph-sec">Recent</div>
+            <div class="ph-note"><span class="ph-lang" style="background:#3B82F6">EN</span><div><b>Sync with Sara</b><span class="s">Q3 launch plan &amp; timeline.</span></div><span class="ph-ready"><i></i>Ready</span></div>
+            <div class="ph-note rtl"><span class="ph-lang" style="background:#10B981">AR</span><div><b>قائمة المشتريات</b><span class="s">خبز، جبنة وبيض.</span></div><span class="ph-ready"><i></i>Ready</span></div>
+            <div class="ph-note"><span class="ph-lang" style="background:#6366F1">FR</span><div><b>Notes de réunion</b><span class="s">Préparer la démo.</span></div><span class="ph-ready"><i></i>Ready</span></div>
+            <div class="ph-note"><span class="ph-lang" style="background:#F59E0B">ES</span><div><b>Reunión de diseño</b><span class="s">Revisar el onboarding.</span></div><span class="ph-ready"><i></i>Ready</span></div>
+            <div class="ph-tabs">
+              <div class="t on"><em>🏠</em>Home</div>
+              <div class="t"><em>📄</em>Notes</div>
+              <div class="ph-mic">🎙</div>
+              <div class="t"><em>✅</em>Tasks</div>
+              <div class="t"><em>⚙️</em>Settings</div>
+            </div>
+          </div>
+        </div>
+        <div class="ph-card ph-actions">
+          <div class="h">✓ ACTIONS</div>
+          <div class="r"><i>●</i>Send Sara the timeline</div>
+          <div class="r"><i>●</i>Buy bread</div>
+          <div class="r"><i>●</i>Dentist — Tue 4 PM</div>
+        </div>
+        <div class="ph-card ph-quote">
+          <div class="q">"…send the timeline, and umm, don't forget the dentist…"</div>
+        </div>
+      </div>
     </header>
   </div>
 </div>
