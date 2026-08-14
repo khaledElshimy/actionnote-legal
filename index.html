@@ -27,7 +27,8 @@
     "https://www.instagram.com/actionnote7/"
   ],
   "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD",
-    "description": "Free for 5 notes a month; Pro $4.99/month or $29.99/year"}
+    "description": "Free for 5 notes a month; Pro $4.99/month or $29.99/year"},
+  "aggregateRating": {"@type": "AggregateRating", "ratingValue": "5.0", "ratingCount": "4", "bestRating": "5"}
 }
 </script>
 <link rel="icon" type="image/png" href="assets/favicon.png" />
@@ -186,6 +187,57 @@
   .chips{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:24px;position:relative;}
   .chip{background:rgba(139,123,255,.13);color:var(--brand-hi);border-radius:999px;padding:8px 16px;font-size:13px;font-weight:600;}
 
+  /* try-it demo */
+  .try-box{background:var(--ink-2);border:1px solid var(--line);border-radius:32px;padding:42px;margin-top:52px;position:relative;overflow:hidden;}
+  .try-tabs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+  .try-tab{background:var(--ink-3);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:9px 18px;
+    font-size:14px;font-weight:600;cursor:pointer;font-family:var(--inter);transition:all .2s;}
+  .try-tab.on{background:rgba(139,123,255,.16);border-color:rgba(139,123,255,.5);color:var(--brand-hi);}
+  .try-stage{max-width:640px;margin:34px auto 0;min-height:320px;}
+  .ramble{background:var(--ink-1);border:1px solid var(--line);border-radius:20px;padding:24px 26px;color:var(--muted);
+    font-size:16px;line-height:1.8;transition:opacity .45s,transform .45s;}
+  .ramble .mic{display:flex;align-items:center;gap:10px;color:var(--text);font-weight:600;font-size:13.5px;margin-bottom:12px;letter-spacing:.4px;}
+  .ramble .mic .rec{width:9px;height:9px;border-radius:50%;background:#F87171;animation:blink 1.1s infinite;}
+  @keyframes blink{50%{opacity:.25;}}
+  .ramble[dir=rtl]{text-align:right;}
+  .try-note{background:var(--ink-1);border:1px solid rgba(139,123,255,.5);border-radius:20px;padding:26px;box-shadow:var(--glow);
+    opacity:0;transform:translateY(24px);transition:opacity .5s .1s,transform .5s .1s;display:none;}
+  .try-note.in{opacity:1;transform:none;}
+  .try-note h4{font-family:var(--sora);font-size:19px;}
+  .try-note .sum{color:var(--muted);font-size:14.5px;margin-top:8px;}
+  .try-note .tsk{display:flex;gap:10px;align-items:flex-start;margin-top:12px;font-size:15px;}
+  .try-note .tsk .cb{width:19px;height:19px;border-radius:6px;border:1.5px solid var(--brand);flex:none;margin-top:2px;}
+  .try-note .tsk .due{color:var(--brand-hi);font-size:12.5px;font-weight:600;display:block;}
+  .try-note[dir=rtl]{text-align:right;}
+  .try-go{text-align:center;margin-top:26px;}
+  .try-go button{background:var(--grad);color:#fff;font-weight:700;font-size:16px;padding:15px 30px;border-radius:18px;border:none;
+    box-shadow:var(--glow);cursor:pointer;font-family:var(--inter);transition:transform .15s;}
+  .try-go button:hover{transform:translateY(-2px);}
+  .try-foot{text-align:center;color:var(--muted);font-size:13.5px;margin-top:16px;}
+
+  /* testimonials */
+  .quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:52px;}
+  .quote{background:var(--ink-2);border:1px solid var(--line);border-radius:24px;padding:30px;display:flex;flex-direction:column;}
+  .quote .stars{color:var(--brand-hi);letter-spacing:3px;font-size:15px;}
+  .quote p{color:var(--text);font-size:15.5px;margin-top:14px;flex:1;}
+  .quote .who{color:var(--muted);font-size:13.5px;margin-top:18px;}
+
+  /* roadmap */
+  .road{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:52px;}
+  .lane{background:var(--ink-2);border:1px solid var(--line);border-radius:24px;padding:28px;}
+  .lane.now{border-color:rgba(139,123,255,.5);}
+  .lane h3{font-family:var(--sora);font-size:16px;font-weight:700;letter-spacing:.6px;display:flex;align-items:center;gap:9px;}
+  .lane h3 .lt{font-size:11.5px;font-weight:700;border-radius:999px;padding:4px 10px;letter-spacing:.4px;}
+  .lane.done h3 .lt{background:rgba(52,211,153,.14);color:var(--ok);}
+  .lane.now h3 .lt{background:rgba(139,123,255,.16);color:var(--brand-hi);}
+  .lane.next h3 .lt{background:rgba(245,158,11,.14);color:#FBBF24;}
+  .lane ul{list-style:none;margin-top:18px;}
+  .lane li{color:var(--muted);font-size:14.5px;padding:8px 0;border-bottom:1px solid var(--line);}
+  .lane li:last-child{border-bottom:none;}
+  .lane li b{color:var(--text);font-weight:600;display:block;}
+  .lane .vote{color:var(--brand-hi);font-size:12.5px;font-weight:600;white-space:nowrap;}
+  .lane .vote:hover{text-decoration:underline;}
+
   /* band */
   .band{background:var(--grad);border-radius:32px;padding:60px 42px;text-align:center;box-shadow:var(--glow);}
   .band h2{color:#fff;}
@@ -202,7 +254,8 @@
     .hero h1{font-size:44px;letter-spacing:-1.5px;}
     .hero p.sub{margin-left:auto;margin-right:auto;}
     .cta,.langchips{justify-content:center;}
-    .steps,.feat{grid-template-columns:1fr;}
+    .steps,.feat,.quotes,.road{grid-template-columns:1fr;}
+    .try-box{padding:28px 18px;}
     .plans{grid-template-columns:1fr;}
     .panel .grid,.paths{grid-template-columns:1fr;}
     .panel{padding:34px 24px;}
@@ -227,6 +280,7 @@
         <a href="#how">How it works</a>
         <a href="#meeting">Meeting Mode</a>
         <a href="#paths">Lectures &amp; meetings</a>
+        <a href="#roadmap">Roadmap</a>
         <a href="#pricing">Pricing</a>
         <a class="nav-cta" href="https://apps.apple.com/us/app/actionnote-voice-to-tasks/id6789915282">Download</a>
       </div>
@@ -262,6 +316,24 @@
       <div class="step"><div class="n">1</div><h3>Talk</h3><p>Tap record and say it how it comes out — rambling, half-formed, two languages at once. Or share a voice note in from WhatsApp.</p></div>
       <div class="step"><div class="n">2</div><h3>Get the organized note</h3><p>Seconds later: a title, a short summary, key points, and a task list with reminders that actually fire. The audio stays attached; you'll never need it.</p></div>
       <div class="step"><div class="n">3</div><h3>Ask anytime</h3><p>"What did I promise Sara?" Ask across everything you've ever captured and get the answer with the source note linked.</p></div>
+    </div>
+  </section>
+
+  <section id="try">
+    <h2>See the magic — right here</h2>
+    <p class="lead">A real example of what ActionNote does to a rambling voice note. Pick a language, then organize it.</p>
+    <div class="try-box">
+      <div class="try-tabs">
+        <button class="try-tab on" data-demo="en">English</button>
+        <button class="try-tab" data-demo="ar">العربية</button>
+        <button class="try-tab" data-demo="mix">Two at once</button>
+      </div>
+      <div class="try-stage">
+        <div class="ramble" id="try-ramble"></div>
+        <div class="try-note" id="try-note"></div>
+      </div>
+      <div class="try-go"><button id="try-btn">✨ Organize it</button></div>
+      <p class="try-foot">This is a scripted sample of the real output format. In the app, it's your own voice — any language, even two at once.</p>
     </div>
   </section>
 
@@ -342,6 +414,28 @@
     </div>
   </section>
 
+  <section id="loved">
+    <h2>What people say</h2>
+    <p class="lead">Real reviews from the App Store, quoted word for word.</p>
+    <div class="quotes">
+      <div class="quote">
+        <div class="stars">★★★★★</div>
+        <p>“Very useful application, I use it like my assistant for taking notes easily by voice, and it can create organized todo lists for me which is really helpful”</p>
+        <div class="who">Eletol · App Store</div>
+      </div>
+      <div class="quote">
+        <div class="stars">★★★★★</div>
+        <p>“Excellent app for organizing ideas and creating tasks from voice recordings. Clean interface and works smoothly.”</p>
+        <div class="who">M.M.S.H · App Store</div>
+      </div>
+      <div class="quote">
+        <div class="stars">★★★★★</div>
+        <p>“It’s easy to capture the idea when you have it — just record”</p>
+        <div class="who">MohammedMandouh · App Store</div>
+      </div>
+    </div>
+  </section>
+
   <section id="screens">
     <h2>See it in action</h2>
     <p class="lead">From a rambling voice memo to organized notes, tasks, and answers.</p>
@@ -404,12 +498,48 @@
     </div>
   </section>
 
+  <section id="roadmap">
+    <h2>Built in public</h2>
+    <p class="lead">One developer, shipping almost every week. Here's what's live, what's in build right now, and what's next — vote for what you want sooner.</p>
+    <div class="road">
+      <div class="lane done">
+        <h3><span class="lt">SHIPPED</span> In the app today</h3>
+        <ul>
+          <li><b>Hands-free Siri capture</b> Start and stop a recording by voice, even locked.</li>
+          <li><b>Any language, even two at once</b> With a bilingual flip between them.</li>
+          <li><b>Quick Record widget</b> Home screen, lock screen, Action Button.</li>
+          <li><b>WhatsApp voice notes in</b> Share any audio, get the note.</li>
+          <li><b>Ask Your Notes</b> Answers with the source note cited.</li>
+        </ul>
+      </div>
+      <div class="lane now">
+        <h3><span class="lt">IN BUILD</span> Version 1.2 — days away</h3>
+        <ul>
+          <li><b>Apple Watch recording</b> Capture on your wrist, even offline on a run.</li>
+          <li><b>Morning Brief</b> Your tasks, deadlines and meetings, every morning.</li>
+          <li><b>Ask for everyone</b> 5 free questions a month, no subscription needed.</li>
+          <li><b>Share notes as links</b> Send a note to anyone — no app needed to read it.</li>
+          <li><b>Gentle follow-ups</b> Done, tomorrow, or let it go. No guilt.</li>
+        </ul>
+      </div>
+      <div class="lane next">
+        <h3><span class="lt">NEXT</span> On the bench</h3>
+        <ul>
+          <li><b>Meeting Mode (2.0)</b> Whole meetings and lectures, notes building live. <a class="vote" href="mailto:khaled@khaledelshimy.com?subject=Vote%3A%20Meeting%20Mode">+ vote</a></li>
+          <li><b>Notion export</b> Your notes, straight into your workspace. <a class="vote" href="mailto:khaled@khaledelshimy.com?subject=Vote%3A%20Notion%20export">+ vote</a></li>
+          <li><b>Mac companion</b> Same notes on your desk, via your iCloud. <a class="vote" href="mailto:khaled@khaledelshimy.com?subject=Vote%3A%20Mac%20app">+ vote</a></li>
+          <li><b>Siri in Arabic</b> «سجل ملاحظة» as a native phrase. <a class="vote" href="mailto:khaled@khaledelshimy.com?subject=Vote%3A%20Arabic%20Siri">+ vote</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
   <section id="suggest">
     <div class="suggest">
       <h2>Missing something? Tell me.</h2>
       <p>ActionNote is built by one person, in public, and the roadmap is genuinely shaped by users — translate mode, audio markers, and Notion export all started as user suggestions. If the app doesn't do the thing you need, I want to know.</p>
       <div class="chips">
-        <span class="chip">🚧 Coming: Siri capture</span>
+        <span class="chip">🚧 In build: Apple Watch</span>
         <span class="chip">🚧 Coming: Mac app</span>
       </div>
       <a class="btn" style="margin-top:32px;position:relative" href="mailto:khaled@khaledelshimy.com?subject=ActionNote%20feature%20idea&amp;body=The%20feature%20I%20wish%20ActionNote%20had%3A%0A%0AWhy%20I%20need%20it%3A%0A">💡 Suggest a feature</a>
@@ -440,5 +570,96 @@
     </div>
   </footer>
 </div>
+<script>
+(function(){
+  var demos = {
+    en: {
+      dir: "ltr",
+      ramble: "Okay so, umm, I need to call mom tomorrow about the weekend… also we're out of coffee again. Oh — and Sara's birthday is Friday, I have to order the cake before Thursday or it won't make it. What else… right, the gym membership expires this month I think.",
+      title: "Weekend, Sara's birthday & errands",
+      sum: "Family call to arrange, a birthday to prepare for Friday, plus two errands before the month ends.",
+      tasks: [
+        ["Call mom about the weekend","Tomorrow"],
+        ["Order Sara's birthday cake","Before Thursday"],
+        ["Buy coffee",""],
+        ["Renew gym membership","This month"]
+      ]
+    },
+    ar: {
+      dir: "rtl",
+      ramble: "طيب أنا محتاج أكلم ماما بكرة بخصوص الويكند… وكمان القهوة خلصت تاني. آه وعيد ميلاد سارة يوم الجمعة، لازم أطلب التورتة قبل الخميس. وإيه تاني… أيوة اشتراك الجيم بيخلص الشهر ده.",
+      title: "الويكند وعيد ميلاد سارة ومشاوير",
+      sum: "مكالمة عائلية للترتيب، وتحضير لعيد ميلاد يوم الجمعة، ومشوارين قبل نهاية الشهر.",
+      tasks: [
+        ["أكلم ماما بخصوص الويكند","بكرة"],
+        ["أطلب تورتة عيد ميلاد سارة","قبل الخميس"],
+        ["أشتري قهوة",""],
+        ["أجدد اشتراك الجيم","الشهر ده"]
+      ]
+    },
+    mix: {
+      dir: "ltr",
+      ramble: "So the meeting with Ahmed is Tuesday الساعة ٣ العصر, and I promised him the pricing doc قبل الاجتماع. Also لازم أبعت الانفويس لشركة النور before the end of the week… and book the flight to Dubai, يفضل يوم الخميس.",
+      title: "Ahmed meeting, invoice & Dubai flight",
+      sum: "A Tuesday meeting with prep work due before it, an invoice deadline this week, and a flight to book.",
+      tasks: [
+        ["Send Ahmed the pricing doc","Before Tuesday 3 PM"],
+        ["أبعت الانفويس لشركة النور","End of week"],
+        ["Book flight to Dubai","Thursday preferred"]
+      ]
+    }
+  };
+  var cur = "en", organized = false;
+  var ramble = document.getElementById("try-ramble");
+  var note = document.getElementById("try-note");
+  var btn = document.getElementById("try-btn");
+
+  function load(key){
+    cur = key; organized = false;
+    var d = demos[key];
+    ramble.setAttribute("dir", d.dir);
+    ramble.innerHTML = '<div class="mic"><span class="rec"></span> VOICE NOTE — 0:31</div>' + d.ramble;
+    ramble.style.display = "block";
+    ramble.style.opacity = 1;
+    ramble.style.transform = "none";
+    note.className = "try-note";
+    note.style.display = "none";
+    btn.textContent = "✨ Organize it";
+  }
+
+  function organize(){
+    if (organized) { load(cur); return; }
+    organized = true;
+    var d = demos[cur];
+    ramble.style.opacity = 0;
+    ramble.style.transform = "translateY(-14px)";
+    setTimeout(function(){
+      ramble.style.display = "none";
+      note.setAttribute("dir", d.dir);
+      var html = "<h4>" + d.title + "</h4><div class='sum'>" + d.sum + "</div>";
+      for (var i=0;i<d.tasks.length;i++){
+        html += "<div class='tsk'><span class='cb'></span><span>" + d.tasks[i][0];
+        if (d.tasks[i][1]) html += "<span class='due'>⏰ " + d.tasks[i][1] + "</span>";
+        html += "</span></div>";
+      }
+      note.innerHTML = html;
+      note.style.display = "block";
+      requestAnimationFrame(function(){ requestAnimationFrame(function(){ note.className = "try-note in"; }); });
+      btn.textContent = "↺ Play it again";
+    }, 420);
+  }
+
+  var tabs = document.querySelectorAll(".try-tab");
+  for (var i=0;i<tabs.length;i++){
+    tabs[i].addEventListener("click", function(){
+      for (var j=0;j<tabs.length;j++) tabs[j].className = "try-tab";
+      this.className = "try-tab on";
+      load(this.getAttribute("data-demo"));
+    });
+  }
+  btn.addEventListener("click", organize);
+  load("en");
+})();
+</script>
 </body>
 </html>
