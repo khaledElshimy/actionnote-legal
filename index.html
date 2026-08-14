@@ -208,12 +208,22 @@
   .more{display:block;margin-top:16px;color:var(--ox);font-size:14.5px;font-weight:600;}
   .note{text-align:center;color:var(--ink-2);font-size:14.5px;margin:26px auto 0;max-width:620px;}
 
-  /* testimonials */
-  .quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:50px;}
+  /* testimonials — auto-scrolling rail */
+  .quotes-rail{overflow:hidden;margin-top:50px;position:relative;}
+  .quotes-rail::before,.quotes-rail::after{content:"";position:absolute;top:0;bottom:0;width:70px;z-index:2;pointer-events:none;}
+  .quotes-rail::before{left:0;background:linear-gradient(90deg,var(--paper),transparent);}
+  .quotes-rail::after{right:0;background:linear-gradient(270deg,var(--paper),transparent);}
+  .quotes{display:flex;gap:20px;width:max-content;animation:q-drift 36s linear infinite;}
+  .quotes-rail:hover .quotes{animation-play-state:paused;}
+  @keyframes q-drift{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+  @media (prefers-reduced-motion:reduce){
+    .quotes{animation:none;}
+    .quotes-rail{overflow-x:auto;}
+  }
   .quote{background:var(--sheet);border:1px solid var(--rule);border-radius:10px;padding:30px;display:flex;flex-direction:column;
-    box-shadow:0 10px 28px rgba(34,36,44,.06);}
-  .quote:nth-child(1){transform:rotate(-.5deg);}
-  .quote:nth-child(3){transform:rotate(.5deg);}
+    box-shadow:0 10px 28px rgba(34,36,44,.06);width:360px;flex:none;}
+  .quote:nth-child(odd){transform:rotate(-.4deg);}
+  .quote:nth-child(4n){transform:rotate(.4deg);}
   .quote .stars{color:var(--ox);letter-spacing:3px;font-size:14px;}
   .quote p{color:var(--ink);font-family:var(--serif);font-style:italic;font-size:16px;line-height:1.75;margin-top:14px;flex:1;}
   .quote .who{color:var(--ink-3);font-size:13px;margin-top:18px;font-weight:600;letter-spacing:.4px;}
@@ -475,7 +485,7 @@
   <section id="loved">
     <h2>What people say</h2>
     <p class="lead">Real reviews from the App Store, quoted word for word.</p>
-    <div class="quotes">
+    <div class="quotes-rail"><div class="quotes">
       <div class="quote">
         <div class="stars">★★★★★</div>
         <p>“Very useful application, I use it like my assistant for taking notes easily by voice, and it can create organized todo lists for me which is really helpful”</p>
@@ -491,7 +501,32 @@
         <p>“It’s easy to capture the idea when you have it — just record”</p>
         <div class="who">MohammedMandouh · App Store</div>
       </div>
-    </div>
+      <div class="quote">
+        <div class="stars">★★★★★</div>
+        <p>“Great app for productivity!”</p>
+        <div class="who">NourS Farouk · App Store</div>
+      </div>
+      <div class="quote" aria-hidden="true">
+        <div class="stars">★★★★★</div>
+        <p>“Very useful application, I use it like my assistant for taking notes easily by voice, and it can create organized todo lists for me which is really helpful”</p>
+        <div class="who">Eletol · App Store</div>
+      </div>
+      <div class="quote" aria-hidden="true">
+        <div class="stars">★★★★★</div>
+        <p>“Excellent app for organizing ideas and creating tasks from voice recordings. Clean interface and works smoothly.”</p>
+        <div class="who">M.M.S.H · App Store</div>
+      </div>
+      <div class="quote" aria-hidden="true">
+        <div class="stars">★★★★★</div>
+        <p>“It’s easy to capture the idea when you have it — just record”</p>
+        <div class="who">MohammedMandouh · App Store</div>
+      </div>
+      <div class="quote" aria-hidden="true">
+        <div class="stars">★★★★★</div>
+        <p>“Great app for productivity!”</p>
+        <div class="who">NourS Farouk · App Store</div>
+      </div>
+    </div></div>
   </section>
 
   <section id="pricing">
