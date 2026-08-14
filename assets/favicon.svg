@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <style>@media (prefers-color-scheme: dark){
+  rect[fill="#F6F5F0"]{fill:#14161E}
+  [fill="#22242C"]{fill:#EDEBE3}
+  [stroke="#22242C"]{stroke:#EDEBE3}
+  [stroke="#3E7A50"]{stroke:#5E9B72}
+  circle[fill="#8A2F28"]{fill:#C76156}
+}</style>
+  <rect width="1024" height="1024" fill="#F6F5F0"/>
+  <g transform="translate(-70.48,-36.48) scale(1.04)">
+    <circle cx="212" cy="324" r="30" fill="#8A2F28"/>
+    <rect x="238" y="334" width="118" height="240" rx="59" fill="#22242C"/>
+    <path d="M 174 518 A 124 124 0 0 0 422 518" fill="none" stroke="#22242C" stroke-width="34" stroke-linecap="butt"/>
+    <rect x="279" y="642" width="36" height="88" fill="#22242C"/>
+    <rect x="205" y="730" width="184" height="34" rx="10" fill="#22242C"/>
+    <polyline points="520,542 634,656 902,338" fill="none" stroke="#3E7A50" stroke-width="96" stroke-linecap="butt" stroke-linejoin="miter"/>
+  </g>
+</svg>

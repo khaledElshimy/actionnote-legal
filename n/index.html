@@ -5,7 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>A note shared with you — ActionNote</title>
 <meta name="robots" content="noindex" />
-<link rel="icon" type="image/png" href="../assets/favicon.png" />
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="../assets/favicon-32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="../assets/favicon-16.png" sizes="16x16" type="image/png" />
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png" />
+<link rel="manifest" href="../site.webmanifest" />
+<meta name="theme-color" content="#F6F5F0" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#14161E" media="(prefers-color-scheme: dark)" />
 <style>
   :root{--paper:#F6F5F0;--sheet:#FFFFFF;--line:#E3E1D8;
     --text:#22242C;--muted:#5A5C66;--brand:#8A2F28;--ok:#3E7A50;
@@ -35,7 +41,7 @@
 </head>
 <body>
 <div class="wrap">
-  <div class="from"><img src="../assets/icon.png" alt=""><span>Someone shared an ActionNote with you</span></div>
+  <div class="from"><img src="../assets/favicon.svg" alt=""><span>Someone shared an ActionNote with you</span></div>
   <div id="note" class="card" hidden>
     <h1 id="title"></h1>
     <div id="s-summary" hidden><div class="sec">Summary</div><p class="summary" id="summary"></p></div>
