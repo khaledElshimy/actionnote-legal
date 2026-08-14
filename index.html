@@ -78,9 +78,9 @@
   .lead{text-align:center;color:var(--ink-2);font-size:16.5px;margin:14px auto 0;max-width:600px;}
 
   /* hero */
-  .hero-zone{position:relative;
+  .hero-zone{position:relative;z-index:0;
     background:repeating-linear-gradient(to bottom,transparent 0 35px,var(--ruled) 35px 36px);}
-  .hero-zone::before{content:"";position:absolute;top:0;bottom:0;left:max(24px,calc(50% - 470px));width:1.5px;background:#D9807A;opacity:.7;}
+  .hero-zone::before{content:"";position:absolute;top:0;bottom:0;left:max(24px,calc(50% - 470px));width:1.5px;background:#D9807A;opacity:.7;z-index:-1;}
   .hero{display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:center;padding:64px 0 58px;}
   .hero h1{font-family:var(--serif);font-size:62px;line-height:1.02;letter-spacing:-1px;font-weight:600;margin-top:26px;text-wrap:balance;}
   .hero h1 em{font-style:italic;color:var(--ox);}
@@ -93,8 +93,10 @@
   .l-more{color:var(--ink-3);}
   .soon{color:var(--ink-3);font-size:14px;margin-top:16px;}
 
-  /* hero phone — the app as it looks after the Ledger re-skin */
+  /* hero visual — the demo GIF in a paper frame */
   .hero-phone{justify-self:center;position:relative;padding:26px 56px;}
+  .demo-frame{width:400px;border-radius:14px;border:1px solid var(--rule);
+    box-shadow:0 40px 90px rgba(34,36,44,.28);transform:rotate(1.2deg);display:block;}
   .phone{width:300px;background:#2A2C34;border-radius:40px;padding:12px;position:relative;
     box-shadow:0 40px 90px rgba(34,36,44,.35);animation:ph-float 7s ease-in-out infinite;transform:rotate(1.5deg);}
   .phone::before{content:"";position:absolute;top:12px;left:50%;transform:translateX(-50%);width:84px;height:22px;background:#17181D;border-radius:999px;z-index:3;}
@@ -133,8 +135,8 @@
   .ph-card .h{color:var(--green);font-size:9px;font-weight:800;letter-spacing:1.2px;display:flex;gap:5px;align-items:center;margin-bottom:5px;}
   .ph-card .r{color:var(--ink);font-size:10.5px;font-weight:500;padding:2.5px 0;display:flex;gap:6px;align-items:center;}
   .ph-card .r i{font-style:normal;color:var(--green);font-size:10px;}
-  .ph-actions{top:140px;right:-30px;animation:ph-drift 6s .8s ease-in-out infinite;}
-  .ph-quote{bottom:104px;left:-32px;max-width:145px;animation:ph-drift 8s 1.6s ease-in-out infinite;}
+  .ph-actions{top:110px;right:-26px;animation:ph-drift 6s .8s ease-in-out infinite;}
+  .ph-quote{bottom:90px;left:-30px;max-width:145px;animation:ph-drift 8s 1.6s ease-in-out infinite;}
   .ph-quote .q{color:var(--ink-2);font-family:var(--serif);font-style:italic;font-size:11px;line-height:1.55;}
   @keyframes ph-float{0%,100%{transform:translateY(0) rotate(1.5deg);}50%{transform:translateY(-10px) rotate(1.5deg);}}
   @keyframes ph-drift{0%,100%{transform:translateY(0) rotate(-1.5deg);}50%{transform:translateY(-12px) rotate(-1.5deg);}}
@@ -355,31 +357,8 @@
         </div>
         <div class="soon">Free for 5 notes a month · Your notes stay on your device + your iCloud</div>
       </div>
-      <div class="hero-phone" aria-label="ActionNote home screen with notes in English, Arabic, French and Spanish">
-        <div class="phone">
-          <div class="ph-screen">
-            <div class="ph-time">9:41</div>
-            <div class="ph-hello">Good morning, Khaled</div>
-            <div class="ph-capture"><b>🎙 Capture an idea</b><span>Tap to record — organized the moment you stop</span></div>
-            <div class="ph-quick">
-              <div class="ph-q"><em>✓</em>My tasks</div>
-              <div class="ph-q"><em>📄</em>My notes</div>
-              <div class="ph-q"><em>☁️</em>Upload</div>
-            </div>
-            <div class="ph-sec">Recent</div>
-            <div class="ph-note"><span class="ph-lang" style="background:#3E6FA8">EN</span><div><b>Sync with Sara</b><span class="s">Q3 launch plan &amp; timeline.</span></div><span class="ph-ready"><i></i>Ready</span></div>
-            <div class="ph-note rtl"><span class="ph-lang" style="background:#3E7A50">AR</span><div><b>قائمة المشتريات</b><span class="s">خبز، جبنة وبيض.</span></div><span class="ph-ready"><i></i>Ready</span></div>
-            <div class="ph-note"><span class="ph-lang" style="background:#5B5EA8">FR</span><div><b>Notes de réunion</b><span class="s">Préparer la démo.</span></div><span class="ph-ready"><i></i>Ready</span></div>
-            <div class="ph-note"><span class="ph-lang" style="background:#B0703F">ES</span><div><b>Reunión de diseño</b><span class="s">Revisar el onboarding.</span></div><span class="ph-ready"><i></i>Ready</span></div>
-            <div class="ph-tabs">
-              <div class="t on"><em>🏠</em>Home</div>
-              <div class="t"><em>📄</em>Notes</div>
-              <div class="ph-mic">🎙</div>
-              <div class="t"><em>✓</em>Tasks</div>
-              <div class="t"><em>⚙️</em>Settings</div>
-            </div>
-          </div>
-        </div>
+      <div class="hero-phone" aria-label="A rambling voice note becoming an organized ActionNote with tasks">
+        <img class="demo-frame" src="assets/demo-scroll.gif" alt="A voice-note ramble scrolls into an organized note with key points and tasks" />
         <div class="ph-card ph-actions">
           <div class="h">✓ ACTIONS</div>
           <div class="r"><i>●</i>Send Sara the timeline</div>
