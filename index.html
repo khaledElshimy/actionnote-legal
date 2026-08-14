@@ -98,10 +98,10 @@
   .l-more{color:var(--ink-3);}
   .soon{color:var(--ink-3);font-size:14px;margin-top:16px;}
 
-  /* hero visual — the demo GIF in a paper frame */
-  .hero-phone{justify-self:center;position:relative;padding:26px 56px;}
-  .demo-frame{width:400px;border-radius:14px;border:1px solid var(--rule);
-    box-shadow:0 40px 90px rgba(34,36,44,.28);transform:rotate(1.2deg);display:block;}
+  /* hero visual — the wide before/after demo GIF in a paper frame */
+  .hero-phone{justify-self:center;position:relative;padding:10px 0;}
+  .demo-frame{width:100%;max-width:530px;border-radius:14px;border:1px solid var(--rule);
+    box-shadow:0 40px 90px rgba(34,36,44,.28);transform:rotate(0.8deg);display:block;}
   .phone{width:300px;background:#2A2C34;border-radius:40px;padding:12px;position:relative;
     box-shadow:0 40px 90px rgba(34,36,44,.35);animation:ph-float 7s ease-in-out infinite;transform:rotate(1.5deg);}
   .phone::before{content:"";position:absolute;top:12px;left:50%;transform:translateX(-50%);width:84px;height:22px;background:#17181D;border-radius:999px;z-index:3;}
@@ -387,16 +387,7 @@
         <div class="soon">Free for 5 notes a month · Your notes stay on your device + your iCloud</div>
       </div>
       <div class="hero-phone" aria-label="A rambling voice note becoming an organized ActionNote with tasks">
-        <img class="demo-frame" src="assets/demo-scroll.gif" alt="A voice-note ramble scrolls into an organized note with key points and tasks" />
-        <div class="ph-card ph-actions">
-          <div class="h">✓ ACTIONS</div>
-          <div class="r"><i>●</i>Send Sara the timeline</div>
-          <div class="r"><i>●</i>Buy bread</div>
-          <div class="r"><i>●</i>Dentist — Tue 4 PM</div>
-        </div>
-        <div class="ph-card ph-quote">
-          <div class="q">"…send the timeline, and umm, don't forget the dentist…"</div>
-        </div>
+        <img class="demo-frame" src="assets/demo-scroll.gif" alt="A voice-note ramble on the right becomes an organized note with key points and tasks on the left" />
       </div>
     </header>
   </div>
@@ -410,6 +401,8 @@
       <div class="try-tabs">
         <button class="try-tab on" data-demo="en">English</button>
         <button class="try-tab" data-demo="ar">العربية</button>
+        <button class="try-tab" data-demo="es">Español</button>
+        <button class="try-tab" data-demo="fr">Français</button>
         <button class="try-tab" data-demo="mix">Two at once</button>
       </div>
       <div class="try-stage">
@@ -696,6 +689,38 @@
         ["أطلب تورتة عيد ميلاد سارة","قبل الخميس"],
         ["أشتري قهوة",""],
         ["أجدد اشتراك الجيم","الشهر ده"]
+      ]
+    },
+    es: {
+      dir: "ltr",
+      ramble: "Vale, eh, tengo que llamar a mamá mañana por el finde… y otra vez se acabó el café. Ah, y el cumpleaños de Sara es el viernes, hay que encargar la tarta antes del jueves. Podría sorprenderla también con un álbum de fotos… y sí, el gimnasio se me vence este mes.",
+      title: "Finde, cumpleaños de Sara y recados",
+      sum: "Una llamada familiar por organizar, un cumpleaños que preparar para el viernes y dos recados antes de fin de mes.",
+      points: ["El cumpleaños de Sara es el viernes — la tarta antes del jueves","Llamar a mamá mañana por el finde","El gimnasio vence este mes"],
+      pointsLabel: "Puntos clave", tasksLabel: "Tareas",
+      extraLabel: "💡 Ideas",
+      extra: ["Sorprender a Sara con un álbum de fotos"],
+      tasks: [
+        ["Llamar a mamá por el finde","Mañana"],
+        ["Encargar la tarta de Sara","Antes del jueves"],
+        ["Comprar café",""],
+        ["Renovar el gimnasio","Este mes"]
+      ]
+    },
+    fr: {
+      dir: "ltr",
+      ramble: "Bon alors, euh, je dois appeler maman demain pour le week-end… on n'a plus de café. Ah, et l'anniversaire de Sara c'est vendredi, il faut commander le gâteau avant jeudi. Je pourrais aussi lui faire un album photo… et oui, l'abonnement à la salle expire ce mois-ci.",
+      title: "Week-end, anniversaire de Sara et courses",
+      sum: "Un appel familial à organiser, un anniversaire à préparer pour vendredi, et deux courses avant la fin du mois.",
+      points: ["L'anniversaire de Sara est vendredi — le gâteau avant jeudi","Appeler maman demain pour le week-end","L'abonnement à la salle expire ce mois-ci"],
+      pointsLabel: "Points clés", tasksLabel: "Tâches",
+      extraLabel: "💡 Idées",
+      extra: ["Surprendre Sara avec un album photo"],
+      tasks: [
+        ["Appeler maman pour le week-end","Demain"],
+        ["Commander le gâteau de Sara","Avant jeudi"],
+        ["Acheter du café",""],
+        ["Renouveler l'abonnement salle","Ce mois-ci"]
       ]
     },
     mix: {
