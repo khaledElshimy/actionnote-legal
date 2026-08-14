@@ -257,6 +257,12 @@
   .stop:last-child span{text-align:right;}
   @media (max-width:600px){.stop span{display:none;}.stop b{font-size:12.5px;}}
 
+  /* mail fallback toast */
+  #mail-toast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(80px);
+    background:var(--ink-3);border:1px solid rgba(139,123,255,.5);color:var(--text);font-size:14px;font-weight:600;
+    border-radius:14px;padding:12px 20px;box-shadow:0 12px 40px rgba(0,0,0,.5);opacity:0;transition:all .35s;z-index:50;pointer-events:none;}
+  #mail-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
   /* band */
   .band{background:var(--grad);border-radius:32px;padding:60px 42px;text-align:center;box-shadow:var(--glow);}
   .band h2{color:#fff;}
@@ -296,11 +302,10 @@
     <nav>
       <div class="logo"><img src="assets/icon.png" alt="ActionNote" /> ActionNote</div>
       <div class="nav-links">
+        <a href="#try">Try it</a>
         <a href="#how">How it works</a>
-        <a href="#meeting">Meeting Mode</a>
-        <a href="#paths">Lectures &amp; meetings</a>
-        <a href="#roadmap">Roadmap</a>
         <a href="#pricing">Pricing</a>
+        <a href="#roadmap">Roadmap</a>
         <a class="nav-cta" href="https://apps.apple.com/us/app/actionnote-voice-to-tasks/id6789915282">Download</a>
       </div>
     </nav>
@@ -328,16 +333,6 @@
 </div>
 
 <div class="wrap">
-  <section id="how">
-    <h2>How it works</h2>
-    <p class="lead">No folders, no typing, no listening back. Three steps, ten seconds.</p>
-    <div class="steps">
-      <div class="step"><div class="n">1</div><h3>Talk</h3><p>Tap record and say it how it comes out — rambling, half-formed, two languages at once. Or share a voice note in from WhatsApp.</p></div>
-      <div class="step"><div class="n">2</div><h3>Get the organized note</h3><p>Seconds later: a title, a short summary, key points, and a task list with reminders that actually fire. The audio stays attached; you'll never need it.</p></div>
-      <div class="step"><div class="n">3</div><h3>Ask anytime</h3><p>"What did I promise Sara?" Ask across everything you've ever captured and get the answer with the source note linked.</p></div>
-    </div>
-  </section>
-
   <section id="try">
     <h2>See the magic — right here</h2>
     <p class="lead">A real example of what ActionNote does to a rambling voice note. Pick a language, then organize it.</p>
@@ -356,32 +351,29 @@
     </div>
   </section>
 
-  <section id="meeting">
-    <div class="panel">
-      <div class="grid">
-        <div>
-          <div class="kicker">🚧 Version 2.0 · in build, not in the app yet</div>
-          <h2>Next: <span class="g">Meeting Mode.</span></h2>
-          <p>Today ActionNote is built for the note you speak in a minute. Meeting Mode is for the hour you sit through — a full in-person meeting or a whole lecture, recorded end to end, with the note building while it runs instead of after.</p>
-          <div class="chips" style="justify-content:flex-start">
-            <span class="chip">Long recordings</span>
-            <span class="chip">Notes build while you record</span>
-            <span class="chip">Still on your device + iCloud</span>
-          </div>
-          <p class="fine">Arriving on a new <b>Pro+ tier at $9.99/month</b>. Everything else on this page is in the app today.</p>
-          <div class="cta">
-            <a class="btn ghost sm" href="mailto:khaled@khaledelshimy.com?subject=Meeting%20Mode%20early%20access&amp;body=I%20record%20%28meetings%20%2F%20lectures%29%3A%0A%0AWhat%20I%20need%20from%20Meeting%20Mode%3A%0A">Tell me how you'd use it</a>
-            <span style="color:var(--muted);font-size:14px">No waitlist, no email capture — just a reply.</span>
-          </div>
-        </div>
-        <div>
-          <div class="shotslot">
-            <span class="em">🎙️</span>
-            <span>SCREENSHOT — MEETING MODE</span>
-            <span class="m">Drop the real frame in when 2.0 ships.</span>
-          </div>
-        </div>
-      </div>
+  <section id="how">
+    <h2>How it works</h2>
+    <p class="lead">No folders, no typing, no listening back. Three steps, ten seconds.</p>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><h3>Talk</h3><p>Tap record and say it how it comes out — rambling, half-formed, two languages at once. Or share a voice note in from WhatsApp.</p></div>
+      <div class="step"><div class="n">2</div><h3>Get the organized note</h3><p>Seconds later: a title, a short summary, key points, and a task list with reminders that actually fire. The audio stays attached; you'll never need it.</p></div>
+      <div class="step"><div class="n">3</div><h3>Ask anytime</h3><p>"What did I promise Sara?" Ask across everything you've ever captured and get the answer with the source note linked.</p></div>
+    </div>
+  </section>
+
+  <section id="features">
+    <h2>Your voice, organized</h2>
+    <p class="lead">Stop scrolling back through endless voice memos. Capture a thought and get exactly what matters.</p>
+    <div class="feat">
+      <div class="card"><div class="ic">🎙️</div><h3>Just talk</h3><p>Record a thought, meeting, or rambling memo — hands-free.</p></div>
+      <div class="card"><div class="ic">✨</div><h3>AI summaries</h3><p>Every note returns a title, key points, and a to-do list.</p></div>
+      <div class="card"><div class="ic">⏰</div><h3>Tasks &amp; reminders</h3><p>Turn talk into a checklist with timed reminders.</p></div>
+      <div class="card"><div class="ic">💬</div><h3>Ask Your Notes</h3><p>"What did I promise Sara?" Get answers from everything you've captured, with the source note cited.</p></div>
+      <div class="card"><div class="ic">🌍</div><h3>Any language</h3><p>Arabic, English &amp; more — even mixed in one sentence. Detected and organized automatically.</p></div>
+      <div class="card"><div class="ic">☁️</div><h3>Private &amp; backed up</h3><p>Notes stay on your device and your iCloud — never in a database of ours. Audio is processed, not kept.</p></div>
+      <div class="card"><div class="ic">📲</div><h3>WhatsApp voice notes in</h3><p>Share any voice note or audio file straight in — get the summary without ever pressing play.</p></div>
+      <div class="card"><div class="ic">🔒</div><h3>Keeps recording</h3><p>Lock the screen or switch apps mid-thought — the recording survives, and you get notified when the note is ready.</p></div>
+      <div class="card"><div class="ic">📤</div><h3>Clean export</h3><p>Every note exports as clean formatted text that pastes nicely into Notion, Todoist, or anywhere you live.</p></div>
     </div>
   </section>
 
@@ -417,19 +409,14 @@
     <p class="note">Same app, same $4.99 Pro, same download — the only difference is the room you press record in.</p>
   </section>
 
-  <section id="features">
-    <h2>Your voice, organized</h2>
-    <p class="lead">Stop scrolling back through endless voice memos. Capture a thought and get exactly what matters.</p>
-    <div class="feat">
-      <div class="card"><div class="ic">🎙️</div><h3>Just talk</h3><p>Record a thought, meeting, or rambling memo — hands-free.</p></div>
-      <div class="card"><div class="ic">✨</div><h3>AI summaries</h3><p>Every note returns a title, key points, and a to-do list.</p></div>
-      <div class="card"><div class="ic">⏰</div><h3>Tasks &amp; reminders</h3><p>Turn talk into a checklist with timed reminders.</p></div>
-      <div class="card"><div class="ic">💬</div><h3>Ask Your Notes</h3><p>"What did I promise Sara?" Get answers from everything you've captured, with the source note cited.</p></div>
-      <div class="card"><div class="ic">🌍</div><h3>Any language</h3><p>Arabic, English &amp; more — even mixed in one sentence. Detected and organized automatically.</p></div>
-      <div class="card"><div class="ic">☁️</div><h3>Private &amp; backed up</h3><p>Notes stay on your device and your iCloud — never in a database of ours. Audio is processed, not kept.</p></div>
-      <div class="card"><div class="ic">📲</div><h3>WhatsApp voice notes in</h3><p>Share any voice note or audio file straight in — get the summary without ever pressing play.</p></div>
-      <div class="card"><div class="ic">🔒</div><h3>Keeps recording</h3><p>Lock the screen or switch apps mid-thought — the recording survives, and you get notified when the note is ready.</p></div>
-      <div class="card"><div class="ic">📤</div><h3>Clean export</h3><p>Every note exports as clean formatted text that pastes nicely into Notion, Todoist, or anywhere you live.</p></div>
+  <section id="screens">
+    <h2>See it in action</h2>
+    <p class="lead">From a rambling voice memo to organized notes, tasks, and answers.</p>
+    <div class="demo-gif"><img src="assets/demo-scroll.gif" alt="A rambling transcript becomes an organized note with summary, tasks and reminders" loading="lazy" /></div>
+    <div class="shots">
+      <img src="assets/shot-organize.jpg" alt="AI organizes a ramble into summary, key points and tasks" />
+      <img class="mid" src="assets/shot-ask.jpg" alt="Ask Your Notes answering with source citations" />
+      <img src="assets/shot-tasks.jpg" alt="Task list with reminders" />
     </div>
   </section>
 
@@ -452,17 +439,6 @@
         <p>“It’s easy to capture the idea when you have it — just record”</p>
         <div class="who">MohammedMandouh · App Store</div>
       </div>
-    </div>
-  </section>
-
-  <section id="screens">
-    <h2>See it in action</h2>
-    <p class="lead">From a rambling voice memo to organized notes, tasks, and answers.</p>
-    <div class="demo-gif"><img src="assets/demo-scroll.gif" alt="A rambling transcript becomes an organized note with summary, tasks and reminders" loading="lazy" /></div>
-    <div class="shots">
-      <img src="assets/shot-organize.jpg" alt="AI organizes a ramble into summary, key points and tasks" />
-      <img class="mid" src="assets/shot-ask.jpg" alt="Ask Your Notes answering with source citations" />
-      <img src="assets/shot-tasks.jpg" alt="Task list with reminders" />
     </div>
   </section>
 
@@ -497,23 +473,32 @@
     <p class="note">A third tier, <b style="color:var(--text);font-weight:600">Pro+ at $9.99/month</b>, arrives with Meeting Mode in 2.0. Nothing in Free or Pro moves behind it.</p>
   </section>
 
-  <section id="faq">
-    <h2>Questions people ask</h2>
-    <div class="faq">
-      <details><summary>Where do my notes live? Can you read them?</summary>
-        <p>Your notes live on your iPhone and in your own iCloud. There is no ActionNote database. Audio is sent to the AI once for processing and is not kept on any server of ours.</p></details>
-      <details><summary>Which languages work?</summary>
-        <p>Whatever you speak — including two languages mixed in the same sentence. Arabic/English mid-sentence switching was the original reason the app exists. The note comes back organized in the language you spoke.</p></details>
-      <details><summary>Can I record a whole meeting or lecture today?</summary>
-        <p>Today ActionNote is built around shorter notes, and recording survives a locked screen. Full long-session recording with the note building as you go is Meeting Mode, in build for 2.0 — not in the app yet.</p></details>
-      <details><summary>Do I have to listen back to my recordings?</summary>
-        <p>Never. That's the whole point. The audio stays attached to each note in case you want it, but the summary, key points, and tasks replace listening.</p></details>
-      <details><summary>Does recording stop if I lock my phone?</summary>
-        <p>No — recording continues with the screen locked or while you use other apps, and you get a notification when your organized note is ready.</p></details>
-      <details><summary>Is there an Android or desktop version?</summary>
-        <p>iPhone first (iOS 16+). A Mac companion is on the roadmap, along with long-recording support for meetings and lectures. Android depends on how iOS goes.</p></details>
-      <details><summary>What happens when I cancel?</summary>
-        <p>Your notes are yours — they stay on your device and iCloud. You just go back to 5 new notes a month.</p></details>
+  <section id="meeting">
+    <div class="panel">
+      <div class="grid">
+        <div>
+          <div class="kicker">🚧 Version 2.0 · in build, not in the app yet</div>
+          <h2>Next: <span class="g">Meeting Mode.</span></h2>
+          <p>Today ActionNote is built for the note you speak in a minute. Meeting Mode is for the hour you sit through — a full in-person meeting or a whole lecture, recorded end to end, with the note building while it runs instead of after.</p>
+          <div class="chips" style="justify-content:flex-start">
+            <span class="chip">Long recordings</span>
+            <span class="chip">Notes build while you record</span>
+            <span class="chip">Still on your device + iCloud</span>
+          </div>
+          <p class="fine">Arriving on a new <b>Pro+ tier at $9.99/month</b>. Everything else on this page is in the app today.</p>
+          <div class="cta">
+            <a class="btn ghost sm" href="mailto:khaled@khaledelshimy.com?subject=Meeting%20Mode%20early%20access&amp;body=I%20record%20%28meetings%20%2F%20lectures%29%3A%0A%0AWhat%20I%20need%20from%20Meeting%20Mode%3A%0A">Tell me how you'd use it</a>
+            <span style="color:var(--muted);font-size:14px">No waitlist, no email capture — just a reply.</span>
+          </div>
+        </div>
+        <div>
+          <div class="shotslot">
+            <span class="em">🎙️</span>
+            <span>SCREENSHOT — MEETING MODE</span>
+            <span class="m">Drop the real frame in when 2.0 ships.</span>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -559,6 +544,26 @@
           <li><b>Siri in Arabic</b> «سجل ملاحظة» as a native phrase. <a class="vote" href="mailto:khaled@khaledelshimy.com?subject=Vote%3A%20Arabic%20Siri">+ vote</a></li>
         </ul>
       </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <h2>Questions people ask</h2>
+    <div class="faq">
+      <details><summary>Where do my notes live? Can you read them?</summary>
+        <p>Your notes live on your iPhone and in your own iCloud. There is no ActionNote database. Audio is sent to the AI once for processing and is not kept on any server of ours.</p></details>
+      <details><summary>Which languages work?</summary>
+        <p>Whatever you speak — including two languages mixed in the same sentence. Arabic/English mid-sentence switching was the original reason the app exists. The note comes back organized in the language you spoke.</p></details>
+      <details><summary>Can I record a whole meeting or lecture today?</summary>
+        <p>Today ActionNote is built around shorter notes, and recording survives a locked screen. Full long-session recording with the note building as you go is Meeting Mode, in build for 2.0 — not in the app yet.</p></details>
+      <details><summary>Do I have to listen back to my recordings?</summary>
+        <p>Never. That's the whole point. The audio stays attached to each note in case you want it, but the summary, key points, and tasks replace listening.</p></details>
+      <details><summary>Does recording stop if I lock my phone?</summary>
+        <p>No — recording continues with the screen locked or while you use other apps, and you get a notification when your organized note is ready.</p></details>
+      <details><summary>Is there an Android or desktop version?</summary>
+        <p>iPhone first (iOS 16+). A Mac companion is on the roadmap, along with long-recording support for meetings and lectures. Android depends on how iOS goes.</p></details>
+      <details><summary>What happens when I cancel?</summary>
+        <p>Your notes are yours — they stay on your device and iCloud. You just go back to 5 new notes a month.</p></details>
     </div>
   </section>
 
@@ -694,6 +699,32 @@
       if (entries[0].isIntersecting) { fill.style.width = "62%"; obs.disconnect(); }
     }, {threshold:.4}).observe(fill.parentElement);
   } else if (fill) { fill.style.width = "62%"; }
+})();
+</script>
+<div id="mail-toast"></div>
+<script>
+(function(){
+  var toast = document.getElementById("mail-toast");
+  var timer;
+  function show(msg){
+    toast.textContent = msg;
+    toast.className = "show";
+    clearTimeout(timer);
+    timer = setTimeout(function(){ toast.className = ""; }, 3200);
+  }
+  // mailto silently fails on devices with no mail app configured. Copy the
+  // address as a safety net so the click always accomplishes something.
+  var links = document.querySelectorAll('a[href^="mailto:"]');
+  for (var i=0;i<links.length;i++){
+    links[i].addEventListener("click", function(){
+      var addr = this.getAttribute("href").replace("mailto:","").split("?")[0];
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(addr).then(function(){
+          show("📋 Email copied: " + addr);
+        }, function(){ show("✉️ " + addr); });
+      } else { show("✉️ " + addr); }
+    });
+  }
 })();
 </script>
 </body>
