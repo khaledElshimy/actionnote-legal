@@ -206,7 +206,10 @@
   .try-note.in{opacity:1;transform:none;}
   .try-note h4{font-family:var(--sora);font-size:19px;}
   .try-note .sum{color:var(--muted);font-size:14.5px;margin-top:8px;}
-  .try-note .tsk{display:flex;gap:10px;align-items:flex-start;margin-top:12px;font-size:15px;}
+  .try-note .sec{color:var(--brand-hi);font-size:11.5px;font-weight:700;letter-spacing:1.1px;margin-top:18px;text-transform:uppercase;}
+  .try-note .kp{display:flex;gap:9px;color:var(--muted);font-size:14.5px;margin-top:8px;}
+  .try-note .kp i{color:var(--brand);font-style:normal;flex:none;}
+  .try-note .tsk{display:flex;gap:10px;align-items:flex-start;margin-top:10px;font-size:15px;}
   .try-note .tsk .cb{width:19px;height:19px;border-radius:6px;border:1.5px solid var(--brand);flex:none;margin-top:2px;}
   .try-note .tsk .due{color:var(--brand-hi);font-size:12.5px;font-weight:600;display:block;}
   .try-note[dir=rtl]{text-align:right;}
@@ -611,9 +614,12 @@
   var demos = {
     en: {
       dir: "ltr",
-      ramble: "Okay so, umm, I need to call mom tomorrow about the weekend… also we're out of coffee again. Oh — and Sara's birthday is Friday, I have to order the cake before Thursday or it won't make it. What else… right, the gym membership expires this month I think.",
+      ramble: "Okay so, umm, I need to call mom tomorrow about the weekend… also we're out of coffee again. Oh — and Sara's birthday is Friday, I have to order the cake before Thursday or it won't make it. Maybe I could surprise her with a photo album too, that could be nice. What else… right, the gym membership expires this month I think.",
       title: "Weekend, Sara's birthday & errands",
       sum: "Family call to arrange, a birthday to prepare for Friday, plus two errands before the month ends.",
+      points: ["Sara's birthday is Friday, cake must be ordered by Thursday","Mom call tomorrow to plan the weekend","Gym membership expires this month"],
+      extraLabel: "💡 Ideas",
+      extra: ["Surprise Sara with a photo album"],
       tasks: [
         ["Call mom about the weekend","Tomorrow"],
         ["Order Sara's birthday cake","Before Thursday"],
@@ -623,9 +629,13 @@
     },
     ar: {
       dir: "rtl",
-      ramble: "طيب أنا محتاج أكلم ماما بكرة بخصوص الويكند… وكمان القهوة خلصت تاني. آه وعيد ميلاد سارة يوم الجمعة، لازم أطلب التورتة قبل الخميس. وإيه تاني… أيوة اشتراك الجيم بيخلص الشهر ده.",
+      ramble: "طيب أنا محتاج أكلم ماما بكرة بخصوص الويكند… وكمان القهوة خلصت تاني. آه وعيد ميلاد سارة يوم الجمعة، لازم أطلب التورتة قبل الخميس. وممكن كمان أعملها ألبوم صور مفاجأة، فكرة حلوة. وإيه تاني… أيوة اشتراك الجيم بيخلص الشهر ده.",
       title: "الويكند وعيد ميلاد سارة ومشاوير",
       sum: "مكالمة عائلية للترتيب، وتحضير لعيد ميلاد يوم الجمعة، ومشوارين قبل نهاية الشهر.",
+      points: ["عيد ميلاد سارة يوم الجمعة والتورتة لازم تتطلب قبل الخميس","مكالمة ماما بكرة لترتيب الويكند","اشتراك الجيم بيخلص الشهر ده"],
+      pointsLabel: "النقاط الأساسية", tasksLabel: "المهام",
+      extraLabel: "💡 أفكار",
+      extra: ["ألبوم صور مفاجأة لسارة"],
       tasks: [
         ["أكلم ماما بخصوص الويكند","بكرة"],
         ["أطلب تورتة عيد ميلاد سارة","قبل الخميس"],
@@ -635,9 +645,12 @@
     },
     mix: {
       dir: "ltr",
-      ramble: "So the meeting with Ahmed is Tuesday الساعة ٣ العصر, and I promised him the pricing doc قبل الاجتماع. Also لازم أبعت الانفويس لشركة النور before the end of the week… and book the flight to Dubai, يفضل يوم الخميس.",
+      ramble: "So the meeting with Ahmed is Tuesday الساعة ٣ العصر, and I promised him the pricing doc قبل الاجتماع. Also لازم أبعت الانفويس لشركة النور before the end of the week… and book the flight to Dubai, يفضل يوم الخميس. Oh and Ahmed still didn't send the contract, لازم أفكره.",
       title: "Ahmed meeting, invoice & Dubai flight",
       sum: "A Tuesday meeting with prep work due before it, an invoice deadline this week, and a flight to book.",
+      points: ["Meeting with Ahmed on Tuesday at 3 PM","Pricing doc promised before the meeting","Invoice for شركة النور due this week"],
+      extraLabel: "🔁 Follow-ups",
+      extra: ["Ahmed still owes the contract, remind him"],
       tasks: [
         ["Send Ahmed the pricing doc","Before Tuesday 3 PM"],
         ["أبعت الانفويس لشركة النور","End of week"],
@@ -673,10 +686,19 @@
       ramble.style.display = "none";
       note.setAttribute("dir", d.dir);
       var html = "<h4>" + d.title + "</h4><div class='sum'>" + d.sum + "</div>";
+      html += "<div class='sec'>" + (d.pointsLabel || "Key points") + "</div>";
+      for (var i=0;i<d.points.length;i++){
+        html += "<div class='kp'><i>◆</i><span>" + d.points[i] + "</span></div>";
+      }
+      html += "<div class='sec'>" + (d.tasksLabel || "Tasks") + "</div>";
       for (var i=0;i<d.tasks.length;i++){
         html += "<div class='tsk'><span class='cb'></span><span>" + d.tasks[i][0];
         if (d.tasks[i][1]) html += "<span class='due'>⏰ " + d.tasks[i][1] + "</span>";
         html += "</span></div>";
+      }
+      html += "<div class='sec'>" + d.extraLabel + "</div>";
+      for (var i=0;i<d.extra.length;i++){
+        html += "<div class='kp'><i>◆</i><span>" + d.extra[i] + "</span></div>";
       }
       note.innerHTML = html;
       note.style.display = "block";
