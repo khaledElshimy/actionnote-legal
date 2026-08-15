@@ -47,8 +47,17 @@
   .tip{margin-top:18px;background:rgba(62,122,80,.07);border:1px solid rgba(62,122,80,.25);border-radius:10px;
     padding:14px 18px;font-size:14.5px;color:var(--muted);}
   .tip b{color:#3E7A50;font-weight:700;}
-  .gvis{width:100%;max-width:540px;border-radius:12px;border:1px solid var(--line);
-    box-shadow:0 12px 32px rgba(34,36,44,.10);display:block;margin-top:18px;}
+  .gplayer{max-width:540px;margin-top:18px;}
+  .gvis{width:100%;border-radius:12px 12px 0 0;border:1px solid var(--line);border-bottom:none;
+    box-shadow:0 12px 32px rgba(34,36,44,.10);display:block;}
+  .gctl{display:flex;align-items:center;justify-content:space-between;background:var(--ink-2);
+    border:1px solid var(--line);border-radius:0 0 12px 12px;padding:8px 12px;}
+  .gctl button{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--text);background:transparent;
+    color:var(--text);font-size:20px;cursor:pointer;line-height:1;}
+  .gctl button:hover{background:var(--text);color:var(--ink-0);}
+  .gdots{display:flex;gap:8px;}
+  .gdots i{width:9px;height:9px;border-radius:50%;background:var(--line);cursor:pointer;}
+  .gdots i.on{background:var(--brand);}
   @media (max-width:700px){.ghero h1{font-size:36px;}.guide{padding:26px 20px;}}
 </style>
 </head>
@@ -89,7 +98,7 @@
     <div class="guide" id="record">
       <h2><span class="em">🎙️</span> Record your first note</h2>
       <p class="why">The core loop: talk messy, get a clean note with a title, summary, key points, and real tasks.</p>
-      <img class="gvis" src="assets/guides/record.gif" alt="Animated walkthrough" loading="lazy" />
+      <div class="gplayer" data-g="record"><img class="gvis" src="assets/guides/frames/record-0.png" alt="Step-by-step walkthrough" loading="lazy" /><div class="gctl"><button class="gprev" aria-label="Previous step">‹</button><span class="gdots"></span><button class="gnext" aria-label="Next step">›</button></div><noscript><img class="gvis" style="border-radius:12px;border-bottom:1px solid var(--line)" src="assets/guides/record.gif" alt="Animated walkthrough" /></noscript></div>
       <div class="steps">
         <div class="step"><div><b>Tap the mic button</b> <span>— the big one at the bottom, or the "Capture an idea" card on Home.</span></div></div>
         <div class="step"><div><b>Say it how it comes out.</b> <span>Rambling is the point: "call mom tomorrow… we're out of coffee… Sara's birthday is Friday, cake before Thursday."</span></div></div>
@@ -101,7 +110,7 @@
     <div class="guide" id="siri">
       <h2><span class="em">🗣️</span> Hands-free with Siri</h2>
       <p class="why">Capture without touching the phone — even from your pocket, even locked.</p>
-      <img class="gvis" src="assets/guides/siri.gif" alt="Animated walkthrough" loading="lazy" />
+      <div class="gplayer" data-g="siri"><img class="gvis" src="assets/guides/frames/siri-0.png" alt="Step-by-step walkthrough" loading="lazy" /><div class="gctl"><button class="gprev" aria-label="Previous step">‹</button><span class="gdots"></span><button class="gnext" aria-label="Next step">›</button></div><noscript><img class="gvis" style="border-radius:12px;border-bottom:1px solid var(--line)" src="assets/guides/siri.gif" alt="Animated walkthrough" /></noscript></div>
       <div class="steps">
         <div class="step"><div><b>Say "Hey Siri, record with ActionNote."</b> <span>The app opens straight into a running recording.</span></div></div>
         <div class="step"><div><b>Talk.</b> <span>As long as you like.</span></div></div>
@@ -113,7 +122,7 @@
     <div class="guide" id="widget">
       <h2><span class="em">⚡</span> Quick Record widget &amp; Action Button</h2>
       <p class="why">One tap from the lock screen or home screen to a running recording.</p>
-      <img class="gvis" src="assets/guides/widget.gif" alt="Animated walkthrough" loading="lazy" />
+      <div class="gplayer" data-g="widget"><img class="gvis" src="assets/guides/frames/widget-0.png" alt="Step-by-step walkthrough" loading="lazy" /><div class="gctl"><button class="gprev" aria-label="Previous step">‹</button><span class="gdots"></span><button class="gnext" aria-label="Next step">›</button></div><noscript><img class="gvis" style="border-radius:12px;border-bottom:1px solid var(--line)" src="assets/guides/widget.gif" alt="Animated walkthrough" /></noscript></div>
       <div class="steps">
         <div class="step"><div><b>Lock screen:</b> <span>long-press the lock screen → Customize → add the ActionNote circular widget below the clock.</span></div></div>
         <div class="step"><div><b>Home screen:</b> <span>long-press any empty spot → Edit → Add Widget → ActionNote.</span></div></div>
@@ -125,7 +134,7 @@
     <div class="guide" id="whatsapp">
       <h2><span class="em">📲</span> Import WhatsApp voice notes</h2>
       <p class="why">The 7-minute voice note from your friend, readable in 20 seconds.</p>
-      <img class="gvis" src="assets/guides/whatsapp.gif" alt="Animated walkthrough" loading="lazy" />
+      <div class="gplayer" data-g="whatsapp"><img class="gvis" src="assets/guides/frames/whatsapp-0.png" alt="Step-by-step walkthrough" loading="lazy" /><div class="gctl"><button class="gprev" aria-label="Previous step">‹</button><span class="gdots"></span><button class="gnext" aria-label="Next step">›</button></div><noscript><img class="gvis" style="border-radius:12px;border-bottom:1px solid var(--line)" src="assets/guides/whatsapp.gif" alt="Animated walkthrough" /></noscript></div>
       <div class="steps">
         <div class="step"><div><b>Long-press the voice note</b> <span>in WhatsApp (or any audio file, anywhere) and choose Forward → Share.</span></div></div>
         <div class="step"><div><b>Pick ActionNote</b> <span>in the share sheet.</span></div></div>
@@ -137,7 +146,7 @@
     <div class="guide" id="ask">
       <h2><span class="em">💬</span> Ask Your Notes</h2>
       <p class="why">Everything you've ever captured becomes something you can question.</p>
-      <img class="gvis" src="assets/guides/ask.gif" alt="Animated walkthrough" loading="lazy" />
+      <div class="gplayer" data-g="ask"><img class="gvis" src="assets/guides/frames/ask-0.png" alt="Step-by-step walkthrough" loading="lazy" /><div class="gctl"><button class="gprev" aria-label="Previous step">‹</button><span class="gdots"></span><button class="gnext" aria-label="Next step">›</button></div><noscript><img class="gvis" style="border-radius:12px;border-bottom:1px solid var(--line)" src="assets/guides/ask.gif" alt="Animated walkthrough" /></noscript></div>
       <div class="steps">
         <div class="step"><div><b>Open Ask</b> <span>from Home.</span></div></div>
         <div class="step"><div><b>Ask like you'd ask a person:</b> <span>"What did I promise Sara?" · "When is the dentist?" · "What was my idea about the trip?"</span></div></div>
@@ -149,7 +158,7 @@
     <div class="guide" id="tasks">
       <h2><span class="em">✅</span> Tasks &amp; reminders</h2>
       <p class="why">Dates you say out loud become reminders that actually ring.</p>
-      <img class="gvis" src="assets/guides/tasks.gif" alt="Animated walkthrough" loading="lazy" />
+      <div class="gplayer" data-g="tasks"><img class="gvis" src="assets/guides/frames/tasks-0.png" alt="Step-by-step walkthrough" loading="lazy" /><div class="gctl"><button class="gprev" aria-label="Previous step">‹</button><span class="gdots"></span><button class="gnext" aria-label="Next step">›</button></div><noscript><img class="gvis" style="border-radius:12px;border-bottom:1px solid var(--line)" src="assets/guides/tasks.gif" alt="Animated walkthrough" /></noscript></div>
       <div class="steps">
         <div class="step"><div><b>Say the deadline while recording:</b> <span>"send the report before Thursday" — the task arrives with Thursday attached.</span></div></div>
         <div class="step"><div><b>Tap the bell</b> <span>on any task to add or change its reminder.</span></div></div>
@@ -161,7 +170,7 @@
     <div class="guide" id="languages">
       <h2><span class="em">🌍</span> Two languages, one note</h2>
       <p class="why">Speak how you actually speak — Arabic and English in the same sentence is the reason this app exists.</p>
-      <img class="gvis" src="assets/guides/languages.gif" alt="Animated walkthrough" loading="lazy" />
+      <div class="gplayer" data-g="languages"><img class="gvis" src="assets/guides/frames/languages-0.png" alt="Step-by-step walkthrough" loading="lazy" /><div class="gctl"><button class="gprev" aria-label="Previous step">‹</button><span class="gdots"></span><button class="gnext" aria-label="Next step">›</button></div><noscript><img class="gvis" style="border-radius:12px;border-bottom:1px solid var(--line)" src="assets/guides/languages.gif" alt="Animated walkthrough" /></noscript></div>
       <div class="steps">
         <div class="step"><div><b>Just record.</b> <span>Mix languages mid-sentence; the note comes back clean in the language you spoke.</span></div></div>
         <div class="step"><div><b>Want everything in your language?</b> <span>Settings → turn on <b>Organize in my language</b>.</span></div></div>
@@ -173,7 +182,7 @@
     <div class="guide" id="share">
       <h2><span class="em">📤</span> Share &amp; export</h2>
       <p class="why">Clean formatted text that pastes nicely anywhere — free for everyone.</p>
-      <img class="gvis" src="assets/guides/share.gif" alt="Animated walkthrough" loading="lazy" />
+      <div class="gplayer" data-g="share"><img class="gvis" src="assets/guides/frames/share-0.png" alt="Step-by-step walkthrough" loading="lazy" /><div class="gctl"><button class="gprev" aria-label="Previous step">‹</button><span class="gdots"></span><button class="gnext" aria-label="Next step">›</button></div><noscript><img class="gvis" style="border-radius:12px;border-bottom:1px solid var(--line)" src="assets/guides/share.gif" alt="Animated walkthrough" /></noscript></div>
       <div class="steps">
         <div class="step"><div><b>Open a note → share icon.</b> <span>You get formatted text with the title, summary, and tasks.</span></div></div>
         <div class="step"><div><b>Paste anywhere:</b> <span>Notion, Todoist, email, WhatsApp — it lands clean.</span></div></div>
@@ -185,7 +194,7 @@
     <div class="guide" id="account">
       <h2><span class="em">☁️</span> Account &amp; backup</h2>
       <p class="why">Notes live on your iPhone and your own iCloud — there is no ActionNote database.</p>
-      <img class="gvis" src="assets/guides/account.gif" alt="Animated walkthrough" loading="lazy" />
+      <div class="gplayer" data-g="account"><img class="gvis" src="assets/guides/frames/account-0.png" alt="Step-by-step walkthrough" loading="lazy" /><div class="gctl"><button class="gprev" aria-label="Previous step">‹</button><span class="gdots"></span><button class="gnext" aria-label="Next step">›</button></div><noscript><img class="gvis" style="border-radius:12px;border-bottom:1px solid var(--line)" src="assets/guides/account.gif" alt="Animated walkthrough" /></noscript></div>
       <div class="steps">
         <div class="step"><div><b>Try first, sign in later.</b> <span>Your first notes work with no account at all.</span></div></div>
         <div class="step"><div><b>When you sign in,</b> <span>the notes you made as a guest come with you automatically.</span></div></div>
@@ -197,7 +206,7 @@
     <div class="guide" id="watch">
       <h2><span class="em">⌚</span> Apple Watch <span class="gsoon">ARRIVING IN v1.2</span></h2>
       <p class="why">Record on your wrist — even offline on a run. The phone does the thinking.</p>
-      <img class="gvis" src="assets/guides/watch.gif" alt="Animated walkthrough" loading="lazy" />
+      <div class="gplayer" data-g="watch"><img class="gvis" src="assets/guides/frames/watch-0.png" alt="Step-by-step walkthrough" loading="lazy" /><div class="gctl"><button class="gprev" aria-label="Previous step">‹</button><span class="gdots"></span><button class="gnext" aria-label="Next step">›</button></div><noscript><img class="gvis" style="border-radius:12px;border-bottom:1px solid var(--line)" src="assets/guides/watch.gif" alt="Animated walkthrough" /></noscript></div>
       <div class="steps">
         <div class="step"><div><b>Open ActionNote on the watch.</b> <span>It starts recording immediately — that's the whole UI.</span></div></div>
         <div class="step"><div><b>Tap stop.</b> <span>"Saved — will sync when your iPhone is nearby."</span></div></div>
@@ -209,7 +218,7 @@
     <div class="guide" id="brief">
       <h2><span class="em">☀️</span> Morning Brief <span class="gsoon">ARRIVING IN v1.2</span></h2>
       <p class="why">Your tasks, deadlines, and meetings in one notification, every morning. Free forever.</p>
-      <img class="gvis" src="assets/guides/brief.gif" alt="Animated walkthrough" loading="lazy" />
+      <div class="gplayer" data-g="brief"><img class="gvis" src="assets/guides/frames/brief-0.png" alt="Step-by-step walkthrough" loading="lazy" /><div class="gctl"><button class="gprev" aria-label="Previous step">‹</button><span class="gdots"></span><button class="gnext" aria-label="Next step">›</button></div><noscript><img class="gvis" style="border-radius:12px;border-bottom:1px solid var(--line)" src="assets/guides/brief.gif" alt="Animated walkthrough" /></noscript></div>
       <div class="steps">
         <div class="step"><div><b>It's on automatically</b> <span>— arrives at 8:30 by default.</span></div></div>
         <div class="step"><div><b>Change the time:</b> <span>Settings → Morning Brief.</span></div></div>
@@ -221,7 +230,7 @@
     <div class="guide" id="links">
       <h2><span class="em">🔗</span> Share a note as a link <span class="gsoon">ARRIVING IN v1.2</span></h2>
       <p class="why">Send a note to anyone — they read it in the browser, no app needed.</p>
-      <img class="gvis" src="assets/guides/links.gif" alt="Animated walkthrough" loading="lazy" />
+      <div class="gplayer" data-g="links"><img class="gvis" src="assets/guides/frames/links-0.png" alt="Step-by-step walkthrough" loading="lazy" /><div class="gctl"><button class="gprev" aria-label="Previous step">‹</button><span class="gdots"></span><button class="gnext" aria-label="Next step">›</button></div><noscript><img class="gvis" style="border-radius:12px;border-bottom:1px solid var(--line)" src="assets/guides/links.gif" alt="Animated walkthrough" /></noscript></div>
       <div class="steps">
         <div class="step"><div><b>Share a note</b> <span>— the share text now carries a getactionnote.com link.</span></div></div>
         <div class="step"><div><b>They open it anywhere.</b> <span>Clean web page: title, summary, tasks.</span></div></div>
@@ -244,5 +253,33 @@
     </div>
   </footer>
 </div>
+<script>
+(function(){
+  var players = document.querySelectorAll('.gplayer');
+  players.forEach(function(p){
+    var gid = p.getAttribute('data-g');
+    var img = p.querySelector('.gvis');
+    var dots = p.querySelector('.gdots');
+    var N = 3, idx = 0, manual = false;
+    // preload
+    for (var i = 1; i < N; i++) { new Image().src = 'assets/guides/frames/' + gid + '-' + i + '.png'; }
+    for (var i = 0; i < N; i++) {
+      var d = document.createElement('i');
+      if (i === 0) d.className = 'on';
+      (function(k){ d.addEventListener('click', function(){ manual = true; show(k); }); })(i);
+      dots.appendChild(d);
+    }
+    function show(k){
+      idx = (k + N) % N;
+      img.src = 'assets/guides/frames/' + gid + '-' + idx + '.png';
+      dots.querySelectorAll('i').forEach(function(el, j){ el.className = j === idx ? 'on' : ''; });
+    }
+    p.querySelector('.gprev').addEventListener('click', function(){ manual = true; show(idx - 1); });
+    p.querySelector('.gnext').addEventListener('click', function(){ manual = true; show(idx + 1); });
+    // automatic until the user takes over
+    setInterval(function(){ if (!manual) show(idx + 1); }, 3000);
+  });
+})();
+</script>
 </body>
 </html>
