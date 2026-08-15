@@ -313,6 +313,30 @@
   footer a:hover{color:var(--ink);}
   .fl{display:flex;gap:22px;flex-wrap:wrap;}
 
+  /* message sheet */
+  .msg-back{position:fixed;inset:0;background:rgba(34,36,44,.45);z-index:60;display:none;
+    align-items:center;justify-content:center;padding:20px;}
+  .msg-back.show{display:flex;}
+  .msg-sheet{background:var(--sheet);border:1px solid var(--rule);border-radius:14px;width:100%;
+    max-width:480px;padding:34px 36px;box-shadow:0 40px 100px rgba(34,36,44,.35);position:relative;}
+  .msg-sheet h3{font-family:var(--serif);font-size:26px;letter-spacing:-.4px;}
+  .msg-sheet .sub{color:var(--ink-2);font-size:14.5px;margin-top:6px;}
+  .msg-sheet textarea{width:100%;margin-top:18px;border:1.5px solid var(--rule);border-radius:10px;
+    padding:14px 16px;font:inherit;font-size:15px;min-height:130px;resize:vertical;background:var(--paper);color:var(--ink);}
+  .msg-sheet input[type=text]{width:100%;margin-top:12px;border:1.5px solid var(--rule);border-radius:10px;
+    padding:12px 16px;font:inherit;font-size:14.5px;background:var(--paper);color:var(--ink);}
+  .msg-sheet textarea:focus,.msg-sheet input:focus{outline:none;border-color:rgba(138,47,40,.5);}
+  .msg-send{margin-top:18px;width:100%;background:var(--ink);color:var(--paper);border:none;border-radius:8px;
+    padding:15px;font:inherit;font-size:15.5px;font-weight:600;cursor:pointer;}
+  .msg-send:disabled{opacity:.6;cursor:default;}
+  .msg-alt{display:block;text-align:center;color:var(--ink-3);font-size:13px;margin-top:12px;}
+  .msg-alt a{color:var(--ox);font-weight:600;}
+  .msg-x{position:absolute;top:14px;right:18px;background:none;border:none;font-size:22px;color:var(--ink-3);cursor:pointer;}
+  .msg-done{text-align:center;padding:30px 0 14px;display:none;}
+  .msg-done .big{font-size:44px;color:var(--green);}
+  .msg-done p{font-family:var(--serif);font-size:19px;margin-top:12px;}
+  .msg-hp{position:absolute;left:-9999px;opacity:0;}
+
   /* mail fallback toast */
   #mail-toast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(80px);
     background:var(--ink);color:var(--paper);font-size:14px;font-weight:600;
@@ -576,7 +600,7 @@
           </div>
           <p class="fine">Arriving on a new <b>Pro+ tier at $9.99/month</b>. Everything else on this page is in the app today.</p>
           <div class="cta">
-            <a class="btn ghost sm" href="mailto:khaled@khaledelshimy.com?subject=Meeting%20Mode%20early%20access&amp;body=I%20record%20%28meetings%20%2F%20lectures%29%3A%0A%0AWhat%20I%20need%20from%20Meeting%20Mode%3A%0A">Tell me how you'd use it</a>
+            <a class="btn ghost sm msg-open" data-topic="meeting-mode" href="#">Tell me how you'd use it</a>
             <span style="color:var(--ink-3);font-size:14px">No waitlist, no email capture — just a reply.</span>
           </div>
         </div>
@@ -664,7 +688,7 @@
         <span class="chip">🚧 In build: Apple Watch</span>
         <span class="chip">🚧 Coming: Mac app</span>
       </div>
-      <a class="btn" style="margin-top:32px" href="mailto:khaled@khaledelshimy.com?subject=ActionNote%20feature%20idea&amp;body=The%20feature%20I%20wish%20ActionNote%20had%3A%0A%0AWhy%20I%20need%20it%3A%0A">💡 Suggest a feature</a>
+      <a class="btn msg-open" data-topic="feature" style="margin-top:32px" href="#">💡 Suggest a feature</a>
     </div>
   </section>
 
@@ -694,6 +718,24 @@
   </footer>
 </div>
 
+<div class="msg-back" id="msg-back">
+  <div class="msg-sheet">
+    <button class="msg-x" id="msg-x" aria-label="Close">✕</button>
+    <div id="msg-form">
+      <h3 id="msg-title">Tell me</h3>
+      <div class="sub">Goes straight to me, Khaled. I read every message.</div>
+      <textarea id="msg-text" maxlength="2000" placeholder="Write in any language…"></textarea>
+      <input type="text" id="msg-contact" maxlength="200" placeholder="Email or @handle if you want a reply (optional)">
+      <input type="text" id="msg-hp" class="msg-hp" tabindex="-1" autocomplete="off">
+      <button class="msg-send" id="msg-send">Send</button>
+      <span class="msg-alt">or email <a href="mailto:khaled@khaledelshimy.com">khaled@khaledelshimy.com</a></span>
+    </div>
+    <div class="msg-done" id="msg-done">
+      <div class="big">✓</div>
+      <p>Sent. Thank you — I read every message.</p>
+    </div>
+  </div>
+</div>
 <div id="mail-toast"></div>
 <script>
 (function(){
@@ -862,6 +904,52 @@
       } else { show("✉️ " + addr); }
     });
   }
+  // Direct message sheet -> Supabase (insert-only; nobody can read others' messages)
+  var MSG_URL = "https://vsqlyitcuawszzxyeueg.supabase.co/rest/v1/site_feedback";
+  var MSG_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZzcWx5aXRjdWF3c3p6eHlldWVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIwNDg0NzMsImV4cCI6MjA5NzYyNDQ3M30.5G25SVXASOGZW-T5PJkQ_CQ8w2ziYRdqDcnegUu4fVg";
+  var msgTopic = 'other';
+  var back = document.getElementById('msg-back');
+  document.querySelectorAll('.msg-open').forEach(function(b){
+    b.addEventListener('click', function(e){
+      e.preventDefault();
+      msgTopic = b.getAttribute('data-topic') || 'other';
+      document.getElementById('msg-title').textContent =
+        msgTopic === 'meeting-mode' ? 'How would you use Meeting Mode?' : 'What should ActionNote do next?';
+      document.getElementById('msg-form').style.display = 'block';
+      document.getElementById('msg-done').style.display = 'none';
+      back.classList.add('show');
+      document.getElementById('msg-text').focus();
+    });
+  });
+  document.getElementById('msg-x').addEventListener('click', function(){ back.classList.remove('show'); });
+  back.addEventListener('click', function(e){ if (e.target === back) back.classList.remove('show'); });
+  document.getElementById('msg-send').addEventListener('click', function(){
+    var text = document.getElementById('msg-text').value.trim();
+    if (text.length < 3) { document.getElementById('msg-text').focus(); return; }
+    if (document.getElementById('msg-hp').value) return; // honeypot
+    var btn = this;
+    btn.disabled = true; btn.textContent = 'Sending…';
+    fetch(MSG_URL, {
+      method: 'POST',
+      headers: { 'apikey': MSG_KEY, 'Authorization': 'Bearer ' + MSG_KEY,
+                 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+      body: JSON.stringify({ topic: msgTopic, message: text,
+                             contact: document.getElementById('msg-contact').value.trim() || null })
+    }).then(function(r){
+      btn.disabled = false; btn.textContent = 'Send';
+      if (r.ok) {
+        document.getElementById('msg-form').style.display = 'none';
+        document.getElementById('msg-done').style.display = 'block';
+        document.getElementById('msg-text').value = '';
+        if (window.umami) umami.track('feedback-sent', { topic: msgTopic });
+      } else {
+        alert('Could not send right now. You can email khaled@khaledelshimy.com instead.');
+      }
+    }).catch(function(){
+      btn.disabled = false; btn.textContent = 'Send';
+      alert('Could not send right now. You can email khaled@khaledelshimy.com instead.');
+    });
+  });
 })();
 </script>
 </body>
