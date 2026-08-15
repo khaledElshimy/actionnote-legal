@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ActionNote guides — learn every feature in a minute each</title>
+<meta name="description" content="Short, simple tutorials for every ActionNote feature: recording, Siri, widgets, WhatsApp import, Ask Your Notes, tasks and reminders, two-language notes, and more." />
+<meta property="og:title" content="ActionNote guides — learn every feature in a minute each" />
+<meta property="og:description" content="Short, simple tutorials for every ActionNote feature." />
+<meta property="og:image" content="https://getactionnote.com/assets/og.jpg" />
+<meta property="og:url" content="https://getactionnote.com/guides.html" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="assets/favicon-16.png" sizes="16x16" type="image/png" />
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+<link rel="manifest" href="site.webmanifest" />
+<meta name="theme-color" content="#F6F5F0" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#14161E" media="(prefers-color-scheme: dark)" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,600;0,8..60,700;1,8..60,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="persona.css">
+<script defer src="https://cloud.umami.is/script.js" data-website-id="d4933bf3-fbb3-4342-a2df-f88abf4e54f3"></script>
+<style>
+  .ghero{padding:56px 0 8px;}
+  .ghero h1{font-family:var(--sora);font-size:52px;letter-spacing:-1px;font-weight:700;line-height:1.1;}
+  .ghero h1 em{font-style:italic;color:var(--brand);}
+  .ghero p{color:var(--muted);font-size:17px;margin-top:14px;max-width:600px;}
+  .toc{display:flex;gap:10px;flex-wrap:wrap;margin:28px 0 8px;}
+  .toc a{background:var(--ink-2);border:1px solid var(--line);border-radius:999px;padding:8px 16px;
+    font-size:13.5px;font-weight:600;color:var(--muted);}
+  .toc a:hover{color:var(--text);border-color:rgba(138,47,40,.4);}
+  .guide{background:var(--ink-2);border:1px solid var(--line);border-radius:14px;padding:34px 38px;margin-top:26px;scroll-margin-top:24px;}
+  .guide h2{font-family:var(--sora);font-size:26px;text-align:left;letter-spacing:-.4px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;}
+  .guide h2 .em{font-size:26px;}
+  .gsoon{font-family:var(--inter);font-size:10.5px;font-weight:700;letter-spacing:1.5px;color:var(--brand);
+    border:1.5px solid rgba(138,47,40,.5);border-radius:3px;padding:4px 10px;transform:rotate(-1.2deg);white-space:nowrap;}
+  .guide .why{color:var(--muted);font-size:15.5px;margin-top:10px;}
+  .steps{margin-top:20px;counter-reset:st;}
+  .step{display:flex;gap:16px;padding:12px 0;border-bottom:1px dashed var(--line);font-size:15.5px;align-items:baseline;}
+  .step:last-child{border-bottom:none;}
+  .step::before{counter-increment:st;content:counter(st);font-family:var(--sora);font-weight:700;color:var(--brand);
+    font-size:19px;min-width:26px;}
+  .step b{font-weight:600;}
+  .step span{color:var(--muted);}
+  .tip{margin-top:18px;background:rgba(62,122,80,.07);border:1px solid rgba(62,122,80,.25);border-radius:10px;
+    padding:14px 18px;font-size:14.5px;color:var(--muted);}
+  .tip b{color:#3E7A50;font-weight:700;}
+  @media (max-width:700px){.ghero h1{font-size:36px;}.guide{padding:26px 20px;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a class="logo" href="index.html"><img src="assets/icon.png" alt="ActionNote" /> ActionNote</a>
+    <div class="nav-links">
+      <a href="index.html#how">How it works</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="index.html#roadmap">Roadmap</a>
+      <a class="nav-cta" href="https://apps.apple.com/us/app/actionnote-voice-to-tasks/id6789915282">Download</a>
+    </div>
+  </nav>
+
+  <header class="ghero">
+    <div class="kicker">📖 GUIDES</div>
+    <h1>Every feature, <em>one minute each.</em></h1>
+    <p>Short, honest tutorials. No videos to sit through — each one is a few numbered steps and a tip you'll actually use.</p>
+    <div class="toc">
+      <a href="#record">Record</a>
+      <a href="#siri">Siri</a>
+      <a href="#widget">Widget &amp; Action Button</a>
+      <a href="#whatsapp">WhatsApp import</a>
+      <a href="#ask">Ask Your Notes</a>
+      <a href="#tasks">Tasks &amp; reminders</a>
+      <a href="#languages">Two languages</a>
+      <a href="#share">Share &amp; export</a>
+      <a href="#account">Account &amp; backup</a>
+      <a href="#watch">Apple Watch</a>
+      <a href="#brief">Morning Brief</a>
+      <a href="#links">Share links</a>
+    </div>
+  </header>
+
+  <section style="padding:20px 0 80px;">
+
+    <div class="guide" id="record">
+      <h2><span class="em">🎙️</span> Record your first note</h2>
+      <p class="why">The core loop: talk messy, get a clean note with a title, summary, key points, and real tasks.</p>
+      <div class="steps">
+        <div class="step"><div><b>Tap the mic button</b> <span>— the big one at the bottom, or the "Capture an idea" card on Home.</span></div></div>
+        <div class="step"><div><b>Say it how it comes out.</b> <span>Rambling is the point: "call mom tomorrow… we're out of coffee… Sara's birthday is Friday, cake before Thursday."</span></div></div>
+        <div class="step"><div><b>Tap stop, then Save.</b> <span>A few seconds later the note opens itself: summary, key points, and tasks with the dates you said out loud.</span></div></div>
+      </div>
+      <div class="tip"><b>Tip:</b> lock the screen or switch apps mid-thought — the recording keeps going, and you'll get a notification when the note is ready.</div>
+    </div>
+
+    <div class="guide" id="siri">
+      <h2><span class="em">🗣️</span> Hands-free with Siri</h2>
+      <p class="why">Capture without touching the phone — even from your pocket, even locked.</p>
+      <div class="steps">
+        <div class="step"><div><b>Say "Hey Siri, record with ActionNote."</b> <span>The app opens straight into a running recording.</span></div></div>
+        <div class="step"><div><b>Talk.</b> <span>As long as you like.</span></div></div>
+        <div class="step"><div><b>Say "Hey Siri, stop recording in ActionNote."</b> <span>It saves and organizes — this works from the lock screen too.</span></div></div>
+      </div>
+      <div class="tip"><b>Tip:</b> driving? Mount the phone, keep it unlocked with navigation on, and the two phrases make the whole capture hands-free.</div>
+    </div>
+
+    <div class="guide" id="widget">
+      <h2><span class="em">⚡</span> Quick Record widget &amp; Action Button</h2>
+      <p class="why">One tap from the lock screen or home screen to a running recording.</p>
+      <div class="steps">
+        <div class="step"><div><b>Lock screen:</b> <span>long-press the lock screen → Customize → add the ActionNote circular widget below the clock.</span></div></div>
+        <div class="step"><div><b>Home screen:</b> <span>long-press any empty spot → Edit → Add Widget → ActionNote.</span></div></div>
+        <div class="step"><div><b>Action Button (iPhone 15 Pro and later):</b> <span>Settings → Action Button → Shortcut → "Record with ActionNote".</span></div></div>
+      </div>
+      <div class="tip"><b>Tip:</b> every one of these skips the splash screen — you're recording in under a second.</div>
+    </div>
+
+    <div class="guide" id="whatsapp">
+      <h2><span class="em">📲</span> Import WhatsApp voice notes</h2>
+      <p class="why">The 7-minute voice note from your friend, readable in 20 seconds.</p>
+      <div class="steps">
+        <div class="step"><div><b>Long-press the voice note</b> <span>in WhatsApp (or any audio file, anywhere) and choose Forward → Share.</span></div></div>
+        <div class="step"><div><b>Pick ActionNote</b> <span>in the share sheet.</span></div></div>
+        <div class="step"><div><b>Open ActionNote.</b> <span>The note is processed like your own recording — summary, points, tasks.</span></div></div>
+      </div>
+      <div class="tip"><b>Tip:</b> works with voice memos, meeting recordings, and audio files from anywhere the share sheet exists.</div>
+    </div>
+
+    <div class="guide" id="ask">
+      <h2><span class="em">💬</span> Ask Your Notes</h2>
+      <p class="why">Everything you've ever captured becomes something you can question.</p>
+      <div class="steps">
+        <div class="step"><div><b>Open Ask</b> <span>from Home.</span></div></div>
+        <div class="step"><div><b>Ask like you'd ask a person:</b> <span>"What did I promise Sara?" · "When is the dentist?" · "What was my idea about the trip?"</span></div></div>
+        <div class="step"><div><b>Check the source.</b> <span>Every answer cites the note it came from — tap it to read the original.</span></div></div>
+      </div>
+      <div class="tip"><b>Tip:</b> you can also ask by voice — "Hey Siri, ask ActionNote what I promised Sara" — and hear the answer read back.</div>
+    </div>
+
+    <div class="guide" id="tasks">
+      <h2><span class="em">✅</span> Tasks &amp; reminders</h2>
+      <p class="why">Dates you say out loud become reminders that actually ring.</p>
+      <div class="steps">
+        <div class="step"><div><b>Say the deadline while recording:</b> <span>"send the report before Thursday" — the task arrives with Thursday attached.</span></div></div>
+        <div class="step"><div><b>Tap the bell</b> <span>on any task to add or change its reminder.</span></div></div>
+        <div class="step"><div><b>Promote key points:</b> <span>tap the + next to any key point to turn it into a task, or "Convert all to to-do list".</span></div></div>
+      </div>
+      <div class="tip"><b>Tip:</b> the Tasks tab collects every open task across all notes — one list, all your notes.</div>
+    </div>
+
+    <div class="guide" id="languages">
+      <h2><span class="em">🌍</span> Two languages, one note</h2>
+      <p class="why">Speak how you actually speak — Arabic and English in the same sentence is the reason this app exists.</p>
+      <div class="steps">
+        <div class="step"><div><b>Just record.</b> <span>Mix languages mid-sentence; the note comes back clean in the language you spoke.</span></div></div>
+        <div class="step"><div><b>Want everything in your language?</b> <span>Settings → turn on <b>Organize in my language</b>.</span></div></div>
+        <div class="step"><div><b>Flip the note:</b> <span>on cross-language notes, tap the ⇄ chip next to "Ready" to switch between your language and the spoken one.</span></div></div>
+      </div>
+      <div class="tip"><b>Tip:</b> the transcript always keeps exactly what you said, in the languages you said it.</div>
+    </div>
+
+    <div class="guide" id="share">
+      <h2><span class="em">📤</span> Share &amp; export</h2>
+      <p class="why">Clean formatted text that pastes nicely anywhere — free for everyone.</p>
+      <div class="steps">
+        <div class="step"><div><b>Open a note → share icon.</b> <span>You get formatted text with the title, summary, and tasks.</span></div></div>
+        <div class="step"><div><b>Paste anywhere:</b> <span>Notion, Todoist, email, WhatsApp — it lands clean.</span></div></div>
+        <div class="step"><div><b>Sharing to another ActionNote user?</b> <span>The share carries the note itself — they tap once to import it.</span></div></div>
+      </div>
+      <div class="tip"><b>Tip:</b> exporting is free forever — your notes are yours, subscribed or not.</div>
+    </div>
+
+    <div class="guide" id="account">
+      <h2><span class="em">☁️</span> Account &amp; backup</h2>
+      <p class="why">Notes live on your iPhone and your own iCloud — there is no ActionNote database.</p>
+      <div class="steps">
+        <div class="step"><div><b>Try first, sign in later.</b> <span>Your first notes work with no account at all.</span></div></div>
+        <div class="step"><div><b>When you sign in,</b> <span>the notes you made as a guest come with you automatically.</span></div></div>
+        <div class="step"><div><b>iCloud backup is on by default:</b> <span>reinstall the app, sign in, and everything returns.</span></div></div>
+      </div>
+      <div class="tip"><b>Tip:</b> cancel any subscription anytime — your notes stay on your device and iCloud. You just go back to the free monthly limits.</div>
+    </div>
+
+    <div class="guide" id="watch">
+      <h2><span class="em">⌚</span> Apple Watch <span class="gsoon">ARRIVING IN v1.2</span></h2>
+      <p class="why">Record on your wrist — even offline on a run. The phone does the thinking.</p>
+      <div class="steps">
+        <div class="step"><div><b>Open ActionNote on the watch.</b> <span>It starts recording immediately — that's the whole UI.</span></div></div>
+        <div class="step"><div><b>Tap stop.</b> <span>"Saved — will sync when your iPhone is nearby."</span></div></div>
+        <div class="step"><div><b>That's it.</b> <span>The note appears on your phone, processed like any other — even if the phone was at home the whole time.</span></div></div>
+      </div>
+      <div class="tip"><b>Tip:</b> no pairing, no setup, no account on the watch. If it's paired to your iPhone, it just works.</div>
+    </div>
+
+    <div class="guide" id="brief">
+      <h2><span class="em">☀️</span> Morning Brief <span class="gsoon">ARRIVING IN v1.2</span></h2>
+      <p class="why">Your tasks, deadlines, and meetings in one notification, every morning. Free forever.</p>
+      <div class="steps">
+        <div class="step"><div><b>It's on automatically</b> <span>— arrives at 8:30 by default.</span></div></div>
+        <div class="step"><div><b>Change the time:</b> <span>Settings → Morning Brief.</span></div></div>
+        <div class="step"><div><b>Add your calendar (optional):</b> <span>toggle calendar context and the Brief includes today's meetings — read on-device, never uploaded.</span></div></div>
+      </div>
+      <div class="tip"><b>Tip:</b> quiet days stay quiet — no tasks and no meetings means a gentler brief, not guilt.</div>
+    </div>
+
+    <div class="guide" id="links">
+      <h2><span class="em">🔗</span> Share a note as a link <span class="gsoon">ARRIVING IN v1.2</span></h2>
+      <p class="why">Send a note to anyone — they read it in the browser, no app needed.</p>
+      <div class="steps">
+        <div class="step"><div><b>Share a note</b> <span>— the share text now carries a getactionnote.com link.</span></div></div>
+        <div class="step"><div><b>They open it anywhere.</b> <span>Clean web page: title, summary, tasks.</span></div></div>
+        <div class="step"><div><b>Privacy stays intact:</b> <span>the note travels inside the link itself — its content never touches a server, including ours.</span></div></div>
+      </div>
+      <div class="tip"><b>Tip:</b> if they have ActionNote installed, the same link imports the note straight into their app.</div>
+    </div>
+
+  </section>
+
+  <footer>
+    <div>© 2026 ActionNote</div>
+    <div class="fl">
+      <a href="index.html">Home</a>
+      <a href="lectures.html">For lectures</a>
+      <a href="meetings.html">For meetings</a>
+      <a href="support.html">Support</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="mailto:khaled@khaledelshimy.com">Contact</a>
+    </div>
+  </footer>
+</div>
+</body>
+</html>
