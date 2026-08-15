@@ -54,12 +54,31 @@
   <p class="sub">Voice notes that organize themselves into tasks. If you already have ActionNote, this note imported automatically.</p>
 </div>
 <script>
-(function(){
-  // The note lives in the fragment — it never reaches any server, including ours.
+(async function(){
+  // The note lives in the fragment — it never reaches any server, including
+  // ours. "z"-prefixed fragments are raw-DEFLATE compressed (short enough for
+  // chat apps to linkify); plain fragments are legacy JSON.
   try {
-    var b64 = location.hash.slice(1).replace(/-/g,'+').replace(/_/g,'/');
+    var frag = location.hash.slice(1);
+    var compressed = frag.charAt(0) === 'z';
+    if (compressed) frag = frag.slice(1);
+    var b64 = frag.replace(/-/g,'+').replace(/_/g,'/');
     while (b64.length % 4) b64 += '=';
-    var payload = JSON.parse(decodeURIComponent(escape(atob(b64))));
+    var raw = atob(b64);
+    var json;
+    if (compressed) {
+      if (typeof DecompressionStream === 'undefined') {
+        throw new Error('no-ds');
+      }
+      var bytes = new Uint8Array(raw.length);
+      for (var i = 0; i < raw.length; i++) bytes[i] = raw.charCodeAt(i);
+      var ds = new DecompressionStream('deflate-raw');
+      var stream = new Blob([bytes]).stream().pipeThrough(ds);
+      json = await new Response(stream).text();
+    } else {
+      json = decodeURIComponent(escape(raw));
+    }
+    var payload = JSON.parse(json);
     document.getElementById('title').textContent = payload.title || 'Untitled note';
     if (payload.summary) { document.getElementById('summary').textContent = payload.summary;
       document.getElementById('s-summary').hidden = false; }
