@@ -200,13 +200,14 @@
       <div class="gbody">
         <div>
           <div class="steps">
-        <div class="step"><div><b>Just record.</b> <span>Mix languages mid-sentence; the note comes back clean in the language you spoke.</span></div></div>
-        <div class="step"><div><b>Want everything in your language?</b> <span>Settings → turn on <b>Organize in my language</b>.</span></div></div>
-        <div class="step"><div><b>Flip the note:</b> <span>on cross-language notes, tap the ⇄ chip next to "Ready" to switch between your language and the spoken one.</span></div></div>
+        <div class="step"><div><b>First, turn the switch on:</b> <span>Settings → <b>Organize in my language</b>. This is what makes the ⇄ flip possible.</span></div></div>
+        <div class="step"><div><b>Just record.</b> <span>Mix languages mid-sentence — speak how it actually comes out.</span></div></div>
+        <div class="step"><div><b>The note arrives in your language,</b> <span>with a ⇄ chip next to "Ready".</span></div></div>
+        <div class="step"><div><b>Tap ⇄ to flip</b> <span>to the spoken version — and back, anytime.</span></div></div>
       </div>
           <div class="tip"><b>Tip:</b> the transcript always keeps exactly what you said, in the languages you said it.</div>
         </div>
-        <div class="gplayer" data-g="languages"><img class="gvis" src="assets/guides/frames/languages-0.png" alt="Step-by-step walkthrough" loading="lazy" /><div class="gctl"><button class="gprev" aria-label="Previous step">‹</button><span class="gdots"></span><button class="gnext" aria-label="Next step">›</button></div><noscript><img class="gvis" style="border-radius:12px;border-bottom:1px solid var(--line)" src="assets/guides/languages.gif" alt="Animated walkthrough" /></noscript></div>
+        <div class="gplayer" data-g="languages" data-n="4"><img class="gvis" src="assets/guides/frames/languages-0.png" alt="Step-by-step walkthrough" loading="lazy" /><div class="gctl"><button class="gprev" aria-label="Previous step">‹</button><span class="gdots"></span><button class="gnext" aria-label="Next step">›</button></div><noscript><img class="gvis" style="border-radius:12px;border-bottom:1px solid var(--line)" src="assets/guides/languages.gif" alt="Animated walkthrough" /></noscript></div>
       </div></div>
     </details>
 
@@ -316,7 +317,7 @@
     var gid = p.getAttribute('data-g');
     var img = p.querySelector('.gvis');
     var dots = p.querySelector('.gdots');
-    var N = 3, idx = 0, manual = false;
+    var N = parseInt(p.getAttribute('data-n') || '3', 10), idx = 0, manual = false;
     var guide = p.closest('.guide');
     var stepEls = guide ? guide.querySelectorAll('.step') : [];
     // preload
