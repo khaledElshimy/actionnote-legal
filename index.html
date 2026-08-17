@@ -617,19 +617,29 @@
 
   <section id="roadmap">
     <h2>Built in public</h2>
-    <p class="lead">One developer, shipping almost every week. Here's what's live, what's in build right now, and what's next — vote for what you want sooner.</p>
+    <p class="lead">One developer, shipping almost every week. Version 1.2 just landed. Here's what shipped, what I'm building now, and what is next. Vote for what you want sooner.</p>
     <div class="track">
       <div class="track-line"><div class="track-fill" id="track-fill"></div></div>
       <div class="track-stops">
         <div class="stop done"><div class="dot"></div><b>v1.0</b><span>Launch: voice → note,<br>any language</span></div>
         <div class="stop done"><div class="dot"></div><b>v1.1</b><span>Siri, widget,<br>bilingual flip</span></div>
-        <div class="stop cur"><div class="dot"></div><b>v1.2</b><span>New look, Watch,<br>Morning Brief</span></div>
-        <div class="stop"><div class="dot"></div><b>v2.0</b><span>Meeting Mode</span></div>
+        <div class="stop done"><div class="dot"></div><b>v1.2</b><span>New look, Watch,<br>Morning Brief</span></div>
+        <div class="stop cur"><div class="dot"></div><b>v2.0</b><span>Meeting Mode</span></div>
       </div>
     </div>
     <div class="road">
       <div class="lane done">
-        <h3><span class="lt">SHIPPED</span> In the app today</h3>
+        <h3><span class="lt">JUST SHIPPED</span> New in v1.2</h3>
+        <ul>
+          <li><b>A whole new look</b> The app, redesigned as a beautiful paper ledger.</li>
+          <li><b>Apple Watch recording</b> Capture on your wrist, even offline on a run.</li>
+          <li><b>Morning Brief</b> Your tasks, deadlines and meetings, every morning. Free.</li>
+          <li><b>Ask for everyone</b> Free questions every month, no subscription needed.</li>
+          <li><b>Share notes as links</b> Send a note to anyone, no app needed to read it.</li>
+        </ul>
+      </div>
+      <div class="lane done">
+        <h3><span class="lt">SHIPPED</span> Already in the app</h3>
         <ul>
           <li><b>Hands-free Siri capture</b> Start and stop a recording by voice, even locked.</li>
           <li><b>Any language, even two at once</b> With a bilingual flip between them.</li>
@@ -639,17 +649,7 @@
         </ul>
       </div>
       <div class="lane now">
-        <h3><span class="lt">IN BUILD</span> Next up in v1.2</h3>
-        <ul>
-          <li><b>A whole new look</b> The app, redesigned as a beautiful paper ledger.</li>
-          <li><b>Apple Watch recording</b> Capture on your wrist, even offline on a run.</li>
-          <li><b>Morning Brief</b> Your tasks, deadlines and meetings, every morning.</li>
-          <li><b>Ask for everyone</b> 5 free questions a month, no subscription needed.</li>
-          <li><b>Share notes as links</b> Send a note to anyone — no app needed to read it.</li>
-        </ul>
-      </div>
-      <div class="lane next">
-        <h3><span class="lt">NEXT</span> On the bench</h3>
+        <h3><span class="lt">IN BUILD</span> Next up</h3>
         <ul>
           <li><b>Meeting Mode (2.0)</b> Whole meetings and lectures, notes building live. <a class="vote" href="mailto:khaled@khaledelshimy.com?subject=Vote%3A%20Meeting%20Mode">+ vote</a></li>
           <li><b>Notion export</b> Your notes, straight into your workspace. <a class="vote" href="mailto:khaled@khaledelshimy.com?subject=Vote%3A%20Notion%20export">+ vote</a></li>
@@ -685,7 +685,7 @@
       <h2>Missing something? Tell me.</h2>
       <p>ActionNote is built by one person, in public, and the roadmap is genuinely shaped by users — translate mode, audio markers, and Notion export all started as user suggestions. If the app doesn't do the thing you need, I want to know.</p>
       <div class="chips">
-        <span class="chip">🚧 In build: Apple Watch</span>
+        <span class="chip">✓ New: Apple Watch</span>
         <span class="chip">🚧 Coming: Mac app</span>
       </div>
       <a class="btn msg-open" data-topic="feature" style="margin-top:32px" href="#">💡 Suggest a feature</a>
@@ -881,9 +881,9 @@
   var fill = document.getElementById("track-fill");
   if (fill && "IntersectionObserver" in window) {
     new IntersectionObserver(function(entries, obs){
-      if (entries[0].isIntersecting) { fill.style.width = "62%"; obs.disconnect(); }
+      if (entries[0].isIntersecting) { fill.style.width = "88%"; obs.disconnect(); }
     }, {threshold:.4}).observe(fill.parentElement);
-  } else if (fill) { fill.style.width = "62%"; }
+  } else if (fill) { fill.style.width = "88%"; }
 
   var toast = document.getElementById("mail-toast");
   var timer;
