@@ -1,18 +1,38 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
-  <style>@media (prefers-color-scheme: dark){
-  rect[fill="#F6F5F0"]{fill:#14161E}
-  [fill="#22242C"]{fill:#EDEBE3}
-  [stroke="#22242C"]{stroke:#EDEBE3}
-  [stroke="#3E7A50"]{stroke:#5E9B72}
-  circle[fill="#8A2F28"]{fill:#C76156}
-}</style>
-  <rect width="1024" height="1024" fill="#F6F5F0"/>
-  <g transform="translate(-70.48,-36.48) scale(1.04)">
-    <circle cx="212" cy="324" r="30" fill="#8A2F28"/>
-    <rect x="238" y="334" width="118" height="240" rx="59" fill="#22242C"/>
-    <path d="M 174 518 A 124 124 0 0 0 422 518" fill="none" stroke="#22242C" stroke-width="34" stroke-linecap="butt"/>
-    <rect x="279" y="642" width="36" height="88" fill="#22242C"/>
-    <rect x="205" y="730" width="184" height="34" rx="10" fill="#22242C"/>
-    <polyline points="520,542 634,656 902,338" fill="none" stroke="#3E7A50" stroke-width="96" stroke-linecap="butt" stroke-linejoin="miter"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="14" fill="#05080C"/>
+  <svg x="6" y="3" width="52" height="58" viewBox="0 0 160 180">
+  
+  <defs>
+    <linearGradient id="brand" gradientUnits="userSpaceOnUse" x1="50" y1="146" x2="100" y2="100">
+      <stop offset="0" stop-color="#8B5CF6"></stop>
+      <stop offset=".5" stop-color="#EC4899"></stop>
+      <stop offset="1" stop-color="#F59E0B"></stop>
+    </linearGradient>
+  </defs>
+  <g id="shadow"><ellipse cx="80" cy="172" rx="44" ry="6" fill="#000" opacity=".45"></ellipse></g>
+  <g id="feet">
+    <ellipse cx="60" cy="162" rx="13" ry="7" fill="#D9D6CC"></ellipse>
+    <ellipse cx="100" cy="162" rx="13" ry="7" fill="#D9D6CC"></ellipse>
   </g>
+  <g id="body">
+    <path d="M30 44 Q30 28 46 28 H108 L130 50 V140 Q130 156 114 156 H46 Q30 156 30 140 Z" fill="#F6F5F0"></path>
+    <path id="fold" d="M108 28 V44 Q108 50 114 50 H130 Z" fill="#D9D6CC"></path>
+  </g>
+  <g id="eyes">
+    <ellipse id="eyeLeft" cx="62" cy="66" rx="7" ry="8.5" fill="#0F172A"></ellipse>
+    <ellipse id="eyeRight" cx="98" cy="66" rx="7" ry="8.5" fill="#0F172A"></ellipse>
+    <circle cx="64.3" cy="62.5" r="2.2" fill="#FFFFFF"></circle>
+    <circle cx="100.3" cy="62.5" r="2.2" fill="#FFFFFF"></circle>
+  </g>
+  <g id="cheeks">
+    <ellipse cx="49" cy="81" rx="7" ry="4" fill="#EC4899" opacity=".35"></ellipse>
+    <ellipse cx="111" cy="81" rx="7" ry="4" fill="#EC4899" opacity=".35"></ellipse>
+  </g>
+  <g id="mouth"><path d="M73 81 Q80 87 87 81" fill="none" stroke="#0F172A" stroke-width="3.5" stroke-linecap="round"></path></g>
+  <g id="mark">
+    <path id="line1" d="M50 102 H100" fill="none" stroke="url(#brand)" stroke-width="7" stroke-linecap="round"></path>
+    <path id="line2" d="M50 116 H80" fill="none" stroke="url(#brand)" stroke-width="7" stroke-linecap="round"></path>
+    <path id="tick" d="M52 133 L64 144 L96 117" fill="none" stroke="url(#brand)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"></path>
+  </g>
+</svg>
 </svg>
