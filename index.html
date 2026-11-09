@@ -423,7 +423,7 @@ en: {
     { q: 'What happens if I lock the phone while recording?', a: 'It keeps recording, and the lock screen shows it with Pause and End.' },
     { q: 'Who is Noto?', a: 'A small paper note who keeps your day with you. Your open actions are stickies on his board; what you finish becomes stars in his jar. You can turn him off in Settings.' }
   ],
-  links: { meetings: 'For meetings', lectures: 'For lectures', support: 'Support', privacy: 'Privacy', terms: 'Terms', guides: 'Guides' },
+  links: { support: 'Support', privacy: 'Privacy', terms: 'Terms', guides: 'Guides', contact: 'Contact' },
   msg: { title: 'Tell me', sub: 'Goes straight to me, Khaled. I read every message.', ph: 'Write in any language', contact: 'Email or @handle if you want a reply (optional)', send: 'Send', sending: 'Sending', or: 'or email', thanks: 'Sent. Thank you, I read every message.', fail: 'Could not send right now. You can email khaled@khaledelshimy.com instead.' },
   copied: 'Email copied: '
 },
@@ -484,7 +484,7 @@ ar: {
     { q: 'ماذا يحدث إن قفلت الهاتف أثناء التسجيل؟', a: 'يستمر التسجيل، وتعرضه شاشة القفل مع إيقاف مؤقت وإنهاء.' },
     { q: 'من هو نوتو؟', a: 'ورقة صغيرة تحفظ يومك معك. مهامك المفتوحة أوراق على لوحته، وما تنجزه يصير نجوماً في جرّته. ويمكنك إخفاؤه من الإعدادات.' }
   ],
-  links: { meetings: 'للاجتماعات', lectures: 'للمحاضرات', support: 'الدعم', privacy: 'الخصوصية', terms: 'الشروط', guides: 'الأدلة' },
+  links: { support: 'الدعم', privacy: 'الخصوصية', terms: 'الشروط', guides: 'الأدلة', contact: 'تواصل معنا' },
   msg: { title: 'قل لي', sub: 'تصلني مباشرة، أنا خالد. أقرأ كل رسالة.', ph: 'اكتب بأي لغة', contact: 'بريدك أو حسابك إن أردت رداً (اختياري)', send: 'أرسل', sending: 'جارٍ الإرسال', or: 'أو راسلني على', thanks: 'وصلت. شكراً لك، أقرأ كل رسالة.', fail: 'تعذّر الإرسال الآن. يمكنك مراسلتي على khaled@khaledelshimy.com' },
   copied: 'نُسخ البريد: '
 }
@@ -607,7 +607,7 @@ function renderPanel(animate) {
       '<h3>' + esc(P.faq) + '</h3><div class="faq">' + L.faq.map(function (f) { return '<details><summary>' + esc(f.q) + '</summary><p>' + esc(f.a) + '</p></details>'; }).join('') + '</div>' +
       '<div class="end"><a class="cta" data-umami-event="store-click" data-umami-event-place="plans" href="' + STORE + '">' + esc(L.store) + '</a><br>' +
       '<button type="button" class="btn ghost" data-msg="feature">' + esc(P.idea) + '</button>' +
-      '<nav aria-label="Footer"><a href="meetings.html">' + esc(L.links.meetings) + '</a><a href="lectures.html">' + esc(L.links.lectures) + '</a><a href="support.html">' + esc(L.links.support) + '</a><a href="privacy.html">' + esc(L.links.privacy) + '</a><a href="terms.html">' + esc(L.links.terms) + '</a><a href="guides.html">' + esc(L.links.guides) + '</a><a href="mailto:khaled@khaledelshimy.com">khaled@khaledelshimy.com</a></nav>' +
+      '<nav aria-label="Footer"><a href="support.html">' + esc(L.links.support) + '</a><a href="privacy.html">' + esc(L.links.privacy) + '</a><a href="terms.html">' + esc(L.links.terms) + '</a><a href="guides.html">' + esc(L.links.guides) + '</a><a href="mailto:khaled@khaledelshimy.com">' + esc(L.links.contact) + '</a></nav>' +
       '<p class="copy">© 2026 ActionNote</p></div>';
     p.scrollTop = 0;
     return;
