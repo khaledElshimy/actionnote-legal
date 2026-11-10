@@ -41,6 +41,16 @@ canvas{max-height:280px}
 <h2><span id="every">Every day</span> <span class="per"></span></h2>
 <div class="two"><div class="card"><canvas id="cDaily"></canvas></div><div class="card"><canvas id="cMoney"></canvas></div></div>
 
+<h2>Apple Ads <span class="per"></span></h2>
+<p class="sub" id="adsSync" style="margin:-6px 0 10px"></p>
+<div class="grid" id="adsKpis"></div>
+<div class="two" style="margin-top:12px"><div class="card"><b>Taps and installs per day</b><canvas id="cAds"></canvas></div><div class="card"><b>Spend per day ($)</b><canvas id="cAdsSpend"></canvas></div></div>
+<div class="card wrap" style="margin-top:12px"><b>Campaigns</b><table id="adsCamp"></table></div>
+<div class="two" style="margin-top:12px">
+ <div class="card wrap"><b>Keywords</b><table id="adsKw"></table></div>
+ <div class="card wrap"><b>What people searched</b><table id="adsSt"></table></div>
+</div>
+
 <h2>A new person's first steps <span class="per"></span></h2>
 <div class="card wrap"><p class="sub" style="margin:0 0 8px">People who first opened 2.0 in this window, and how far they got.</p><table id="onb"></table></div>
 
@@ -127,6 +137,21 @@ const L=D.daily.map(x=>{const d=new Date(x.at);return D.unit==='hour'?String(d.g
 const whole={y:{beginAtZero:true,ticks:{precision:0}}};
 charts.push(new Chart($('cDaily'),{type:'line',data:{labels:L,datasets:[{label:'New installs',data:D.daily.map(x=>x.installs),borderColor:'#8B5CF6',tension:.3},{label:'Active',data:D.daily.map(x=>x.active),borderColor:'#6AA8FF',tension:.3},{label:'Notes',data:D.daily.map(x=>x.notes),borderColor:'#4ADE80',tension:.3}]},options:{plugins:{legend:{position:'bottom'}},interaction:{mode:'index',intersect:false},scales:whole}}));
 charts.push(new Chart($('cMoney'),{type:'bar',data:{labels:L,datasets:[{label:'Paywall shown',data:D.daily.map(x=>x.paywalls),backgroundColor:'#EC4899'},{label:'Purchases',data:D.daily.map(x=>x.purchases),backgroundColor:'#F59E0B'}]},options:{plugins:{legend:{position:'bottom'}},interaction:{mode:'index',intersect:false},scales:whole}}));
+
+// Apple Ads, from the hourly sync
+const AD=D.ads||{}, AT=AD.totals||{}, usd=v=>'$'+Number(v||0).toFixed(2);
+const ago=t=>{if(!t)return'never';const m=Math.round((Date.now()-new Date(t))/60000);return m<1?'just now':m<60?m+' min ago':Math.round(m/60)+' h ago'};
+const lr=AD.last_run;
+$('adsSync').textContent='Copied from Apple every hour. Last copy: '+(lr?ago(lr.ts)+(lr.ok?'':' (failed: '+(lr.error||'unknown')+')'):'not yet')+'. Days are Apple\'s (UTC); installs are Apple\'s count, people who tapped an ad and installed within 30 days, so recent days can still go up.';
+const cc=(l,v,sub)=>'<div class=card><div class=k>'+l+'</div><div class=v>'+v+(sub?' <small>'+sub+'</small>':'')+'</div></div>';
+$('adsKpis').innerHTML=cc('Spend',usd(AT.spend))+cc('Impressions',AT.impressions||0)+cc('Taps',AT.taps||0,pct(AT.taps,AT.impressions)&&pct(AT.taps,AT.impressions)+' of views')+cc('Installs',AT.installs||0,pct(AT.installs,AT.taps)&&pct(AT.installs,AT.taps)+' of taps')+cc('Cost per install',AT.installs?usd(AT.spend/AT.installs):'none yet')+cc('Cost per tap',AT.taps?usd(AT.spend/AT.taps):'none yet');
+const AL=(AD.daily||[]).map(x=>x.day.slice(5));
+charts.push(new Chart($('cAds'),{type:'bar',data:{labels:AL,datasets:[{label:'Taps',data:(AD.daily||[]).map(x=>x.taps),backgroundColor:'#6AA8FF'},{label:'Installs',data:(AD.daily||[]).map(x=>x.installs),backgroundColor:'#4ADE80'}]},options:{plugins:{legend:{position:'bottom'}},interaction:{mode:'index',intersect:false},scales:whole}}));
+charts.push(new Chart($('cAdsSpend'),{type:'bar',data:{labels:AL,datasets:[{label:'Spend $',data:(AD.daily||[]).map(x=>x.spend),backgroundColor:'#EC4899'}]},options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}}));
+const ST={RUNNING:'Running',PAUSED:'Paused',ON_HOLD:'On hold',CAMPAIGN_ON_HOLD:'On hold'};
+table('adsCamp',['Campaign','State','Budget a day','Spend','Views','Taps','Installs','Per install'],(AD.campaigns||[]).map(x=>[esc(x.name)+'<div class=sub>'+esc(x.countries)+' · '+(x.bidding==='MAX_CONVERSIONS'?'Maximize Conversions, target '+usd(x.target_cpa):'Manage Bids')+'</div>',ST[x.state]||esc(x.state),x.budget!=null?usd(x.budget):'',usd(x.spend),x.impressions,x.taps,x.installs,x.installs?usd(x.spend/x.installs):'']));
+table('adsKw',['Keyword','Views','Taps','Installs','Spend'],(AD.keywords||[]).map(x=>[esc(x.keyword)+'<div class=sub>'+esc(x.campaign)+' · '+esc(x.ad_group||'')+'</div>',x.impressions,x.taps,x.installs,usd(x.spend)]));
+table('adsSt',['Search','Views','Taps','Installs','Spend'],(AD.searchterms||[]).map(x=>[esc(x.term)+'<div class=sub>'+esc(x.campaign)+' · '+(x.source==='AUTO'?'found by Search Match':'your keyword')+'</div>',x.impressions,x.taps,x.installs,usd(x.spend)]));
 const first=D.onboarding[0]?.installs||0;
 table('onb',['Step','People','Of first opens',''],D.onboarding.map(s=>[nm(s.step),s.installs,pct(s.installs,first),'<div class=bar style="width:'+(first?Math.round(100*s.installs/first):0)+'%"></div>']));
 table('cap',['Way in','Notes','Worked'],(D.capture||[]).map(x=>[esc(x.source),x.notes,(x.ok_rate??0)+'%']));
