@@ -33,16 +33,15 @@ canvas{max-height:280px}
 <input id="pw" type="password" autocomplete="current-password" placeholder="Password" required><button>Open</button><div id="msg"></div></form>
 <div id="dash" hidden>
 <h1>ActionNote numbers</h1>
-<div class="sub">App Store builds only, your own devices left out. Updated <span id="gen"></span>. Every section below follows the buttons, unless its title says otherwise. <a href="#" id="out">Sign out</a></div>
+<div class="sub">Version 2 · <span id="stamps"></span> · <a href="#" id="out">Sign out</a></div>
 
-<div class="tabs" id="tabs"><button data-w="24h">24h</button><button data-w="since2">since 2.0</button><button data-w="7d">7d</button><button data-w="30d">30d</button><button data-w="90d">90d</button></div>
+<div class="tabs" id="tabs"><button data-w="24h">24h</button><button data-w="7d">7d</button><button data-w="30d">30d</button><button data-w="since2">since 2.0</button></div>
 <div class="grid" id="kpis"></div>
 
 <h2><span id="every">Every day</span> <span class="per"></span></h2>
 <div class="two"><div class="card"><canvas id="cDaily"></canvas></div><div class="card"><canvas id="cMoney"></canvas></div></div>
 
 <h2>Apple Ads <span class="per"></span></h2>
-<p class="sub" id="adsSync" style="margin:-6px 0 10px"></p>
 <div class="grid" id="adsKpis"></div>
 <div class="two" style="margin-top:12px"><div class="card"><b>Taps and installs per day</b><canvas id="cAds"></canvas></div><div class="card"><b>Spend per day ($)</b><canvas id="cAdsSpend"></canvas></div></div>
 <div class="card wrap" style="margin-top:12px"><b>Campaigns</b><table id="adsCamp"></table></div>
@@ -51,8 +50,19 @@ canvas{max-height:280px}
  <div class="card wrap"><b>What people searched</b><table id="adsSt"></table></div>
 </div>
 
+<h2>App Store <span class="per"></span></h2>
+<div class="grid" id="asKpis"></div>
+<div class="two" style="margin-top:12px"><div class="card"><b>Per day</b><canvas id="cAs"></canvas></div><div class="card wrap"><b>Countries</b><table id="asCountry"></table></div></div>
+<div class="two" style="margin-top:12px">
+ <div class="card wrap"><b>Subscriptions <span class="per" data-fixed id="asSubsDay"></span></b><table id="asSubs"></table></div>
+ <div class="card wrap"><b>Subscription events</b><table id="asEvents"></table></div>
+ <div class="card wrap"><b>In-app purchases</b><table id="asProd"></table></div>
+ <div class="card wrap"><b>Rating <span class="per" data-fixed>· now</span></b><table id="asRate"></table></div>
+</div>
+<div class="card" style="margin-top:12px"><b>Reviews</b><div id="asRev"></div></div>
+
 <h2>A new person's first steps <span class="per"></span></h2>
-<div class="card wrap"><p class="sub" style="margin:0 0 8px">People who first opened 2.0 in this window, and how far they got.</p><table id="onb"></table></div>
+<div class="card wrap"><table id="onb"></table></div>
 
 <div class="two">
  <div><h2>How notes come in <span class="per"></span></h2><div class="card wrap"><table id="cap"></table></div></div>
@@ -97,8 +107,8 @@ canvas{max-height:280px}
 // site and only with the password. This page holds no data of its own.
 const FN='https://vsqlyitcuawszzxyeueg.supabase.co/functions/v1/owner-dashboard';
 var D, charts=[];
-const PER={'24h':'last 24 hours','since2':'since 2.0 went live (8 Nov)','7d':'last 7 days','30d':'last 30 days','90d':'last 90 days'};
-function getW(){try{const w=localStorage.getItem('an.owner.w');return PER[w]?w:'30d'}catch(e){return'30d'}}
+const PER={'24h':'last 24 hours','7d':'last 7 days','30d':'last 30 days','since2':'since 2.0 (8 Nov)'};
+function getW(){try{const w=localStorage.getItem('an.owner.w');return PER[w]?w:'since2'}catch(e){return'since2'}}
 function setW(w){try{localStorage.setItem('an.owner.w',w)}catch(e){}}
 var win=getW();
 const $=id=>document.getElementById(id);
@@ -125,7 +135,7 @@ const pct=(a,b)=>b?Math.round(100*a/b)+'%':'';
 const NAMES={app_first_open:'Opened the app for the first time',onboarding_started:'Started onboarding',try_it_now_tapped:'Tapped Try it now',first_note_recorded:'Recorded a first note',first_note_typed:'Typed a first note',magic_shown:'Saw the magic moment',sign_in_completed:'Signed in',landed_today:'Landed on Today',remind_ask_accepted:'Allowed reminders',remind_ask_declined:'Declined reminders',process_note_result_success:'A note organized',task_completed:'Ticked an action',promise_kept_shown:'Kept a promise (gold star)',paywall_shown:'Saw the paywall',purchase_completed:'Bought a plan',daily_noto_opened:'Opened The Daily Noto',brief_opened:'Opened the brief',weekly_story_opened:'Opened the Weekly Story',weekly_story_shared:'Shared the Weekly Story',insights_card_viewed:'Viewed an Insights card',noto_tapped:'Tapped Noto',calm_mode_toggled:'Switched Calm mode',overdue_option_chosen:'Sorted a slipped action',share_extension_used:'Shared into the app',note_import_result:'Imported audio',note_viewed:'Opened a note',guidance_step_completed:'Finished a guide step',guidance_stopped:'Stopped the guide',note_milestone:'Reached a note milestone',task_created:'Added an action by hand'};
 const nm=e=>NAMES[e]||e;
 function table(id,head,rows){$(id).innerHTML='<tr>'+head.map((h,i)=>'<th'+(i?' class=n':'')+'>'+h+'</th>').join('')+'</tr>'+(rows.length?rows.map(r=>'<tr>'+r.map((c,i)=>'<td'+(i?' class=n':'')+'>'+c+'</td>').join('')+'</tr>').join(''):'<tr><td colspan='+head.length+' class=sub>Nothing yet</td></tr>')}
-$('gen').textContent=new Date(D.generated_at).toLocaleString();
+
 
 function kpis(){const k=D.kpis;const c=(l,v,s)=>'<div class=card><div class=k>'+l+'</div><div class=v>'+v+(s?' <small>'+s+'</small>':'')+'</div></div>';
  $('kpis').innerHTML=c('New installs',k.new_installs)+c('Active people',k.active)+c('Notes organized',k.notes,k.note_makers+' people')+c('Ask questions',k.asks)+c('Meetings',k.meetings)+c('Polish',k.polish)+c('Paywall shown',k.paywalls)+c('Purchases',k.purchases,pct(k.purchases,k.paywalls))+c('AI cost','$'+k.ai_cost_usd)+c('Server errors',(k.error_rate??0)+'%');}
@@ -141,8 +151,6 @@ charts.push(new Chart($('cMoney'),{type:'bar',data:{labels:L,datasets:[{label:'P
 // Apple Ads, from the hourly sync
 const AD=D.ads||{}, AT=AD.totals||{}, usd=v=>'$'+Number(v||0).toFixed(2);
 const ago=t=>{if(!t)return'never';const m=Math.round((Date.now()-new Date(t))/60000);return m<1?'just now':m<60?m+' min ago':Math.round(m/60)+' h ago'};
-const lr=AD.last_run;
-$('adsSync').textContent='Copied from Apple every hour. Last copy: '+(lr?ago(lr.ts)+(lr.ok?'':' (failed: '+(lr.error||'unknown')+')'):'not yet')+'. Days are Apple\'s (UTC); installs are Apple\'s count, people who tapped an ad and installed within 30 days, so recent days can still go up.';
 const cc=(l,v,sub)=>'<div class=card><div class=k>'+l+'</div><div class=v>'+v+(sub?' <small>'+sub+'</small>':'')+'</div></div>';
 $('adsKpis').innerHTML=cc('Spend',usd(AT.spend))+cc('Impressions',AT.impressions||0)+cc('Taps',AT.taps||0,pct(AT.taps,AT.impressions)&&pct(AT.taps,AT.impressions)+' of views')+cc('Installs',AT.installs||0,pct(AT.installs,AT.taps)&&pct(AT.installs,AT.taps)+' of taps')+cc('Cost per install',AT.installs?usd(AT.spend/AT.installs):'none yet')+cc('Cost per tap',AT.taps?usd(AT.spend/AT.taps):'none yet');
 const AL=(AD.daily||[]).map(x=>x.day.slice(5));
@@ -152,6 +160,21 @@ const ST={RUNNING:'Running',PAUSED:'Paused',ON_HOLD:'On hold',CAMPAIGN_ON_HOLD:'
 table('adsCamp',['Campaign','State','Budget a day','Spend','Views','Taps','Installs','Per install'],(AD.campaigns||[]).map(x=>[esc(x.name)+'<div class=sub>'+esc(x.countries)+' · '+(x.bidding==='MAX_CONVERSIONS'?'Maximize Conversions, target '+usd(x.target_cpa):'Manage Bids')+'</div>',ST[x.state]||esc(x.state),x.budget!=null?usd(x.budget):'',usd(x.spend),x.impressions,x.taps,x.installs,x.installs?usd(x.spend/x.installs):'']));
 table('adsKw',['Keyword','Views','Taps','Installs','Spend'],(AD.keywords||[]).map(x=>[esc(x.keyword)+'<div class=sub>'+esc(x.campaign)+' · '+esc(x.ad_group||'')+'</div>',x.impressions,x.taps,x.installs,usd(x.spend)]));
 table('adsSt',['Search','Views','Taps','Installs','Spend'],(AD.searchterms||[]).map(x=>[esc(x.term)+'<div class=sub>'+esc(x.campaign)+' · '+(x.source==='AUTO'?'found by Search Match':'your keyword')+'</div>',x.impressions,x.taps,x.installs,usd(x.spend)]));
+const J=D.jobs||{}, stamp=(l,t,ok,err)=>'<span'+(ok===false?' style="color:var(--am)" title="'+esc(err||'')+'"':'')+'>'+l+' '+ago(t)+(ok===false?' (failed)':'')+'</span>';
+$('stamps').innerHTML=stamp('our data',D.refreshed_at||D.generated_at,true)+' · '+stamp('Apple Ads',J.apple_ads?.ts,J.apple_ads?.ok,J.apple_ads?.error)+' · '+stamp('App Store',J.app_store?.ts,J.app_store?.ok,J.app_store?.error);
+// App Store
+const AS=D.appstore||{}, AST=AS.totals||{}, R=AS.ratings||[];
+const rc=R.reduce((a,x)=>a+(x.count||0),0), ravg=rc?R.reduce((a,x)=>a+(x.rating||0)*(x.count||0),0)/rc:0;
+const pro=Object.entries(AS.proceeds||{}).map(([c,v])=>esc(c)+' '+Number(v).toFixed(2)).join(' · ')||'0';
+$('asKpis').innerHTML=cc('Downloads',AST.downloads||0)+cc('Redownloads',AST.redownloads||0)+cc('Updates to 2',AST.updates||0)+cc('In-app purchases',AST.purchases||0)+cc('Proceeds',pro)+cc('Rating',rc?ravg.toFixed(1):'none',rc?rc+' ratings':'');
+charts.push(new Chart($('cAs'),{type:'bar',data:{labels:(AS.daily||[]).map(x=>x.day.slice(5)),datasets:[{label:'Downloads',data:(AS.daily||[]).map(x=>x.downloads),backgroundColor:'#8B5CF6'},{label:'Updates',data:(AS.daily||[]).map(x=>x.updates),backgroundColor:'#6AA8FF'},{label:'Purchases',data:(AS.daily||[]).map(x=>x.purchases),backgroundColor:'#F59E0B'}]},options:{plugins:{legend:{position:'bottom'}},interaction:{mode:'index',intersect:false},scales:whole}}));
+table('asCountry',['Country','Downloads','Redownloads','Updates','Purchases'],(AS.countries||[]).map(x=>[esc(x.country),x.downloads||0,x.redownloads||0,x.updates||0,x.purchases||0]));
+table('asRate',['Country','Version','Rating','Ratings'],R.map(x=>[esc(x.country),esc(x.version),Number(x.rating).toFixed(1),x.count]));
+table('asSubs',['Subscription','Active','Intro offer','Billing retry'],(AS.subscriptions||[]).map(x=>[esc(x.name),x.active,x.trial,x.retry]));
+$('asSubsDay').textContent=AS.subscriptions_day?'· '+AS.subscriptions_day:'';
+table('asEvents',['Event','Subscription','Count'],(AS.subscription_events||[]).map(x=>[esc(x.event),esc(x.name),x.count]));
+table('asProd',['Product','Units'],(AS.products||[]).map(x=>[esc(x.product),x.units]));
+$('asRev').innerHTML=(AS.reviews||[]).length?(AS.reviews.map(r=>'<div class=fb><div class=sub>'+esc(r.ts)+' · '+esc(r.territory||'')+' · '+'★'.repeat(r.rating||0)+'</div><div class=m><b>'+esc(r.title||'')+'</b> '+esc(r.body||'')+'</div></div>').join('')):'<span class=sub>Nothing yet</span>';
 const first=D.onboarding[0]?.installs||0;
 table('onb',['Step','People','Of first opens',''],D.onboarding.map(s=>[nm(s.step),s.installs,pct(s.installs,first),'<div class=bar style="width:'+(first?Math.round(100*s.installs/first):0)+'%"></div>']));
 table('cap',['Way in','Notes','Worked'],(D.capture||[]).map(x=>[esc(x.source),x.notes,(x.ok_rate??0)+'%']));
@@ -160,7 +183,7 @@ const M=D.money;
 table('pw',['Reason','Shown'],M.paywall_by_context.map(x=>[esc(x.context),x.shown]));
 table('buy',['Step','Detail','Count'],M.purchase_steps.map(x=>[esc(x.event),esc(x.detail),x.n]));
 table('ent',['Product','Active'],M.active_entitlements.map(x=>[esc(x.product),x.active]));
-$('limit').textContent=M.free_limit_hit+' free users have used all 10 notes this month (this one counts the calendar month, whatever the buttons say).';
+$('limit').textContent=M.free_limit_hit+' free users have used all 10 notes this month.';
 table('asn',['Notice','Count'],M.store_notifications.map(x=>[esc(x.type),x.n]));
 const Q=D.quality;
 table('fns',['Function','Calls','Worked','Median ms','Slowest 5% ms','Fell back','Cost $'],Q.functions.map(x=>[esc(x.fn),x.calls,x.ok_rate+'%',x.p50_ms??'',x.p95_ms??'',x.fell_back,x.cost]));
