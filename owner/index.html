@@ -13,6 +13,8 @@ h1{font-size:26px;margin:0 0 4px;letter-spacing:-.5px}h2{font-size:18px;margin:3
 .v small{font-size:13px;color:var(--mut);font-weight:500}
 .tabs{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0}.tabs button{background:var(--card);color:var(--fg);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font:inherit;cursor:pointer}
 .tabs button.on{background:var(--vi);border-color:var(--vi)}
+h2 .per,b .per{color:var(--mut);font-weight:500;font-size:14px}
+#dash.busy>*:not(.tabs):not(h1):not(.sub){opacity:.45;transition:opacity .2s}
 .two{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
 table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line)}th{color:var(--mut);font-weight:600}
 th.n,td.n{text-align:right;font-variant-numeric:tabular-nums}.wrap{overflow-x:auto}
@@ -31,31 +33,31 @@ canvas{max-height:280px}
 <input id="pw" type="password" autocomplete="current-password" placeholder="Password" required><button>Open</button><div id="msg"></div></form>
 <div id="dash" hidden>
 <h1>ActionNote numbers</h1>
-<div class="sub">App Store builds only, your own devices left out. Updated <span id="gen"></span>. Window: last <span id="win"></span> days · <a href="#" data-d="7">7</a> · <a href="#" data-d="30">30</a> · <a href="#" data-d="90">90</a> · <a href="#" id="out">Sign out</a></div>
+<div class="sub">App Store builds only, your own devices left out. Updated <span id="gen"></span>. Every section below follows the buttons, unless its title says otherwise. <a href="#" id="out">Sign out</a></div>
 
-<div class="tabs" id="tabs"></div>
+<div class="tabs" id="tabs"><button data-w="24h">24h</button><button data-w="since2">since 2.0</button><button data-w="7d">7d</button><button data-w="30d">30d</button><button data-w="90d">90d</button></div>
 <div class="grid" id="kpis"></div>
 
-<h2>Every day</h2>
+<h2><span id="every">Every day</span> <span class="per"></span></h2>
 <div class="two"><div class="card"><canvas id="cDaily"></canvas></div><div class="card"><canvas id="cMoney"></canvas></div></div>
 
-<h2>A new person's first steps (since 2.0)</h2>
-<div class="card wrap"><table id="onb"></table></div>
+<h2>A new person's first steps <span class="per"></span></h2>
+<div class="card wrap"><p class="sub" style="margin:0 0 8px">People who first opened 2.0 in this window, and how far they got.</p><table id="onb"></table></div>
 
 <div class="two">
- <div><h2>How notes come in</h2><div class="card wrap"><table id="cap"></table></div></div>
- <div><h2>Noto and the app in use</h2><div class="card wrap"><table id="feat"></table></div></div>
+ <div><h2>How notes come in <span class="per"></span></h2><div class="card wrap"><table id="cap"></table></div></div>
+ <div><h2>Noto and the app in use <span class="per"></span></h2><div class="card wrap"><table id="feat"></table></div></div>
 </div>
 
-<h2>Money</h2>
+<h2>Money <span class="per"></span></h2>
 <div class="two">
  <div class="card wrap"><b>Paywall shown, by reason</b><table id="pw"></table></div>
  <div class="card wrap"><b>Buying steps</b><table id="buy"></table></div>
- <div class="card wrap"><b>Active paid plans now</b><table id="ent"></table><p class="sub" id="limit"></p></div>
+ <div class="card wrap"><b>Active paid plans <span class="per" data-fixed>· right now</span></b><table id="ent"></table><p class="sub" id="limit"></p></div>
  <div class="card wrap"><b>Apple's subscription notices</b><table id="asn"></table></div>
 </div>
 
-<h2>Does it work?</h2>
+<h2>Does it work? <span class="per"></span></h2>
 <div class="card wrap"><table id="fns"></table></div>
 <div class="two" style="margin-top:12px">
  <div class="card wrap"><b>Server errors</b><table id="err"></table></div>
@@ -64,19 +66,19 @@ canvas{max-height:280px}
  <div class="card wrap"><b>Meetings</b><table id="mtg"></table></div>
 </div>
 
-<h2>Who uses it</h2>
+<h2>Who uses it <span class="per"></span></h2>
 <div class="two">
- <div class="card wrap"><b>App version (last 7 days)</b><table id="ver"></table></div>
+ <div class="card wrap"><b>App version</b><table id="ver"></table></div>
  <div class="card wrap"><b>iPhone models</b><table id="dev"></table></div>
  <div class="card wrap"><b>iOS</b><table id="ios"></table></div>
  <div class="card wrap"><b>Note languages</b><table id="lang"></table></div>
  <div class="card wrap"><b>Plan</b><table id="plan"></table></div>
 </div>
 
-<h2>Do they come back?</h2>
+<h2>Do they come back? <span class="per" data-fixed>· by install week, last 8 weeks</span></h2>
 <div class="card wrap"><table id="ret"></table></div>
 
-<h2>What people told you</h2>
+<h2>What people told you <span class="per" data-fixed>· latest 20</span></h2>
 <div class="card" id="fb"></div>
 
 </div>
@@ -84,21 +86,26 @@ canvas{max-height:280px}
 // The numbers come from the owner-dashboard function, which answers only this
 // site and only with the password. This page holds no data of its own.
 const FN='https://vsqlyitcuawszzxyeueg.supabase.co/functions/v1/owner-dashboard';
-var D, cur=0, charts=[], days=30;
+var D, charts=[];
+const PER={'24h':'last 24 hours','since2':'since 2.0 went live (8 Nov)','7d':'last 7 days','30d':'last 30 days','90d':'last 90 days'};
+function getW(){try{const w=localStorage.getItem('an.owner.w');return PER[w]?w:'30d'}catch(e){return'30d'}}
+function setW(w){try{localStorage.setItem('an.owner.w',w)}catch(e){}}
+var win=getW();
 const $=id=>document.getElementById(id);
 function getPw(){try{return localStorage.getItem('an.owner.pw')||''}catch(e){return''}}
 function setPw(v){try{v?localStorage.setItem('an.owner.pw',v):localStorage.removeItem('an.owner.pw')}catch(e){}}
 function gate(m){$('dash').hidden=true;$('gate').hidden=false;$('msg').textContent=m||'';$('pw').focus()}
-async function load(d){
+async function load(w){
   const pw=getPw(); if(!pw) return gate();
-  days=d||days; $('msg').textContent='Loading…';
-  let r; try{r=await fetch(FN+'?days='+days,{headers:{Authorization:'Basic '+btoa('owner:'+pw)},cache:'no-store'})}catch(e){return gate('Could not reach the server. Try again.')}
+  if(w){win=w;setW(w)} tabsOn(); $('msg').textContent='Loading…'; $('dash').classList.add('busy');
+  let r; try{r=await fetch(FN+'?w='+win,{headers:{Authorization:'Basic '+btoa('owner:'+pw)},cache:'no-store'})}catch(e){return gate('Could not reach the server. Try again.')}
   if(r.status===401){setPw('');return gate('That password did not work.')}
   if(!r.ok) return gate('The server said '+r.status+'. Try again in a minute.');
-  D=await r.json(); $('gate').hidden=true; $('dash').hidden=false; $('win').textContent=days; draw();
+  D=await r.json(); $('dash').classList.remove('busy'); $('gate').hidden=true; $('dash').hidden=false; draw();
 }
 $('gate').addEventListener('submit',e=>{e.preventDefault();setPw($('pw').value.trim());load()});
-document.addEventListener('click',e=>{const a=e.target.closest('a[data-d]');if(a){e.preventDefault();load(+a.dataset.d)}
+function tabsOn(){document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.w===win))}
+document.addEventListener('click',e=>{const b=e.target.closest('#tabs button');if(b&&b.dataset.w!==win){load(b.dataset.w)}
   if(e.target.id==='out'){e.preventDefault();setPw('');gate()}});
 function draw(){
 charts.forEach(c=>c.destroy()); charts=[];
@@ -110,14 +117,16 @@ const nm=e=>NAMES[e]||e;
 function table(id,head,rows){$(id).innerHTML='<tr>'+head.map((h,i)=>'<th'+(i?' class=n':'')+'>'+h+'</th>').join('')+'</tr>'+(rows.length?rows.map(r=>'<tr>'+r.map((c,i)=>'<td'+(i?' class=n':'')+'>'+c+'</td>').join('')+'</tr>').join(''):'<tr><td colspan='+head.length+' class=sub>Nothing yet</td></tr>')}
 $('gen').textContent=new Date(D.generated_at).toLocaleString();
 
-function kpis(){const k=D.kpis[cur];const c=(l,v,s)=>'<div class=card><div class=k>'+l+'</div><div class=v>'+v+(s?' <small>'+s+'</small>':'')+'</div></div>';
- $('kpis').innerHTML=c('New installs',k.new_installs)+c('Active people',k.active)+c('Notes organized',k.notes,k.note_makers+' people')+c('Ask questions',k.asks)+c('Meetings',k.meetings)+c('Polish',k.polish)+c('Paywall shown',k.paywalls)+c('Purchases',k.purchases,pct(k.purchases,k.paywalls))+c('AI cost','$'+k.ai_cost_usd)+c('Server errors',(k.error_rate??0)+'%');
- $('tabs').innerHTML=D.kpis.map((x,i)=>'<button class="'+(i===cur?'on':'')+'" onclick="cur='+i+';kpis()">'+x.window+'</button>').join('')}
+function kpis(){const k=D.kpis;const c=(l,v,s)=>'<div class=card><div class=k>'+l+'</div><div class=v>'+v+(s?' <small>'+s+'</small>':'')+'</div></div>';
+ $('kpis').innerHTML=c('New installs',k.new_installs)+c('Active people',k.active)+c('Notes organized',k.notes,k.note_makers+' people')+c('Ask questions',k.asks)+c('Meetings',k.meetings)+c('Polish',k.polish)+c('Paywall shown',k.paywalls)+c('Purchases',k.purchases,pct(k.purchases,k.paywalls))+c('AI cost','$'+k.ai_cost_usd)+c('Server errors',(k.error_rate??0)+'%');}
 kpis();
+document.querySelectorAll('.per:not([data-fixed])').forEach(e=>e.textContent='· '+PER[D.window]);
+$('every').textContent=D.unit==='hour'?'Every hour':'Every day';
 Chart.defaults.color='#93A1B3';Chart.defaults.borderColor='#2A3768';
-const L=D.daily.map(x=>x.day.slice(5));
-charts.push(new Chart($('cDaily'),{type:'line',data:{labels:L,datasets:[{label:'New installs',data:D.daily.map(x=>x.installs),borderColor:'#8B5CF6',tension:.3},{label:'Active',data:D.daily.map(x=>x.active),borderColor:'#6AA8FF',tension:.3},{label:'Notes',data:D.daily.map(x=>x.notes),borderColor:'#4ADE80',tension:.3}]},options:{plugins:{legend:{position:'bottom'}},interaction:{mode:'index',intersect:false}}}));
-charts.push(new Chart($('cMoney'),{type:'bar',data:{labels:L,datasets:[{label:'Paywall shown',data:D.daily.map(x=>x.paywalls),backgroundColor:'#EC4899'},{label:'Purchases',data:D.daily.map(x=>x.purchases),backgroundColor:'#F59E0B'},{label:'AI cost $',data:D.daily.map(x=>x.cost),type:'line',borderColor:'#C4B5FD',yAxisID:'y1'}]},options:{plugins:{legend:{position:'bottom'}},scales:{y1:{position:'right',grid:{display:false}}}}}));
+const L=D.daily.map(x=>{const d=new Date(x.at);return D.unit==='hour'?String(d.getHours()).padStart(2,'0')+':00':String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')});
+const whole={y:{beginAtZero:true,ticks:{precision:0}}};
+charts.push(new Chart($('cDaily'),{type:'line',data:{labels:L,datasets:[{label:'New installs',data:D.daily.map(x=>x.installs),borderColor:'#8B5CF6',tension:.3},{label:'Active',data:D.daily.map(x=>x.active),borderColor:'#6AA8FF',tension:.3},{label:'Notes',data:D.daily.map(x=>x.notes),borderColor:'#4ADE80',tension:.3}]},options:{plugins:{legend:{position:'bottom'}},interaction:{mode:'index',intersect:false},scales:whole}}));
+charts.push(new Chart($('cMoney'),{type:'bar',data:{labels:L,datasets:[{label:'Paywall shown',data:D.daily.map(x=>x.paywalls),backgroundColor:'#EC4899'},{label:'Purchases',data:D.daily.map(x=>x.purchases),backgroundColor:'#F59E0B'}]},options:{plugins:{legend:{position:'bottom'}},interaction:{mode:'index',intersect:false},scales:whole}}));
 const first=D.onboarding[0]?.installs||0;
 table('onb',['Step','People','Of first opens',''],D.onboarding.map(s=>[nm(s.step),s.installs,pct(s.installs,first),'<div class=bar style="width:'+(first?Math.round(100*s.installs/first):0)+'%"></div>']));
 table('cap',['Way in','Notes','Worked'],(D.capture||[]).map(x=>[esc(x.source),x.notes,(x.ok_rate??0)+'%']));
@@ -126,7 +135,7 @@ const M=D.money;
 table('pw',['Reason','Shown'],M.paywall_by_context.map(x=>[esc(x.context),x.shown]));
 table('buy',['Step','Detail','Count'],M.purchase_steps.map(x=>[esc(x.event),esc(x.detail),x.n]));
 table('ent',['Product','Active'],M.active_entitlements.map(x=>[esc(x.product),x.active]));
-$('limit').textContent=M.free_limit_hit+' free users have used all 10 notes this month.';
+$('limit').textContent=M.free_limit_hit+' free users have used all 10 notes this month (this one counts the calendar month, whatever the buttons say).';
 table('asn',['Notice','Count'],M.store_notifications.map(x=>[esc(x.type),x.n]));
 const Q=D.quality;
 table('fns',['Function','Calls','Worked','Median ms','Slowest 5% ms','Fell back','Cost $'],Q.functions.map(x=>[esc(x.fn),x.calls,x.ok_rate+'%',x.p50_ms??'',x.p95_ms??'',x.fell_back,x.cost]));
@@ -143,7 +152,6 @@ table('plan',['Plan','People'],A.plans.map(x=>[esc(x.plan),x.people]));
 table('ret',['Week of first open','Installs','Back next day','Back in week 2'],D.retention.map(x=>[x.week,x.installs,x.came_back_d1+' ('+pct(x.came_back_d1,x.installs)+')',x.came_back_d7+' ('+pct(x.came_back_d7,x.installs)+')']));
 $('fb').innerHTML=D.feedback.length?D.feedback.map(f=>'<div class=fb><div class=sub>'+esc(f.ts)+' · '+esc(f.v||'')+' · '+Object.entries(f.answers||{}).map(([k,v])=>esc(k)+': '+esc(v)).join(', ')+'</div>'+(f.message?'<div class=m>'+esc(f.message)+'</div>':'')+'</div>').join(''):'<span class=sub>No feedback yet</span>';
 
-window.kpis=kpis;
 }
 load();
 </script></body></html>
