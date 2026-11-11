@@ -71,6 +71,12 @@ canvas{max-height:280px}
 <div class="card wrap"><table id="onb"></table></div>
 <div class="card wrap" style="margin-top:12px"><b>Each new person</b> <span class="sub" id="jrnSum"></span><table id="jrn"></table></div>
 
+<h2>Ways in and out <span class="per"></span></h2>
+<div class="two">
+ <div class="card wrap"><b>What people use</b><table id="ways"></table></div>
+ <div class="card wrap"><b>The + sheet</b> <span class="sub">counted from 11 Nov</span><table id="sheet"></table></div>
+</div>
+
 <div class="two">
  <div><h2>How notes come in <span class="per"></span></h2><div class="card wrap"><table id="cap"></table></div></div>
  <div><h2>Noto and the app in use <span class="per"></span></h2><div class="card wrap"><table id="feat"></table></div></div>
@@ -87,6 +93,7 @@ canvas{max-height:280px}
 <h2>Does it work? <span class="per"></span></h2>
 <div class="card wrap"><table id="fns"></table></div>
 <div class="two" style="margin-top:12px">
+ <div class="card wrap"><b>Notes, by how they ended</b><table id="outc"></table></div>
  <div class="card wrap"><b>Server errors</b><table id="err"></table></div>
  <div class="card wrap"><b>Errors seen in the app</b><table id="aerr"></table></div>
  <div class="card wrap"><b>Recording</b><table id="rec"></table></div>
@@ -197,8 +204,14 @@ const STEP={opened:'Opened only',guide:'Started the guide',try_it:'Tapped Try it
 const JR=D.journey||[], stuck=JR.filter(x=>['opened','guide','try_it','mic','recorded'].includes(x.step)).length;
 const when=t=>new Date(t).toLocaleString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
 $('jrnSum').textContent=JR.length?'· '+stuck+' of '+JR.length+' stopped before a first note':'';
-table('jrn',['Person','First opened','Got to','Notes','Failed','Days seen','Last seen'],JR.map(x=>{const f=[x.mic_denied&&'said no to the mic',x.paywall&&'saw the paywall',x.bought&&'bought'].filter(Boolean).join(' · ');
+table('jrn',['Person','First opened','Got to','Notes','Failed','Days seen','Last seen'],JR.map(x=>{const f=[x.silent&&(x.silent>1?x.silent+' silent recordings':'a silent recording'),x.offline&&'no connection once',x.mic_denied&&'said no to the mic',x.paywall&&'saw the paywall',x.bought&&'bought'].filter(Boolean).join(' · ');
  return [esc(x.id)+'<div class=sub>'+esc([x.device,x.lang].filter(Boolean).join(' · '))+'</div>',when(x.first),STEP[x.step]+(f?'<div class=sub>'+f+'</div>':''),x.notes,x.failures||'',x.days,ago(x.last)]}),[1,2]);
+const WAY={voice:['Voice notes'],typed:['Typed notes'],photo:['Photo or screenshot notes'],audio_file:['Audio file upload chosen','counted from 11 Nov'],shared_in:['Shared into the app','WhatsApp voice notes and others'],meeting_recorded:['Meetings recorded'],meeting_transcribed:['Meetings transcribed'],meeting_organized:['Meetings organized into minutes'],ask:['Ask questions answered'],widget:['Widget or Live Activity taps','counted from the next app update'],siri:['Siri or Shortcuts','counted from the next app update'],shared_out:['Notes shared out','counted from the next app update'],opened_shared:['Shared notes opened']};
+table('ways',['Way','Times','People'],(D.ways||[]).map(x=>{const w=WAY[x.way]||[x.way];return[esc(w[0])+(w[1]?'<div class=sub>'+esc(w[1])+'</div>':''),x.times||'not used',x.people||'']}));
+const KIND={voice:'Voice note',text:'Typed note',image:'Photo or screenshot',meeting:'Meeting',audioFile:'Audio file'};
+table('sheet',['Door','Times','People'],(D.capture_sheet||[]).map(x=>[esc(KIND[x.kind]||x.kind),x.times,x.people]));
+const OUT=[['organized','Organized'],['silent','Too short or silent'],['no_connection','No connection or interrupted'],['limit','Over the free limit'],['failed','Failed']], O=(D.quality||{}).outcomes||{};
+table('outc',['How it ended','Notes'],OUT.map(([k,l])=>[l,O[k]||0]));
 const first=D.onboarding[0]?.installs||0;
 table('onb',['Step','People','Of first opens',''],D.onboarding.map(s=>[nm(s.step),s.installs,pct(s.installs,first),'<div class=bar style="width:'+(first?Math.round(100*s.installs/first):0)+'%"></div>']));
 table('cap',['Way in','Notes','Worked'],(D.capture||[]).map(x=>[esc(x.source),x.notes,(x.ok_rate??0)+'%']));
