@@ -22,6 +22,7 @@ th.n,td.n{text-align:right;font-variant-numeric:tabular-nums}.wrap{overflow-x:au
 .bar{height:10px;border-radius:6px;background:linear-gradient(90deg,var(--vi),var(--pk),var(--am))}
 .fb{border-bottom:1px solid var(--line);padding:8px 0}.fb .m{margin-top:4px}
 canvas{max-height:280px}
+#attn{border-color:var(--am);margin:0 0 12px}#attn ul{margin:6px 0 0;padding-left:18px}#attn li{margin:4px 0}#attn b{color:var(--am)}
 
 [hidden]{display:none!important}
 #gate{max-width:380px;margin:12vh auto 0;display:flex;flex-direction:column;gap:12px}
@@ -36,6 +37,7 @@ canvas{max-height:280px}
 <div class="sub">Version 2 · <span id="stamps"></span> · <a href="#" id="out">Sign out</a></div>
 
 <div class="tabs" id="tabs"><button data-w="24h">24h</button><button data-w="7d">7d</button><button data-w="30d">30d</button><button data-w="since2">since 2.0</button></div>
+<div class="card" id="attn" hidden><b>Needs a look</b><ul id="attnList"></ul></div>
 <div class="grid" id="kpis"></div>
 
 <h2><span id="every">Every day</span> <span class="per"></span></h2>
@@ -48,6 +50,10 @@ canvas{max-height:280px}
 <div class="two" style="margin-top:12px">
  <div class="card wrap"><b>Keywords</b><table id="adsKw"></table></div>
  <div class="card wrap"><b>What people searched</b><table id="adsSt"></table></div>
+</div>
+<div class="two" style="margin-top:12px">
+ <div class="card wrap"><b>Searches worth blocking</b> <span class="sub">tapped twice or more, never installed</span><table id="adsBlock"></table></div>
+ <div class="card wrap"><b>Searches worth adding as Exact</b> <span class="sub">found by Search Match and installed</span><table id="adsPromote"></table></div>
 </div>
 
 <h2>App Store <span class="per"></span></h2>
@@ -63,6 +69,7 @@ canvas{max-height:280px}
 
 <h2>A new person's first steps <span class="per"></span></h2>
 <div class="card wrap"><table id="onb"></table></div>
+<div class="card wrap" style="margin-top:12px"><b>Each new person</b> <span class="sub" id="jrnSum"></span><table id="jrn"></table></div>
 
 <div class="two">
  <div><h2>How notes come in <span class="per"></span></h2><div class="card wrap"><table id="cap"></table></div></div>
@@ -134,7 +141,7 @@ const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&g
 const pct=(a,b)=>b?Math.round(100*a/b)+'%':'';
 const NAMES={app_first_open:'Opened the app for the first time',onboarding_started:'Started onboarding',try_it_now_tapped:'Tapped Try it now',first_note_recorded:'Recorded a first note',first_note_typed:'Typed a first note',magic_shown:'Saw the magic moment',sign_in_completed:'Signed in',landed_today:'Landed on Today',remind_ask_accepted:'Allowed reminders',remind_ask_declined:'Declined reminders',process_note_result_success:'A note organized',task_completed:'Ticked an action',promise_kept_shown:'Kept a promise (gold star)',paywall_shown:'Saw the paywall',purchase_completed:'Bought a plan',daily_noto_opened:'Opened The Daily Noto',brief_opened:'Opened the brief',weekly_story_opened:'Opened the Weekly Story',weekly_story_shared:'Shared the Weekly Story',insights_card_viewed:'Viewed an Insights card',noto_tapped:'Tapped Noto',calm_mode_toggled:'Switched Calm mode',overdue_option_chosen:'Sorted a slipped action',share_extension_used:'Shared into the app',note_import_result:'Imported audio',note_viewed:'Opened a note',guidance_step_completed:'Finished a guide step',guidance_stopped:'Stopped the guide',note_milestone:'Reached a note milestone',task_created:'Added an action by hand'};
 const nm=e=>NAMES[e]||e;
-function table(id,head,rows){$(id).innerHTML='<tr>'+head.map((h,i)=>'<th'+(i?' class=n':'')+'>'+h+'</th>').join('')+'</tr>'+(rows.length?rows.map(r=>'<tr>'+r.map((c,i)=>'<td'+(i?' class=n':'')+'>'+c+'</td>').join('')+'</tr>').join(''):'<tr><td colspan='+head.length+' class=sub>Nothing yet</td></tr>')}
+function table(id,head,rows,left){const n=i=>i&&!(left||[]).includes(i)?' class=n':'';$(id).innerHTML='<tr>'+head.map((h,i)=>'<th'+n(i)+'>'+h+'</th>').join('')+'</tr>'+(rows.length?rows.map(r=>'<tr>'+r.map((c,i)=>'<td'+n(i)+'>'+c+'</td>').join('')+'</tr>').join(''):'<tr><td colspan='+head.length+' class=sub>Nothing yet</td></tr>')}
 
 
 function kpis(){const k=D.kpis;const c=(l,v,s)=>'<div class=card><div class=k>'+l+'</div><div class=v>'+v+(s?' <small>'+s+'</small>':'')+'</div></div>';
@@ -150,7 +157,7 @@ charts.push(new Chart($('cMoney'),{type:'bar',data:{labels:L,datasets:[{label:'P
 
 // Apple Ads, from the hourly sync
 const AD=D.ads||{}, AT=AD.totals||{}, usd=v=>'$'+Number(v||0).toFixed(2);
-const ago=t=>{if(!t)return'never';const m=Math.round((Date.now()-new Date(t))/60000);return m<1?'just now':m<60?m+' min ago':Math.round(m/60)+' h ago'};
+const ago=t=>{if(!t)return'never';const m=Math.round((Date.now()-new Date(t))/60000);return m<1?'just now':m<60?m+' min ago':m<2880?Math.round(m/60)+' h ago':Math.round(m/1440)+' days ago'};
 const cc=(l,v,sub)=>'<div class=card><div class=k>'+l+'</div><div class=v>'+v+(sub?' <small>'+sub+'</small>':'')+'</div></div>';
 $('adsKpis').innerHTML=cc('Spend',usd(AT.spend))+cc('Impressions',AT.impressions||0)+cc('Taps',AT.taps||0,pct(AT.taps,AT.impressions)&&pct(AT.taps,AT.impressions)+' of views')+cc('Installs',AT.installs||0,pct(AT.installs,AT.taps)&&pct(AT.installs,AT.taps)+' of taps')+cc('Cost per install',AT.installs?usd(AT.spend/AT.installs):'none yet')+cc('Cost per tap',AT.taps?usd(AT.spend/AT.taps):'none yet');
 const AL=(AD.daily||[]).map(x=>x.day.slice(5));
@@ -160,6 +167,17 @@ const ST={RUNNING:'Running',PAUSED:'Paused',ON_HOLD:'On hold',CAMPAIGN_ON_HOLD:'
 table('adsCamp',['Campaign','State','Budget a day','Spend','Views','Taps','Installs','Per install'],(AD.campaigns||[]).map(x=>[esc(x.name)+'<div class=sub>'+esc(x.countries)+' · '+(x.bidding==='MAX_CONVERSIONS'?'Maximize Conversions, target '+usd(x.target_cpa):'Manage Bids')+'</div>',ST[x.state]||esc(x.state),x.budget!=null?usd(x.budget):'',usd(x.spend),x.impressions,x.taps,x.installs,x.installs?usd(x.spend/x.installs):'']));
 table('adsKw',['Keyword','Views','Taps','Installs','Spend'],(AD.keywords||[]).map(x=>[esc(x.keyword)+'<div class=sub>'+esc(x.campaign)+' · '+esc(x.ad_group||'')+'</div>',x.impressions,x.taps,x.installs,usd(x.spend)]));
 table('adsSt',['Search','Views','Taps','Installs','Spend'],(AD.searchterms||[]).map(x=>[esc(x.term)+'<div class=sub>'+esc(x.campaign)+' · '+(x.source==='AUTO'?'found by Search Match':'your keyword')+'</div>',x.impressions,x.taps,x.installs,usd(x.spend)]));
+table('adsBlock',['Search','Campaign','Taps','Spend'],((D.ad_terms||{}).block||[]).map(x=>[esc(x.term),esc(x.campaign),x.taps,usd(x.spend)]),[1]);
+table('adsPromote',['Search','Campaign','Installs','Spend'],((D.ad_terms||{}).promote||[]).map(x=>[esc(x.term),esc(x.campaign),x.installs,usd(x.spend)]),[1]);
+// Needs a look: only what went wrong, hidden when nothing did
+const JOB={apple_ads:'Apple Ads',app_store:'App Store',dashboard:'dashboard'}, ppl=n=>n===1?'1 person':n+' people';
+const AT2=(D.attention||[]).map(a=>a.kind==='job'?(a.ok?'The '+JOB[a.job]+' copy has not run since '+ago(a.ts)+'.':'The '+JOB[a.job]+' copy failed '+ago(a.ts)+': '+esc(a.error||'no message')+'.')
+ :a.kind==='note_failures'?'<b>'+a.failed+' of '+a.total+'</b> notes failed to organize, for '+ppl(a.people)+'. See "Does it work?" below.'
+ :a.kind==='low_review'?'A <b>'+a.rating+' star</b> review from '+esc(a.territory||'somewhere')+' on '+esc(a.ts)+': '+esc(a.title||'(no title)')
+ :a.kind==='mic_denied'?ppl(a.people)+' said no to the microphone.'
+ :a.kind==='ads_no_installs'?'<b>'+esc(a.campaign)+'</b> spent '+usd(a.spend)+' over the last 3 days ('+a.taps+' taps) with no install.'
+ :esc(a.kind));
+$('attnList').innerHTML=AT2.map(t=>'<li>'+t+'</li>').join(''); $('attn').hidden=!AT2.length;
 const J=D.jobs||{}, stamp=(l,t,ok,err)=>'<span'+(ok===false?' style="color:var(--am)" title="'+esc(err||'')+'"':'')+'>'+l+' '+ago(t)+(ok===false?' (failed)':'')+'</span>';
 $('stamps').innerHTML=stamp('our data',D.refreshed_at||D.generated_at,true)+' · '+stamp('Apple Ads',J.apple_ads?.ts,J.apple_ads?.ok,J.apple_ads?.error)+' · '+stamp('App Store',J.app_store?.ts,J.app_store?.ok,J.app_store?.error);
 // App Store
@@ -175,6 +193,12 @@ $('asSubsDay').textContent=AS.subscriptions_day?'· '+AS.subscriptions_day:'';
 table('asEvents',['Event','Subscription','Count'],(AS.subscription_events||[]).map(x=>[esc(x.event),esc(x.name),x.count]));
 table('asProd',['Product','Units'],(AS.products||[]).map(x=>[esc(x.product),x.units]));
 $('asRev').innerHTML=(AS.reviews||[]).length?(AS.reviews.map(r=>'<div class=fb><div class=sub>'+esc(r.ts)+' · '+esc(r.territory||'')+' · '+'★'.repeat(r.rating||0)+'</div><div class=m><b>'+esc(r.title||'')+'</b> '+esc(r.body||'')+'</div></div>').join('')):'<span class=sub>Nothing yet</span>';
+const STEP={opened:'Opened only',guide:'Started the guide',try_it:'Tapped Try it now',mic:'Allowed the mic',recorded:'Recorded or typed',organised:'Got a note organized',today:'Reached Today',second_note:'Made a second note'};
+const JR=D.journey||[], stuck=JR.filter(x=>['opened','guide','try_it','mic','recorded'].includes(x.step)).length;
+const when=t=>new Date(t).toLocaleString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
+$('jrnSum').textContent=JR.length?'· '+stuck+' of '+JR.length+' stopped before a first note':'';
+table('jrn',['Person','First opened','Got to','Notes','Failed','Days seen','Last seen'],JR.map(x=>{const f=[x.mic_denied&&'said no to the mic',x.paywall&&'saw the paywall',x.bought&&'bought'].filter(Boolean).join(' · ');
+ return [esc(x.id)+'<div class=sub>'+esc([x.device,x.lang].filter(Boolean).join(' · '))+'</div>',when(x.first),STEP[x.step]+(f?'<div class=sub>'+f+'</div>':''),x.notes,x.failures||'',x.days,ago(x.last)]}),[1,2]);
 const first=D.onboarding[0]?.installs||0;
 table('onb',['Step','People','Of first opens',''],D.onboarding.map(s=>[nm(s.step),s.installs,pct(s.installs,first),'<div class=bar style="width:'+(first?Math.round(100*s.installs/first):0)+'%"></div>']));
 table('cap',['Way in','Notes','Worked'],(D.capture||[]).map(x=>[esc(x.source),x.notes,(x.ok_rate??0)+'%']));
