@@ -232,7 +232,7 @@ $('moneyKpis').innerHTML=cc('Proceeds',pro,'from Apple')+cc('Purchases',AST.purc
 table('mFunnel',['Step','People','Of those shown'],[['Saw the paywall',F.shown||0,''],['Picked a plan',F.selected||0,pct(F.selected,F.shown)],['Started paying',F.started||0,pct(F.started,F.shown)],['Bought',F.bought||0,pct(F.bought,F.shown)]].concat([['Cancelled at Apple\'s sheet',F.cancelled],['Waiting for approval',F.pending],['Failed',F.failed],['Restored a purchase',F.restored]].filter(x=>x[1]).map(x=>[x[0]+' <span class=sub>(times)</span>',x[1],''])));
 table('mReason',['Reason','Shown','People','Started','Bought'],(M.by_reason||[]).map(x=>[esc(REASON[x.reason]||x.reason),x.shown,x.people,x.started,x.bought]));
 table('mPlans',['Plan','Picked','Started paying'],(M.plans||[]).map(x=>[esc(PLAN[x.plan]||x.plan),x.selected,x.started]));
-$('asnSum').textContent=M.notices_total?M.notices_total+' received, the last '+ago(M.notices_last)+'.':'None have reached the server yet: App Store Connect sends them to another address.';
+$('asnSum').textContent=M.notices_total?M.notices_total+' received, the last '+ago(M.notices_last)+'.':'None received yet. App Store Connect has sent them here since 11 Nov, so the next purchase, renewal or refund shows up within seconds.';
 table('ent',['Product','Active'],M.active_entitlements.map(x=>[esc(PLAN[x.product]||x.product),x.active]));
 $('limit').textContent=M.free_limit_hit+' free users have used all 10 notes this month.';
 table('asn',['Notice','Count'],M.store_notifications.map(x=>[esc(x.type),x.n]));
