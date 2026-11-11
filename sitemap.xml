@@ -15,4 +15,8 @@
 <loc>https://getactionnote.com/lectures-ar.html</loc>
 <priority>0.8</priority>
 </url>
+<url>
+<loc>https://getactionnote.com/meetings-ar.html</loc>
+<priority>0.8</priority>
+</url>
 </urlset>
