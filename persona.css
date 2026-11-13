@@ -139,3 +139,9 @@ body{background:var(--ink-0) radial-gradient(1200px 500px at 85% -10%,rgba(196,1
 .btn.ghost{border-color:rgba(246,242,232,.6);color:var(--text);}
 .lang{background:var(--ink-2);}
 ::selection{background:rgba(196,181,253,.35);}
+
+/* The launch offer strip (13 to 30 Nov 2026); the page's script shows it only before the end. */
+.launchstrip{display:block;background:#FAEBA0;color:#2A2416;text-align:center;padding:10px 16px;font:600 14px/1.45 var(--inter),sans-serif;box-shadow:0 6px 16px rgba(0,0,0,.3)}
+.launchstrip[hidden]{display:none}
+.launchstrip b{color:#B4235E;letter-spacing:1.4px;font-size:11px;font-weight:900;margin-inline-end:8px}
+.launchstrip u{font-weight:800;margin-inline-start:6px}
