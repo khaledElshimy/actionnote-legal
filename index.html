@@ -189,6 +189,7 @@ a{color:var(--lav)}
 .coupon .k{margin:0;font:900 11px Archivo,sans-serif;letter-spacing:1.6px;color:#B4235E}
 .coupon .t{margin:6px 0 0;font:700 27px/1.05 Caveat,cursive}
 .coupon .b{margin:8px 0 0;font-size:13px;line-height:1.45}
+.coupon .t.lt{margin-top:12px;padding-top:12px;border-top:2px dashed rgba(42,36,22,.3)}
 .coupon .d{display:inline-block;margin:10px 0 0;padding:3px 9px;border-radius:999px;background:#2A2416;color:#FAEBA0;font:800 12px Archivo,sans-serif}
 .coupon .btn{display:block;margin-top:12px;width:100%}
 .ar .coupon .t{font:700 20px/1.35 'IBM Plex Sans Arabic',sans-serif}
@@ -419,7 +420,7 @@ en: {
   labels: ['Welcome', 'The window', 'The board', 'Noto', 'The jar', 'The frames', 'His things', 'Plans'],
   roomAlt: "Noto's room at night: his corkboard, the moon in the window, his jar of paper stars and the frames for people you kept your word to",
   home: { noto: 'Welcome to my room. Let me show you around.', body: 'Talk, type or snap a page. ActionNote turns your voice to text and actions with reminders, in Arabic, English or both in one sentence.', tour: 'Walk in', stars: 'every App Store review so far', free: 'Meeting transcripts are free, written on iPhone 11 and later.', hint: 'Scroll, swipe or use the arrow keys to walk around. Tap anything in the room.' },
-  launch: { tag: 'Launch offer', kicker: 'LAUNCH OFFER', title: 'Pro yearly, $19.99 for your first year', body: 'For new subscribers, until 30 November. Then $29.99 a year. Cancel any time.', lifetime: 'And Pro Lifetime at $39.99 instead of $69.99.', days: function (n) { return n <= 1 ? 'Last day' : n + ' days left'; }, see: 'See the plans', noto: 'Psst. Pro yearly is $19.99 for your first year, until 30 November.', notoLt: 'Psst. Until 30 November: Pro yearly is $19.99 for your first year, and Pro Lifetime is $39.99 instead of $69.99.', mini: 'Pro Lifetime $39.99, not $69.99' },
+  launch: { tag: 'Launch offer', kicker: 'LAUNCH OFFER', title: 'Pro yearly, $19.99 for your first year', body: 'For new subscribers, until 30 November. Then $29.99 a year. Cancel any time.', lifetime: 'And Pro Lifetime at $39.99 instead of $69.99.', ltTitle: 'Pro Lifetime, $39.99 once', ltBody: 'Instead of $69.99. Pay once, Pro for good, no subscription.', days: function (n) { return n <= 1 ? 'Last day' : n + ' days left'; }, see: 'See the plans', noto: 'Psst. Pro yearly is $19.99 for your first year, until 30 November.', notoLt: 'Psst. Until 30 November: Pro yearly is $19.99 for your first year, and Pro Lifetime is $39.99 instead of $69.99.', mini: 'Pro Lifetime $39.99, not $69.99' },
   poke: 'Poke Noto', pokes: ["Hi, I'm Noto. I keep your word.", 'That tickles.', "I'm made of paper. Gently!", 'Ok, ok, I am awake.'],
   win: { sample: '“Remind me بكرة الصبح to call the bank, and send Omar the slides.”', other: 'Read this site in العربية', sky: 'TRY MY WINDOW' },
   skies: ['Morning', 'Day', 'Evening', 'Night'],
@@ -485,7 +486,7 @@ ar: {
   labels: ['أهلاً', 'النافذة', 'اللوحة', 'نوتو', 'الجرّة', 'الإطارات', 'أشياؤه', 'الخطط'],
   roomAlt: 'غرفة نوتو في الليل: لوحته، والقمر في النافذة، وجرّة النجوم الورقية، وإطارات من وفيت لهم بوعدك',
   home: { noto: 'أهلاً بك في غرفتي. تعال أريك المكان.', body: 'تكلّم أو اكتب أو صوّر صفحة، فيحوّل ActionNote صوتك إلى نص ومهام بتذكيرات، بالعربية أو الإنجليزية أو بهما معاً في جملة واحدة.', tour: 'ادخل', stars: 'كل مراجعات App Store حتى الآن', free: 'نص اجتماعاتك مجاني، يُكتب على آيفون 11 وأحدث.', hint: 'مرّر أو اسحب أو استخدم الأسهم لتتجول. واضغط على أي شيء في الغرفة.' },
-  launch: { tag: 'عرض الإطلاق', kicker: 'عرض الإطلاق', title: '⁨Pro⁩ السنوي بـ ‎$19.99 لسنتك الأولى', body: 'للمشتركين الجدد حتى 30 نوفمبر، ثم ‎$29.99 سنوياً. يمكنك الإلغاء في أي وقت.', lifetime: 'و⁨Pro⁩ مدى الحياة بـ ‎$39.99 بدلاً من ‎$69.99.', days: function (n) { return n <= 1 ? 'آخر يوم' : n === 2 ? 'باقي يومان' : n <= 10 ? 'باقي ' + n + ' أيام' : 'باقي ' + n + ' يوماً'; }, see: 'شاهد الخطط', noto: 'بيني وبينك: ⁨Pro⁩ السنوي بـ ‎$19.99 لسنتك الأولى، حتى 30 نوفمبر.' },
+  launch: { tag: 'عرض الإطلاق', kicker: 'عرض الإطلاق', title: '⁨Pro⁩ السنوي بـ ‎$19.99 لسنتك الأولى', body: 'للمشتركين الجدد حتى 30 نوفمبر، ثم ‎$29.99 سنوياً. يمكنك الإلغاء في أي وقت.', lifetime: 'و⁨Pro⁩ مدى الحياة بـ ‎$39.99 بدلاً من ‎$69.99.', ltTitle: '⁨Pro⁩ مدى الحياة بـ ‎$39.99 مرة واحدة', ltBody: 'بدلاً من ‎$69.99. ادفع مرة واحدة واحصل على ⁨Pro⁩ للأبد بلا اشتراك.', days: function (n) { return n <= 1 ? 'آخر يوم' : n === 2 ? 'باقي يومان' : n <= 10 ? 'باقي ' + n + ' أيام' : 'باقي ' + n + ' يوماً'; }, see: 'شاهد الخطط', noto: 'بيني وبينك: ⁨Pro⁩ السنوي بـ ‎$19.99 لسنتك الأولى، حتى 30 نوفمبر.' },
   poke: 'ألكز نوتو', pokes: ['أنا نوتو. أحفظ وعودك.', 'هذا يدغدغني.', 'أنا من ورق، بلطف من فضلك.', 'حسناً حسناً، أنا صاحٍ.'],
   win: { sample: '«ذكّرني بكرة الصبح أكلّم البنك، and send Omar the slides»', other: 'Read this site in English', sky: 'جرّب نافذتي' },
   skies: ['الصباح', 'النهار', 'المساء', 'الليل'],
@@ -732,7 +733,7 @@ function renderChrome() {
   lt.hidden = !launchOn(); lt.textContent = L.launch.tag; lt.dataset.go = String(STOPS.length - 1);
   cp.hidden = !launchOn() || STOPS[st.stop].id !== 'welcome';
   if (!cp.hidden) cp.innerHTML = '<span class="pin" aria-hidden="true"></span><p class="k">' + esc(L.launch.kicker) + '</p><p class="t">' + esc(L.launch.title) + '</p><p class="b">' + esc(L.launch.body) + '</p>' +
-    (LAUNCH.lifetime ? '<p class="b">' + esc(L.launch.lifetime) + '</p>' : '') +
+    (LAUNCH.lifetime ? '<p class="t lt">' + esc(L.launch.ltTitle) + '</p><p class="b">' + esc(L.launch.ltBody) + '</p>' : '') +
     '<p class="d">' + esc(L.launch.days(daysLeft())) + '</p><button type="button" class="btn gold" data-go="' + (STOPS.length - 1) + '">' + esc(L.launch.see) + '</button>';
   $('trail').setAttribute('aria-label', L.trail);
   $('prev').setAttribute('aria-label', L.prev); $('prev').textContent = L.prevArrow;
