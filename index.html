@@ -556,6 +556,7 @@ var LAUNCH = { ends: Date.parse('2026-11-30T23:59:00+04:00'), lifetime: true };
 function launchOn() { return Date.now() < LAUNCH.ends; }
 function daysLeft() { return Math.max(1, Math.ceil((LAUNCH.ends - Date.now()) / 864e5)); }
 var st = {
+  cpOpen: null,
   stop: 0, lang: qs.get('lang') === 'ar' || qs.get('lang') === 'en' ? qs.get('lang') : (saved || ((navigator.language || '').toLowerCase().indexOf('ar') === 0 ? 'ar' : 'en')),
   way: 0, yearly: true, played: false, stars: 46, gold: 9, dropAt: -1, goldAt: [], ask: 0, thing: 0, sky: 3, ticked: [], say: null, pokes: 0, fly: 0
 };
@@ -730,8 +731,10 @@ function renderChrome() {
   $('toAr').setAttribute('aria-pressed', String(st.lang === 'ar'));
   $('topCta').textContent = L.storeShort;
   var lt = $('launchTag'), cp = $('coupon');
-  lt.hidden = !launchOn(); lt.textContent = L.launch.tag; lt.dataset.go = String(STOPS.length - 1);
-  cp.hidden = !launchOn() || STOPS[st.stop].id !== 'welcome';
+  lt.hidden = !launchOn(); lt.textContent = L.launch.tag; lt.removeAttribute('data-go'); lt.dataset.coupon = '1';
+  // The tag only opens and closes the card; the card's own button goes to the plans.
+  cp.hidden = !launchOn() || !(st.cpOpen === null ? STOPS[st.stop].id === 'welcome' : st.cpOpen);
+  lt.setAttribute('aria-expanded', String(!cp.hidden)); lt.setAttribute('aria-controls', 'coupon');
   if (!cp.hidden) cp.innerHTML = '<span class="pin" aria-hidden="true"></span><p class="k">' + esc(L.launch.kicker) + '</p><p class="t">' + esc(L.launch.title) + '</p><p class="b">' + esc(L.launch.body) + '</p>' +
     (LAUNCH.lifetime ? '<p class="t lt">' + esc(L.launch.ltTitle) + '</p><p class="b">' + esc(L.launch.ltBody) + '</p>' : '') +
     '<p class="d">' + esc(L.launch.days(daysLeft())) + '</p><button type="button" class="btn gold" data-go="' + (STOPS.length - 1) + '">' + esc(L.launch.see) + '</button>';
@@ -765,7 +768,7 @@ function go(i, fromHash) {
   var n = STOPS.length;
   i = Math.max(0, Math.min(n - 1, i));
   if (i === st.stop) return;
-  st.stop = i; st.played = false; st.say = null;
+  st.stop = i; st.played = false; st.say = null; st.cpOpen = null;
   camera(); renderWorld(); renderPanel(true); renderTrail(); renderChrome();
   if (!fromHash) { try { history.replaceState(null, '', i === 0 ? location.pathname + location.search : '#' + STOPS[i].id); } catch (e) {} }
   if (window.umami) { try { umami.track('stop', { stop: STOPS[i].id }); } catch (e) {} }
@@ -783,6 +786,7 @@ document.addEventListener('click', function (e) {
   var b = e.target.closest('button,[data-go]');
   if (!b) return;
   var d = b.dataset, L = t();
+  if (d.coupon) { st.cpOpen = $('coupon').hidden; renderChrome(); return; }
   if (d.go !== undefined) { go(+d.go); return; }
   if (d.nav) { go(st.stop + 1); return; }
   if (d.tick !== undefined) { tick(+d.tick); return; }
