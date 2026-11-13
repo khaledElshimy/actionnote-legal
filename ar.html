@@ -551,8 +551,8 @@ try { saved = localStorage.getItem('an.lang'); } catch (e) {}
 var qs = new URLSearchParams(location.search);
 // The launch offer (13 to 30 Nov 2026). Only what is on sale is said: Pro
 // yearly's first year at $19.99 is live in the App Store; Pro Lifetime at
-// $39.99 waits for Apple's approval of its launch product, then lifetime: true.
-var LAUNCH = { ends: Date.parse('2026-11-30T23:59:00+04:00'), lifetime: false };
+// Apple approved the $39.99 launch product on 14 Nov 2026. It goes off sale after 30 November with the rest.
+var LAUNCH = { ends: Date.parse('2026-11-30T23:59:00+04:00'), lifetime: true };
 function launchOn() { return Date.now() < LAUNCH.ends; }
 function daysLeft() { return Math.max(1, Math.ceil((LAUNCH.ends - Date.now()) / 864e5)); }
 var st = {
