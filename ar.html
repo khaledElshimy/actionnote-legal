@@ -120,6 +120,8 @@ a{color:var(--lav)}
 .hero .lead{margin:16px 0 0;font-size:18px;line-height:1.5;color:var(--muted);max-width:520px}
 .hero .row{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px;align-items:center}
 .hero .stars{margin:16px 0 0;font-size:14px;color:var(--dim)}
+.freenote{display:inline-block;margin:14px 0 0;padding:8px 14px 9px;background:#FAEBA0;color:#2A2416;border-radius:4px;font:700 20px/1.2 Caveat,cursive;transform:rotate(-1.5deg);box-shadow:0 10px 22px rgba(0,0,0,.35)}
+[dir=rtl] .freenote{font:700 15px/1.4 'IBM Plex Sans Arabic',sans-serif;transform:rotate(1.5deg)}
 .hero .stars span{color:var(--gold);letter-spacing:2px}
 .hint{margin:10px 0 0;font-size:13px;color:var(--dim)}
 .rise{display:inline-block;animation:rise .8s cubic-bezier(.2,.9,.3,1.2) both}
@@ -180,6 +182,10 @@ a{color:var(--lav)}
 .plan{background:var(--card);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:22px 20px;animation:fadeup .55s both}
 .plan:nth-child(2){animation-delay:.08s}.plan:nth-child(3){animation-delay:.16s}.plan:nth-child(4){animation-delay:.24s}
 .plan.hot{border:2px solid var(--pin)}
+.period{display:inline-flex;gap:4px;margin-top:18px;padding:4px;border-radius:999px;background:var(--card);border:1px solid rgba(255,255,255,.1)}
+.period button{border:0;border-radius:999px;padding:8px 18px;font:700 14px Archivo,sans-serif;background:transparent;color:var(--muted);cursor:pointer}
+.period button[aria-pressed=true]{background:#F6F5F0;color:#1B1B2B}
+.plan .intro{margin:6px 0 0;padding:6px 10px;border-radius:8px;background:#FAEBA0;color:#2A2416;font-size:13px;font-weight:700}
 .plan.life{background:#F6F5F0;color:#1B1B2B;border:0;transform:rotate(.8deg)}
 [dir=rtl] .plan.life{transform:rotate(-.8deg)}
 .plan .n{margin:0;font-size:19px;font-weight:900}
@@ -381,7 +387,7 @@ en: {
   nextTo: function (l) { return 'Next: ' + l + ' →'; }, finish: 'See the plans →',
   labels: ['Welcome', 'The window', 'The board', 'Noto', 'The jar', 'The frames', 'His things', 'Plans'],
   roomAlt: "Noto's room at night: his corkboard, the moon in the window, his jar of paper stars and the frames for people you kept your word to",
-  home: { noto: 'Welcome to my room. Let me show you around.', body: 'Talk, type or snap a page. ActionNote turns your voice to text and actions with reminders, in Arabic, English or both in one sentence.', tour: 'Walk in', stars: 'every App Store review so far', hint: 'Scroll, swipe or use the arrow keys to walk around. Tap anything in the room.' },
+  home: { noto: 'Welcome to my room. Let me show you around.', body: 'Talk, type or snap a page. ActionNote turns your voice to text and actions with reminders, in Arabic, English or both in one sentence.', tour: 'Walk in', stars: 'every App Store review so far', free: 'Meeting transcripts are free, written on iPhone 11 and later.', hint: 'Scroll, swipe or use the arrow keys to walk around. Tap anything in the room.' },
   poke: 'Poke Noto', pokes: ["Hi, I'm Noto. I keep your word.", 'That tickles.', "I'm made of paper. Gently!", 'Ok, ok, I am awake.'],
   win: { sample: '“Remind me بكرة الصبح to call the bank, and send Omar the slides.”', other: 'Read this site in العربية', sky: 'TRY MY WINDOW' },
   skies: ['Morning', 'Day', 'Evening', 'Night'],
@@ -415,11 +421,11 @@ en: {
     nook: { kicker: 'EARNED, NEVER SOLD', title: 'I get things from what you really do.', body: 'Each thing in my room shows how to get it, and nothing is ever taken away.', noto: 'I can finally read at night.', img: 'en-minutes', alt: 'Meeting minutes app: minutes with who said what' }
   },
   wayImgs: ['en-today', 'en-capture', 'en-photo', 'en-mixed'],
-  plans: { noto: 'Like it here? Move in.', h1: 'start free,', h2: 'upgrade when you want', foot: 'Prices in US dollars; your App Store shows your own currency. Cancel any time in your App Store settings.', rev: 'What people say', faq: 'Questions', idea: 'Tell me what to build next' },
+  plans: { noto: 'Like it here? Move in.', h1: 'start free,', h2: 'upgrade when you want', period: ['Monthly', 'Yearly'], foot: 'Prices in US dollars; your App Store shows your own currency. Cancel any time in your App Store settings.', rev: 'What people say', faq: 'Questions', idea: 'Tell me what to build next' },
   planList: [
     { n: 'Free', p: '$0', per: '', a: '', items: ['5 notes organized a month', 'Your first note needs no account', 'Meetings recorded and transcribed on your iPhone', 'Noto, his room and the jar'] },
-    { n: 'Pro', p: '$4.99', per: 'a month', a: 'or $29.99 a year', hot: true, items: ['Unlimited notes organized', 'Polish your words', '30 minutes of cloud meetings a month'] },
-    { n: 'Pro+', p: '$12.99', per: 'a month', a: 'or $79.99 a year', items: ['Everything in Pro', 'Meetings with speakers, minutes and decisions', '900 minutes of cloud meetings a month'] },
+    { n: 'Pro', p: '$4.99', per: 'a month', a: 'or $29.99 a year', y: { p: '$29.99', per: 'a year', a: '$2.50 a month, billed yearly', intro: 'New subscribers: $19.99 for your first year, until 30 November' }, hot: true, items: ['Unlimited notes organized', 'Polish your words', '30 minutes of cloud meetings a month'] },
+    { n: 'Pro+', p: '$12.99', per: 'a month', a: 'or $79.99 a year', y: { p: '$79.99', per: 'a year', a: '$6.67 a month, billed yearly' }, items: ['Everything in Pro', 'Meetings with speakers, minutes and decisions', '900 minutes of cloud meetings a month'] },
     { n: 'Pro Lifetime', p: '$69.99', per: 'once', a: '', life: true, items: ['Pro for good, no subscription', 'Restore on any iPhone or iPad with your Apple ID'] }
   ],
   where: ['App Store review · Egypt', 'App Store review · UAE', 'App Store review · Egypt'],
@@ -446,7 +452,7 @@ ar: {
   nextTo: function (l) { return 'التالي: ' + l + ' ←'; }, finish: 'شاهد الخطط ←',
   labels: ['أهلاً', 'النافذة', 'اللوحة', 'نوتو', 'الجرّة', 'الإطارات', 'أشياؤه', 'الخطط'],
   roomAlt: 'غرفة نوتو في الليل: لوحته، والقمر في النافذة، وجرّة النجوم الورقية، وإطارات من وفيت لهم بوعدك',
-  home: { noto: 'أهلاً بك في غرفتي. تعال أريك المكان.', body: 'تكلّم أو اكتب أو صوّر صفحة، فيحوّل ActionNote صوتك إلى نص ومهام بتذكيرات، بالعربية أو الإنجليزية أو بهما معاً في جملة واحدة.', tour: 'ادخل', stars: 'كل مراجعات App Store حتى الآن', hint: 'مرّر أو اسحب أو استخدم الأسهم لتتجول. واضغط على أي شيء في الغرفة.' },
+  home: { noto: 'أهلاً بك في غرفتي. تعال أريك المكان.', body: 'تكلّم أو اكتب أو صوّر صفحة، فيحوّل ActionNote صوتك إلى نص ومهام بتذكيرات، بالعربية أو الإنجليزية أو بهما معاً في جملة واحدة.', tour: 'ادخل', stars: 'كل مراجعات App Store حتى الآن', free: 'نص اجتماعاتك مجاني، يُكتب على آيفون 11 وأحدث.', hint: 'مرّر أو اسحب أو استخدم الأسهم لتتجول. واضغط على أي شيء في الغرفة.' },
   poke: 'ألكز نوتو', pokes: ['أنا نوتو. أحفظ وعودك.', 'هذا يدغدغني.', 'أنا من ورق، بلطف من فضلك.', 'حسناً حسناً، أنا صاحٍ.'],
   win: { sample: '«ذكّرني بكرة الصبح أكلّم البنك، and send Omar the slides»', other: 'Read this site in English', sky: 'جرّب نافذتي' },
   skies: ['الصباح', 'النهار', 'المساء', 'الليل'],
@@ -480,11 +486,11 @@ ar: {
     nook: { kicker: 'تُكسب ولا تُباع', title: 'أكسب أشياء مما تفعله فعلاً.', body: 'كل شيء في غرفتي يقول كيف تحصل عليه، ولا يُسحب منك شيء أبداً.', noto: 'أخيراً أستطيع القراءة في الليل.', img: 'ar-minutes', alt: 'محضر اجتماع ومن قال ماذا' }
   },
   wayImgs: ['ar-today', 'ar-capture', 'en-photo', 'ar-mixed'],
-  plans: { noto: 'أعجبك المكان؟ اسكن معي.', h1: 'ابدأ مجاناً،', h2: 'وطوّر خطتك متى أردت', foot: 'الأسعار بالدولار الأمريكي، ويعرض لك App Store عملتك. يمكنك الإلغاء في أي وقت من إعدادات App Store.', rev: 'ماذا يقول الناس', faq: 'أسئلة', idea: 'قل لي ماذا أبني بعد ذلك' },
+  plans: { noto: 'أعجبك المكان؟ اسكن معي.', h1: 'ابدأ مجاناً،', h2: 'وطوّر خطتك متى أردت', period: ['شهري', 'سنوي'], foot: 'الأسعار بالدولار الأمريكي، ويعرض لك App Store عملتك. يمكنك الإلغاء في أي وقت من إعدادات App Store.', rev: 'ماذا يقول الناس', faq: 'أسئلة', idea: 'قل لي ماذا أبني بعد ذلك' },
   planList: [
     { n: 'مجاني', p: '$0', per: '', a: '', items: ['10 ملاحظات منظمة في الشهر', 'ملاحظتك الأولى بلا حساب', 'تسجيل الاجتماعات ونصّها على آيفونك', 'نوتو وغرفته والجرّة'] },
-    { n: 'Pro', p: '$4.99', per: 'في الشهر', a: 'أو ‎$29.99 في السنة', hot: true, items: ['ملاحظات منظمة بلا حدود', 'تحسين صياغة كلماتك', '30 دقيقة اجتماعات سحابية في الشهر'] },
-    { n: 'Pro+', p: '$12.99', per: 'في الشهر', a: 'أو ‎$79.99 في السنة', items: ['كل ما في Pro', 'اجتماعات بأسماء المتحدثين ومحاضر وقرارات', '900 دقيقة اجتماعات سحابية في الشهر'] },
+    { n: 'Pro', p: '$4.99', per: 'في الشهر', a: 'أو ‎$29.99 في السنة', y: { p: '$29.99', per: 'في السنة', a: '‎$2.50 في الشهر، تُدفع سنوياً', intro: 'للمشتركين الجدد: ‎$19.99 لسنتك الأولى، حتى 30 نوفمبر' }, hot: true, items: ['ملاحظات منظمة بلا حدود', 'تحسين صياغة كلماتك', '30 دقيقة اجتماعات سحابية في الشهر'] },
+    { n: '⁨Pro+⁩', p: '$12.99', per: 'في الشهر', a: 'أو ‎$79.99 في السنة', y: { p: '$79.99', per: 'في السنة', a: '‎$6.67 في الشهر، تُدفع سنوياً' }, items: ['كل ما في Pro', 'اجتماعات بأسماء المتحدثين ومحاضر وقرارات', '900 دقيقة اجتماعات سحابية في الشهر'] },
     { n: 'Pro مدى الحياة', p: '$69.99', per: 'مرة واحدة', a: '', life: true, items: ['Pro للأبد بلا اشتراك', 'استعده على أي آيفون أو آيباد بحساب Apple نفسه'] }
   ],
   where: ['مراجعة في App Store · مصر', 'مراجعة في App Store · الإمارات', 'مراجعة في App Store · مصر'],
@@ -511,7 +517,7 @@ try { saved = localStorage.getItem('an.lang'); } catch (e) {}
 var qs = new URLSearchParams(location.search);
 var st = {
   stop: 0, lang: qs.get('lang') === 'en' ? 'en' : 'ar',
-  way: 0, played: false, stars: 46, gold: 9, dropAt: -1, goldAt: [], ask: 0, thing: 0, sky: 3, ticked: [], say: null, pokes: 0, fly: 0
+  way: 0, yearly: true, played: false, stars: 46, gold: 9, dropAt: -1, goldAt: [], ask: 0, thing: 0, sky: 3, ticked: [], say: null, pokes: 0, fly: 0
 };
 var hashMap = { pricing: 'plans', home: 'welcome', '': 'welcome' };
 function stopFromHash() {
@@ -604,7 +610,7 @@ function renderPanel(animate) {
     p.className = 'panel hero';
     p.innerHTML = '<p class="hand">' + esc(L.home.noto) + '</p>' +
       '<h1><span class="rise">' + esc(L.l1) + '</span><br><b class="rise" style="animation-delay:.25s">' + esc(L.l2) + '</b></h1>' +
-      '<p class="lead">' + esc(L.home.body) + '</p>' +
+      '<p class="lead">' + esc(L.home.body) + '</p><p class="freenote">' + esc(L.home.free) + '</p>' +
       '<div class="row"><button type="button" class="btn gold" data-nav="1">' + esc(L.home.tour) + '</button><a class="cta" data-umami-event="store-click" data-umami-event-place="hero" href="' + STORE + '">' + esc(L.store) + '</a></div>' +
       '<p class="stars"><span>★★★★★</span> ' + esc(L.home.stars) + '</p><p class="hint">' + esc(L.home.hint) + '</p>';
     return;
@@ -613,8 +619,11 @@ function renderPanel(animate) {
     p.className = 'panel wide plans';
     var P = L.plans;
     p.innerHTML = '<p class="noto">' + esc(P.noto) + '</p><h2>' + esc(P.h1) + ' <b>' + esc(P.h2) + '</b></h2>' +
+      '<div class="period" role="group">' + P.period.map(function (w, i) { return '<button type="button" data-period="' + i + '" aria-pressed="' + ((i === 1) === st.yearly) + '">' + esc(w) + '</button>'; }).join('') + '</div>' +
       '<div class="grid">' + L.planList.map(function (x) {
-        return '<div class="plan' + (x.hot ? ' hot' : '') + (x.life ? ' life' : '') + '"><p class="n">' + esc(x.n) + '</p><p class="p">' + esc(x.p) + ' <span>' + esc(x.per) + '</span></p><p class="a">' + esc(x.a) + '</p><ul>' +
+        // The first year price is said only while the offer runs (13 to 30 Nov 2026).
+        var v = st.yearly && x.y ? x.y : x, intro = v.intro && Date.now() < Date.parse('2026-11-30T23:59:00+04:00') ? '<p class="intro">' + esc(v.intro) + '</p>' : '';
+        return '<div class="plan' + (x.hot ? ' hot' : '') + (x.life ? ' life' : '') + '"><p class="n">' + esc(x.n) + '</p><p class="p">' + esc(v.p) + ' <span>' + esc(v.per) + '</span></p><p class="a">' + esc(v.a) + '</p>' + intro + '<ul>' +
           x.items.map(function (i) { return '<li>' + esc(i) + '</li>'; }).join('') + '</ul></div>'; }).join('') + '</div>' +
       '<p class="note2">' + esc(P.foot) + '</p>' +
       '<h3>' + esc(P.rev) + '</h3><div class="grid">' + REVIEWS.map(function (r, i) {
@@ -733,6 +742,7 @@ document.addEventListener('click', function (e) {
   if (d.poke) { st.pokes++; setSay(L.pokes[(st.pokes - 1) % L.pokes.length]); retrigger($('pokeImg'), 'wobble'); return; }
   if (d.sky !== undefined) { st.sky = +d.sky; setChips('skyChips', st.sky); renderWorld(); setSay(L.skyLines[st.sky]); return; }
   if (d.flip) { setLang(st.lang === 'ar' ? 'en' : 'ar'); return; }
+  if (d.period !== undefined) { st.yearly = d.period === '1'; renderPanel(false); return; }
   if (d.way !== undefined) { st.way = +d.way; setChips('wayChips', st.way); $('wayLine').textContent = L.ways[st.way].line; retrigger($('wayLine'), 'pop'); $('phone').src = IMG + L.wayImgs[st.way] + '.jpg'; return; }
   if (d.refill) { st.ticked = []; st.say = null; renderStickies(); updateBits(); setSay(L.pages.board.noto); return; }
   if (d.play) { st.played = true; updateBits(); return; }
