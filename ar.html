@@ -204,6 +204,7 @@ a{color:var(--lav)}
   .hero .lead{margin-top:10px}
   .couponmini{display:block;margin:10px 0 0;border:0;cursor:pointer;text-align:start;background:#FAEBA0;color:#2A2416;border-radius:4px;padding:9px 12px;font:600 14px/1.35 Archivo,sans-serif;outline:2px dashed rgba(42,36,22,.35);outline-offset:-5px;transform:rotate(1deg);box-shadow:0 8px 18px rgba(0,0,0,.35)}
   .couponmini b{display:block;font:900 10px Archivo,sans-serif;letter-spacing:1.4px;color:#B4235E}
+  .couponmini i.lt{display:block;font-style:normal;font-weight:800;margin-top:3px}
   .couponmini span{display:inline-block;margin-top:4px;padding:2px 8px;border-radius:999px;background:#2A2416;color:#FAEBA0;font-size:11px;font-weight:800}
   .ar .couponmini{font-family:'IBM Plex Sans Arabic',sans-serif;transform:rotate(-1deg)}
 }
@@ -486,7 +487,7 @@ ar: {
   labels: ['أهلاً', 'النافذة', 'اللوحة', 'نوتو', 'الجرّة', 'الإطارات', 'أشياؤه', 'الخطط'],
   roomAlt: 'غرفة نوتو في الليل: لوحته، والقمر في النافذة، وجرّة النجوم الورقية، وإطارات من وفيت لهم بوعدك',
   home: { noto: 'أهلاً بك في غرفتي. تعال أريك المكان.', body: 'تكلّم أو اكتب أو صوّر صفحة، فيحوّل ActionNote صوتك إلى نص ومهام بتذكيرات، بالعربية أو الإنجليزية أو بهما معاً في جملة واحدة.', tour: 'ادخل', stars: 'كل مراجعات App Store حتى الآن', free: 'نص اجتماعاتك مجاني، يُكتب على آيفون 11 وأحدث.', hint: 'مرّر أو اسحب أو استخدم الأسهم لتتجول. واضغط على أي شيء في الغرفة.' },
-  launch: { tag: 'عرض الإطلاق', kicker: 'عرض الإطلاق', title: '⁨Pro⁩ السنوي بـ ‎$19.99 لسنتك الأولى', body: 'للمشتركين الجدد حتى 30 نوفمبر، ثم ‎$29.99 سنوياً. يمكنك الإلغاء في أي وقت.', lifetime: 'و⁨Pro⁩ مدى الحياة بـ ‎$39.99 بدلاً من ‎$69.99.', days: function (n) { return n <= 1 ? 'آخر يوم' : n === 2 ? 'باقي يومان' : n <= 10 ? 'باقي ' + n + ' أيام' : 'باقي ' + n + ' يوماً'; }, see: 'شاهد الخطط', noto: 'بيني وبينك: ⁨Pro⁩ السنوي بـ ‎$19.99 لسنتك الأولى، حتى 30 نوفمبر.' },
+  launch: { tag: 'عرض الإطلاق', kicker: 'عرض الإطلاق', title: '⁨Pro⁩ السنوي بـ ‎$19.99 لسنتك الأولى', body: 'للمشتركين الجدد حتى 30 نوفمبر، ثم ‎$29.99 سنوياً. يمكنك الإلغاء في أي وقت.', lifetime: 'و⁨Pro⁩ مدى الحياة بـ ‎$39.99 بدلاً من ‎$69.99.', days: function (n) { return n <= 1 ? 'آخر يوم' : n === 2 ? 'باقي يومان' : n <= 10 ? 'باقي ' + n + ' أيام' : 'باقي ' + n + ' يوماً'; }, see: 'شاهد الخطط', noto: 'بيني وبينك: ⁨Pro⁩ السنوي بـ ‎$19.99 لسنتك الأولى، حتى 30 نوفمبر.', notoLt: 'بيني وبينك، حتى 30 نوفمبر: ⁨Pro⁩ السنوي بـ ‎$19.99 لسنتك الأولى، و⁨Pro⁩ مدى الحياة بـ ‎$39.99 بدلاً من ‎$69.99.', mini: '⁨Pro⁩ مدى الحياة بـ ‎$39.99 بدلاً من ‎$69.99' },
   poke: 'ألكز نوتو', pokes: ['أنا نوتو. أحفظ وعودك.', 'هذا يدغدغني.', 'أنا من ورق، بلطف من فضلك.', 'حسناً حسناً، أنا صاحٍ.'],
   win: { sample: '«ذكّرني بكرة الصبح أكلّم البنك، and send Omar the slides»', other: 'Read this site in English', sky: 'جرّب نافذتي' },
   skies: ['الصباح', 'النهار', 'المساء', 'الليل'],
@@ -651,7 +652,7 @@ function renderPanel(animate) {
     p.innerHTML = '<p class="hand">' + esc(L.home.noto) + '</p>' +
       '<h1><span class="rise">' + esc(L.l1) + '</span><br><b class="rise" style="animation-delay:.25s">' + esc(L.l2) + '</b></h1>' +
       '<p class="lead">' + esc(L.home.body) + '</p><p class="freenote">' + esc(L.home.free) + '</p>' +
-      (launchOn() ? '<button type="button" class="couponmini" data-go="' + (STOPS.length - 1) + '"><b>' + esc(L.launch.kicker) + '</b> ' + esc(L.launch.title) + ' <span>' + esc(L.launch.days(daysLeft())) + '</span></button>' : '') +
+      (launchOn() ? '<button type="button" class="couponmini" data-go="' + (STOPS.length - 1) + '"><b>' + esc(L.launch.kicker) + '</b> ' + esc(L.launch.title) + (LAUNCH.lifetime ? '<i class="lt">' + esc(L.launch.mini) + '</i>' : '') + ' <span>' + esc(L.launch.days(daysLeft())) + '</span></button>' : '') +
       '<div class="row"><button type="button" class="btn gold" data-nav="1">' + esc(L.home.tour) + '</button><a class="cta" data-umami-event="store-click" data-umami-event-place="hero" href="' + STORE + '">' + esc(L.store) + '</a></div>' +
       '<p class="stars"><span>★★★★★</span> ' + esc(L.home.stars) + '</p><p class="hint">' + esc(L.home.hint) + '</p>';
     return;
@@ -786,7 +787,7 @@ document.addEventListener('click', function (e) {
   if (d.go !== undefined) { go(+d.go); return; }
   if (d.nav) { go(st.stop + 1); return; }
   if (d.tick !== undefined) { tick(+d.tick); return; }
-  if (d.poke) { var lines = launchOn() ? [L.launch.noto].concat(L.pokes) : L.pokes; st.pokes++; setSay(lines[(st.pokes - 1) % lines.length]); retrigger($('pokeImg'), 'wobble'); return; }
+  if (d.poke) { var lines = launchOn() ? [LAUNCH.lifetime ? L.launch.notoLt : L.launch.noto].concat(L.pokes) : L.pokes; st.pokes++; setSay(lines[(st.pokes - 1) % lines.length]); retrigger($('pokeImg'), 'wobble'); return; }
   if (d.sky !== undefined) { st.sky = +d.sky; setChips('skyChips', st.sky); renderWorld(); setSay(L.skyLines[st.sky]); return; }
   if (d.flip) { setLang(st.lang === 'ar' ? 'en' : 'ar'); return; }
   if (d.period !== undefined) { st.yearly = d.period === '1'; renderPanel(false); return; }

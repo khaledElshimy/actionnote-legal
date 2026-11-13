@@ -202,6 +202,7 @@ a{color:var(--lav)}
   .hero .lead{margin-top:10px}
   .couponmini{display:block;margin:10px 0 0;border:0;cursor:pointer;text-align:start;background:#FAEBA0;color:#2A2416;border-radius:4px;padding:9px 12px;font:600 14px/1.35 Archivo,sans-serif;outline:2px dashed rgba(42,36,22,.35);outline-offset:-5px;transform:rotate(1deg);box-shadow:0 8px 18px rgba(0,0,0,.35)}
   .couponmini b{display:block;font:900 10px Archivo,sans-serif;letter-spacing:1.4px;color:#B4235E}
+  .couponmini i.lt{display:block;font-style:normal;font-weight:800;margin-top:3px}
   .couponmini span{display:inline-block;margin-top:4px;padding:2px 8px;border-radius:999px;background:#2A2416;color:#FAEBA0;font-size:11px;font-weight:800}
   .ar .couponmini{font-family:'IBM Plex Sans Arabic',sans-serif;transform:rotate(-1deg)}
 }
@@ -418,7 +419,7 @@ en: {
   labels: ['Welcome', 'The window', 'The board', 'Noto', 'The jar', 'The frames', 'His things', 'Plans'],
   roomAlt: "Noto's room at night: his corkboard, the moon in the window, his jar of paper stars and the frames for people you kept your word to",
   home: { noto: 'Welcome to my room. Let me show you around.', body: 'Talk, type or snap a page. ActionNote turns your voice to text and actions with reminders, in Arabic, English or both in one sentence.', tour: 'Walk in', stars: 'every App Store review so far', free: 'Meeting transcripts are free, written on iPhone 11 and later.', hint: 'Scroll, swipe or use the arrow keys to walk around. Tap anything in the room.' },
-  launch: { tag: 'Launch offer', kicker: 'LAUNCH OFFER', title: 'Pro yearly, $19.99 for your first year', body: 'For new subscribers, until 30 November. Then $29.99 a year. Cancel any time.', lifetime: 'And Pro Lifetime at $39.99 instead of $69.99.', days: function (n) { return n <= 1 ? 'Last day' : n + ' days left'; }, see: 'See the plans', noto: 'Psst. Pro yearly is $19.99 for your first year, until 30 November.' },
+  launch: { tag: 'Launch offer', kicker: 'LAUNCH OFFER', title: 'Pro yearly, $19.99 for your first year', body: 'For new subscribers, until 30 November. Then $29.99 a year. Cancel any time.', lifetime: 'And Pro Lifetime at $39.99 instead of $69.99.', days: function (n) { return n <= 1 ? 'Last day' : n + ' days left'; }, see: 'See the plans', noto: 'Psst. Pro yearly is $19.99 for your first year, until 30 November.', notoLt: 'Psst. Until 30 November: Pro yearly is $19.99 for your first year, and Pro Lifetime is $39.99 instead of $69.99.', mini: 'Pro Lifetime $39.99, not $69.99' },
   poke: 'Poke Noto', pokes: ["Hi, I'm Noto. I keep your word.", 'That tickles.', "I'm made of paper. Gently!", 'Ok, ok, I am awake.'],
   win: { sample: '“Remind me بكرة الصبح to call the bank, and send Omar the slides.”', other: 'Read this site in العربية', sky: 'TRY MY WINDOW' },
   skies: ['Morning', 'Day', 'Evening', 'Night'],
@@ -649,7 +650,7 @@ function renderPanel(animate) {
     p.innerHTML = '<p class="hand">' + esc(L.home.noto) + '</p>' +
       '<h1><span class="rise">' + esc(L.l1) + '</span><br><b class="rise" style="animation-delay:.25s">' + esc(L.l2) + '</b></h1>' +
       '<p class="lead">' + esc(L.home.body) + '</p><p class="freenote">' + esc(L.home.free) + '</p>' +
-      (launchOn() ? '<button type="button" class="couponmini" data-go="' + (STOPS.length - 1) + '"><b>' + esc(L.launch.kicker) + '</b> ' + esc(L.launch.title) + ' <span>' + esc(L.launch.days(daysLeft())) + '</span></button>' : '') +
+      (launchOn() ? '<button type="button" class="couponmini" data-go="' + (STOPS.length - 1) + '"><b>' + esc(L.launch.kicker) + '</b> ' + esc(L.launch.title) + (LAUNCH.lifetime ? '<i class="lt">' + esc(L.launch.mini) + '</i>' : '') + ' <span>' + esc(L.launch.days(daysLeft())) + '</span></button>' : '') +
       '<div class="row"><button type="button" class="btn gold" data-nav="1">' + esc(L.home.tour) + '</button><a class="cta" data-umami-event="store-click" data-umami-event-place="hero" href="' + STORE + '">' + esc(L.store) + '</a></div>' +
       '<p class="stars"><span>★★★★★</span> ' + esc(L.home.stars) + '</p><p class="hint">' + esc(L.home.hint) + '</p>';
     return;
@@ -784,7 +785,7 @@ document.addEventListener('click', function (e) {
   if (d.go !== undefined) { go(+d.go); return; }
   if (d.nav) { go(st.stop + 1); return; }
   if (d.tick !== undefined) { tick(+d.tick); return; }
-  if (d.poke) { var lines = launchOn() ? [L.launch.noto].concat(L.pokes) : L.pokes; st.pokes++; setSay(lines[(st.pokes - 1) % lines.length]); retrigger($('pokeImg'), 'wobble'); return; }
+  if (d.poke) { var lines = launchOn() ? [LAUNCH.lifetime ? L.launch.notoLt : L.launch.noto].concat(L.pokes) : L.pokes; st.pokes++; setSay(lines[(st.pokes - 1) % lines.length]); retrigger($('pokeImg'), 'wobble'); return; }
   if (d.sky !== undefined) { st.sky = +d.sky; setChips('skyChips', st.sky); renderWorld(); setSay(L.skyLines[st.sky]); return; }
   if (d.flip) { setLang(st.lang === 'ar' ? 'en' : 'ar'); return; }
   if (d.period !== undefined) { st.yearly = d.period === '1'; renderPanel(false); return; }
