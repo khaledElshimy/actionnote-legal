@@ -75,7 +75,10 @@ tr.zero td{color:var(--dim)}
 .more{background:none;border:0;color:var(--bl);font:inherit;font-size:13px;font-weight:600;cursor:pointer;padding:8px 0 0}
 .bar{height:8px;border-radius:5px;background:linear-gradient(90deg,var(--vi),var(--pk),var(--am));min-width:2px}
 #onb td:last-child,#onb th:last-child{width:34%}
-canvas{max-height:260px}
+/* charts fill their card and follow its size */
+.card.ch{display:flex;flex-direction:column}
+.chart{position:relative;flex:1 1 auto;min-height:clamp(220px,30vw,300px)}
+.chart canvas{position:absolute;inset:0}
 .fb{border-bottom:1px solid var(--line);padding:10px 0}.fb:last-child{border-bottom:0}.fb .m{margin-top:4px}
 .stars{color:var(--am);letter-spacing:1px}
 
@@ -112,8 +115,8 @@ canvas{max-height:260px}
  <div class="card"><h3>From ad to purchase <span class="src">ad views and taps from Apple Ads, the rest from the app</span></h3><div class="funnel" id="funnel"></div></div>
  <div class="grid" id="kpis"></div>
  <div class="two">
-  <div class="card"><h3><span class="every">Every day</span></h3><canvas id="cDaily"></canvas></div>
-  <div class="card"><h3>Paywall and purchases</h3><canvas id="cMoney"></canvas></div>
+  <div class="card ch"><h3><span class="every">Every day</span></h3><div class="chart"><canvas id="cDaily"></canvas></div></div>
+  <div class="card ch"><h3>Paywall and purchases</h3><div class="chart"><canvas id="cMoney"></canvas></div></div>
  </div>
 </section>
 
@@ -123,8 +126,8 @@ canvas{max-height:260px}
   <div class="gt">Apple Ads <span class="src" data-src="ads"></span></div>
   <div class="grid" id="adsKpis"></div>
   <div class="two">
-   <div class="card"><h3>Taps and installs per day</h3><canvas id="cAds"></canvas></div>
-   <div class="card"><h3>Spend per day ($)</h3><canvas id="cAdsSpend"></canvas></div>
+   <div class="card ch"><h3>Taps and installs per day</h3><div class="chart"><canvas id="cAds"></canvas></div></div>
+   <div class="card ch"><h3>Spend per day ($)</h3><div class="chart"><canvas id="cAdsSpend"></canvas></div></div>
   </div>
   <div class="card tw"><h3>Campaigns</h3><table id="adsCamp"></table></div>
   <div class="two">
@@ -140,7 +143,7 @@ canvas{max-height:260px}
   <div class="gt">App Store <span class="src" data-src="asc"></span></div>
   <div class="grid" id="asKpis"></div>
   <div class="two">
-   <div class="card"><h3>Per day</h3><canvas id="cAs"></canvas></div>
+   <div class="card ch"><h3>Per day</h3><div class="chart"><canvas id="cAs"></canvas></div></div>
    <div class="card tw"><h3>Countries</h3><table id="asCountry"></table></div>
   </div>
   <div class="card tw"><h3>Ratings <span class="src">now, by country</span></h3><table id="asRate"></table></div>
@@ -221,7 +224,7 @@ canvas{max-height:260px}
 // The numbers come from the owner-dashboard function, which answers only this
 // site and only with the password. This page holds no data of its own.
 const FN='https://vsqlyitcuawszzxyeueg.supabase.co/functions/v1/owner-dashboard';
-var D, charts=[];
+var D, CH={}, loadedAt=0;
 const PER={'24h':'Last 24 hours','7d':'Last 7 days','30d':'Last 30 days','since2':'Since 2.0 (8 Nov)'};
 const SECTIONS=['overview','growth','newpeople','usage','money','health','audience','feedback'];
 function getW(){try{const w=localStorage.getItem('an.owner.w');return PER[w]?w:'since2'}catch(e){return'since2'}}
@@ -231,13 +234,14 @@ const $=id=>document.getElementById(id);
 function getPw(){try{return localStorage.getItem('an.owner.pw')||''}catch(e){return''}}
 function setPw(v){try{v?localStorage.setItem('an.owner.pw',v):localStorage.removeItem('an.owner.pw')}catch(e){}}
 function gate(m){$('dash').hidden=true;$('gate').hidden=false;$('msg').textContent=m||'';$('pw').focus()}
-async function load(w){
-  const pw=getPw(); if(!pw) return gate();
-  if(w){win=w;setW(w)} tabsOn(); $('msg').textContent='Loading…'; $('dash').classList.add('busy');
-  let r; try{r=await fetch(FN+'?w='+win,{headers:{Authorization:'Basic '+btoa('owner:'+pw)},cache:'no-store'})}catch(e){return gate('Could not reach the server. Try again.')}
+async function load(w,quiet){
+  const pw=getPw(); if(!pw) return quiet||gate();
+  if(w){win=w;setW(w)} tabsOn(); if(!quiet){$('msg').textContent='Loading…'; $('dash').classList.add('busy')}
+  let r; try{r=await fetch(FN+'?w='+win,{headers:{Authorization:'Basic '+btoa('owner:'+pw)},cache:'no-store'})}catch(e){return quiet||gate('Could not reach the server. Try again.')}
+  if(quiet&&!r.ok&&r.status!==401) return;
   if(r.status===401){setPw('');return gate('That password did not work.')}
   if(!r.ok) return gate('The server said '+r.status+'. Try again in a minute.');
-  D=await r.json(); show(D);
+  D=await r.json(); loadedAt=Date.now(); show(D);
 }
 function show(data){D=data;$('dash').classList.remove('busy');$('gate').hidden=true;$('dash').hidden=false;draw();route()}
 $('gate').addEventListener('submit',e=>{e.preventDefault();setPw($('pw').value.trim());load()});
@@ -249,6 +253,9 @@ document.addEventListener('click',e=>{const b=e.target.closest('#tabs button');i
 function route(){const s=SECTIONS.includes(location.hash.slice(1))?location.hash.slice(1):'overview';
   SECTIONS.forEach(x=>$('s-'+x).hidden=x!==s);document.querySelectorAll('#nav a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+s))}
 window.addEventListener('hashchange',()=>{route();window.scrollTo({top:0})});
+// new numbers arrive every 10 minutes on the server; fetch them while the page is open, and on coming back to it
+setInterval(()=>{if(!document.hidden&&!$('dash').hidden)load(null,true)},5*60000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!$('dash').hidden&&Date.now()-loadedAt>2*60000)load(null,true)});
 
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const pct=(a,b)=>b?Math.round(100*a/b)+'%':'';
@@ -273,7 +280,6 @@ function table(id,head,rows,left,cap,zero){const n=i=>i&&!(left||[]).includes(i)
 const stat=(l,v,s,dl)=>'<div class=stat><div class=k>'+l+'</div><div class=v>'+v+(dl||'')+'</div>'+(s?'<div class=s>'+s+'</div>':'')+'</div>';
 
 function draw(){
-charts.forEach(c=>c.destroy()); charts=[];
 const k=D.kpis,P=k.prev, AD=D.ads||{}, AT=AD.totals||{}, AS=D.appstore||{}, AST=AS.totals||{}, M=D.money||{}, F=M.funnel||{}, Q=D.quality||{}, J=D.jobs||{};
 $('per').textContent=PER[D.window]||'';
 document.querySelectorAll('.every').forEach(e=>e.textContent=D.unit==='hour'?'Every hour':'Every day');
@@ -302,17 +308,41 @@ $('kpis').innerHTML=stat('Active people',k.active,'',dl('active'))+stat('Notes o
 
 Chart.defaults.color='#93A1B3';Chart.defaults.borderColor='#26325F';Chart.defaults.font.family='-apple-system,BlinkMacSystemFont,Inter,sans-serif';
 const L=(D.daily||[]).map(x=>{const d=new Date(x.at);return D.unit==='hour'?String(d.getHours()).padStart(2,'0')+':00':d.toLocaleDateString('en-GB',{day:'numeric',month:'short'})});
-const whole={y:{beginAtZero:true,ticks:{precision:0}},x:{grid:{display:false}}};
-const opt={plugins:{legend:{position:'bottom',labels:{boxWidth:10,boxHeight:10}}},interaction:{mode:'index',intersect:false},scales:whole,maintainAspectRatio:true};
 const day=s=>new Date(s+'T12:00:00Z').toLocaleDateString('en-GB',{day:'numeric',month:'short'});
-charts.push(new Chart($('cDaily'),{type:'line',data:{labels:L,datasets:[{label:'New installs',data:D.daily.map(x=>x.installs),borderColor:'#8B5CF6',backgroundColor:'#8B5CF6',tension:.3},{label:'Active',data:D.daily.map(x=>x.active),borderColor:'#6AA8FF',backgroundColor:'#6AA8FF',tension:.3},{label:'Notes',data:D.daily.map(x=>x.notes),borderColor:'#4ADE80',backgroundColor:'#4ADE80',tension:.3}]},options:opt}));
-charts.push(new Chart($('cMoney'),{type:'bar',data:{labels:L,datasets:[{label:'Paywall shown',data:D.daily.map(x=>x.paywalls),backgroundColor:'#EC4899',borderRadius:4},{label:'Purchases',data:D.daily.map(x=>x.purchases),backgroundColor:'#F59E0B',borderRadius:4}]},options:opt}));
+// Every chart is built here. It fills its card, follows the window size, and on new numbers moves to them in place.
+const chartFont=()=>innerWidth<520?11:12;
+function chart(id,type,labels,sets,o){o=o||{};const many=labels.length>20;
+ const ds=sets.map(x=>type==='bar'?{label:x.l,data:x.d,backgroundColor:x.c,borderRadius:4,maxBarThickness:34,categoryPercentage:.8,barPercentage:.9}
+  :{label:x.l,data:x.d,borderColor:x.c,backgroundColor:x.c,cubicInterpolationMode:'monotone',borderWidth:2,pointRadius:many?0:3,pointHoverRadius:5,spanGaps:false});
+ const c=CH[id];
+ if(c&&c.config.type===type&&c.data.datasets.length===ds.length){c.data.labels=labels;ds.forEach((n,i)=>Object.assign(c.data.datasets[i],n));c.update();return}
+ if(c)c.destroy();
+ const y={beginAtZero:true,grace:'10%',ticks:{font:{size:chartFont()}}};
+ if(o.money)y.ticks.callback=v=>'$'+v;else y.ticks.precision=0;
+ const val=v=>v==null?'not reported yet':o.money?usd(v):v;
+ CH[id]=new Chart($(id),{type,data:{labels,datasets:ds},options:{responsive:true,maintainAspectRatio:false,resizeDelay:60,animation:{duration:450},
+  interaction:{mode:'index',intersect:false},
+  plugins:{legend:{display:sets.length>1,position:'bottom',labels:{boxWidth:10,boxHeight:10,font:{size:chartFont()}}},tooltip:{callbacks:{label:t=>' '+t.dataset.label+': '+val(t.parsed.y)}}},
+  scales:{x:{offset:type==='bar',grid:{display:false},ticks:{autoSkip:true,autoSkipPadding:14,maxRotation:0,font:{size:chartFont()}}},y}}});
+}
+// one label per calendar day with the empty days filled in, so a chart keeps its shape as days are added
+const ymd=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const appDays=D.unit==='hour'?[]:(D.daily||[]).map(x=>ymd(new Date(x.at)));
+function byDay(rows,keys,reportsLate){const have=(rows||[]).map(x=>x.day).sort();const all=appDays.concat(have).sort();
+ if(!all.length)return{labels:[],vals:keys.map(()=>[])};
+ const ds=[];for(let t=new Date(all[0]+'T12:00:00');ymd(t)<=all[all.length-1];t.setDate(t.getDate()+1))ds.push(ymd(t));
+ const m={};(rows||[]).forEach(x=>m[x.day]=x);const last=have[have.length-1];
+ // App Store reports arrive a day or two late: days after the newest report stay empty instead of showing a false zero
+ return{labels:ds.map(day),vals:keys.map(k=>ds.map(d=>m[d]?Number(m[d][k]||0):(reportsLate&&(!last||d>last)?null:0)))}}
+const DY=D.daily||[];
+chart('cDaily','line',L,[{l:'New installs',d:DY.map(x=>x.installs),c:'#8B5CF6'},{l:'Active',d:DY.map(x=>x.active),c:'#6AA8FF'},{l:'Notes',d:DY.map(x=>x.notes),c:'#4ADE80'}]);
+chart('cMoney','bar',L,[{l:'Paywall shown',d:DY.map(x=>x.paywalls),c:'#EC4899'},{l:'Purchases',d:DY.map(x=>x.purchases),c:'#F59E0B'}]);
 
 // ---- Growth: Apple Ads
 $('adsKpis').innerHTML=stat('Spend',usd(AT.spend))+stat('Ad views',AT.impressions||0)+stat('Taps',AT.taps||0,pct(AT.taps,AT.impressions)&&pct(AT.taps,AT.impressions)+' of views (TTR)')+stat('Installs',AT.installs||0,pct(AT.installs,AT.taps)&&pct(AT.installs,AT.taps)+' of taps')+stat('Cost per install',AT.installs?usd(AT.spend/AT.installs):'none yet')+stat('Cost per tap',AT.taps?usd(AT.spend/AT.taps):'none yet')+stat('Spend per new person with a note',k.activated?usd(AT.spend/k.activated):'none yet','all new people, not only from ads');
-const AL=(AD.daily||[]).map(x=>day(x.day));
-charts.push(new Chart($('cAds'),{type:'bar',data:{labels:AL,datasets:[{label:'Taps',data:(AD.daily||[]).map(x=>x.taps),backgroundColor:'#6AA8FF',borderRadius:4},{label:'Installs',data:(AD.daily||[]).map(x=>x.installs),backgroundColor:'#4ADE80',borderRadius:4}]},options:opt}));
-charts.push(new Chart($('cAdsSpend'),{type:'bar',data:{labels:AL,datasets:[{label:'Spend $',data:(AD.daily||[]).map(x=>x.spend),backgroundColor:'#EC4899',borderRadius:4}]},options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true},x:{grid:{display:false}}}}}));
+const AX=byDay(AD.daily,['taps','installs','spend']);
+chart('cAds','bar',AX.labels,[{l:'Taps',d:AX.vals[0],c:'#6AA8FF'},{l:'Installs',d:AX.vals[1],c:'#4ADE80'}]);
+chart('cAdsSpend','bar',AX.labels,[{l:'Spend',d:AX.vals[2],c:'#EC4899'}],{money:true});
 const ST={RUNNING:'Running',PAUSED:'Paused',ON_HOLD:'On hold',CAMPAIGN_ON_HOLD:'On hold',NOT_RUNNING:'Not running'};
 const camps=(AD.campaigns||[]).slice().sort((a,b)=>(b.spend||0)-(a.spend||0));
 table('adsCamp',['Campaign','State','Budget a day','Spend','Views','Taps','TTR','Installs','Per install'],camps.map(x=>[esc(x.name)+'<div class=sub>'+esc(x.countries)+' · '+(x.bidding==='MAX_CONVERSIONS'?'Maximize Conversions, target '+usd(x.target_cpa):'Manage Bids')+'</div>',ST[x.state]||esc(x.state),x.budget!=null?usd(x.budget):'',usd(x.spend),x.impressions,x.taps,pct(x.taps,x.impressions),x.installs,x.installs?usd(x.spend/x.installs):'']),[1],0,r=>!Number(String(r[3]).slice(1)));
@@ -328,7 +358,8 @@ const R=AS.ratings||[];
 const rc=R.reduce((a,x)=>a+(x.count||0),0), ravg=rc?R.reduce((a,x)=>a+(x.rating||0)*(x.count||0),0)/rc:0;
 const pro=Object.entries(AS.proceeds||{}).map(([c,v])=>esc(c)+' '+Number(v).toFixed(2)).join(' · ')||'0';
 $('asKpis').innerHTML=stat('Downloads',AST.downloads||0,'first time')+stat('Redownloads',AST.redownloads||0)+stat('Updates to 2',AST.updates||0)+stat('Rating',rc?ravg.toFixed(1)+' <span class=stars style="font-size:16px">★</span>':'none',rc?rc+' ratings':'')+stat('New ratings',AS.ratings_added||0,AS.ratings_since?'since '+esc(AS.ratings_since):'');
-charts.push(new Chart($('cAs'),{type:'bar',data:{labels:(AS.daily||[]).map(x=>day(x.day)),datasets:[{label:'Downloads',data:(AS.daily||[]).map(x=>x.downloads),backgroundColor:'#8B5CF6',borderRadius:4},{label:'Updates',data:(AS.daily||[]).map(x=>x.updates),backgroundColor:'#6AA8FF',borderRadius:4},{label:'Purchases',data:(AS.daily||[]).map(x=>x.purchases),backgroundColor:'#F59E0B',borderRadius:4}]},options:opt}));
+const SX=byDay(AS.daily,['downloads','updates','purchases'],true);
+chart('cAs','bar',SX.labels,[{l:'Downloads',d:SX.vals[0],c:'#8B5CF6'},{l:'Updates',d:SX.vals[1],c:'#6AA8FF'},{l:'Purchases',d:SX.vals[2],c:'#F59E0B'}]);
 table('asCountry',['Country','Downloads','Redownloads','Updates','Purchases'],(AS.countries||[]).map(x=>[esc(x.country),x.downloads||0,x.redownloads||0,x.updates||0,x.purchases||0]),0,8);
 table('asRate',['Country','Version','Rating','Ratings'],R.map(x=>[esc(x.country),esc(x.version),Number(x.rating).toFixed(1),x.count]));
 
