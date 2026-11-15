@@ -88,6 +88,36 @@ tr.zero td{color:var(--dim)}
 #gate button{background:var(--vi);color:#fff;border:0;border-radius:12px;padding:12px;font:inherit;font-weight:700;cursor:pointer}
 #msg{color:var(--am);min-height:1.4em}
 #dash.busy section{opacity:.45;transition:opacity .2s}
+
+/* people and feedback */
+.btn{background:var(--card2);color:var(--fg);border:1px solid var(--line);border-radius:10px;padding:6px 12px;font:inherit;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap}
+.btn:hover{border-color:var(--bl)}
+.filters{display:flex;gap:6px;flex-wrap:wrap}
+.filters button{background:var(--card);color:var(--mut);border:1px solid var(--line);border-radius:999px;padding:5px 11px;font:inherit;font-size:13px;font-weight:600;cursor:pointer}
+.filters button.on{background:var(--card2);color:var(--fg);border-color:var(--bl)}
+.filters button i{font-style:normal;color:var(--dim);margin-left:4px}
+.plist{display:flex;flex-direction:column;gap:10px}
+.person{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--c,var(--line));border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.person .hd{display:flex;gap:10px;align-items:flex-start;justify-content:space-between}.person .hd .who{flex:1}
+.person .who{display:flex;gap:8px;align-items:center;flex-wrap:wrap;min-width:0}
+.person .id{font:700 13px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--mut)}
+.chip{font-size:12px;font-weight:800;border-radius:999px;padding:2px 9px;color:#0B1226;background:var(--c,var(--mut))}
+.person dl{margin:0;display:grid;grid-template-columns:max-content 1fr;gap:4px 12px;font-size:14px}
+.person dt{color:var(--dim);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding-top:2px}
+.person dd{margin:0;min-width:0}
+.person dd.next{color:var(--fg);font-weight:600}
+.person .tag{font-size:11px;font-weight:700;color:var(--am);border:1px solid rgba(245,158,11,.5);border-radius:6px;padding:0 5px;margin-left:4px;white-space:nowrap}
+@media (max-width:520px){.person dl{grid-template-columns:1fr}.person dt{padding-top:6px}}
+.qa{display:flex;flex-direction:column;gap:4px;margin-top:6px}
+.qa div{display:flex;justify-content:space-between;gap:10px;font-size:14px}
+.qa div.key{font-weight:700}
+.yes,.no{font-size:12px;font-weight:800;border-radius:6px;padding:1px 8px;white-space:nowrap;align-self:flex-start}
+.yes{background:rgba(74,222,128,.16);color:var(--gr)}.no{background:rgba(245,158,11,.14);color:var(--am)}
+.fbc{border-bottom:1px solid var(--line);padding:12px 0;display:flex;flex-direction:column;gap:6px}.fbc:last-child{border-bottom:0}
+.fbc .hd{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.fbc .m{background:var(--card2);border-radius:10px;padding:8px 10px}
+#toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--gr);color:#06210f;font-weight:800;border-radius:999px;padding:8px 16px;z-index:20;opacity:0;transition:opacity .2s;pointer-events:none}
+#toast.on{opacity:1}
 </style></head><body>
 <form id="gate" hidden><h1>ActionNote numbers</h1><div class="sub">Owner only. The password stays on this device.</div>
 <input id="pw" type="password" autocomplete="current-password" placeholder="Password" required><button>Open</button><div id="msg"></div></form>
@@ -101,6 +131,7 @@ tr.zero td{color:var(--dim)}
 <nav><div class="in" id="nav">
  <a href="#overview">Overview <span class="n" id="nAttn" hidden></span></a>
  <a href="#growth">Growth</a>
+ <a href="#people">People <span class="n" id="nPpl" hidden></span></a>
  <a href="#newpeople">New people</a>
  <a href="#usage">Usage</a>
  <a href="#money">Money</a>
@@ -148,6 +179,14 @@ tr.zero td{color:var(--dim)}
   </div>
   <div class="card tw"><h3>Ratings <span class="src">now, by country</span></h3><table id="asRate"></table></div>
  </div>
+</section>
+
+<!-- PEOPLE -->
+<section id="s-people" hidden>
+ <div class="card"><div class="shead"><div><h2>Who is closest to paying</h2><div class="sub" id="pplSum"></div></div><button class="btn" id="pplCopyAll">Copy all</button></div>
+ <div class="filters" id="pplFilters" style="margin-top:12px"></div></div>
+ <div class="plist" id="ppl"></div>
+ <button class="more" id="pplMore" hidden></button>
 </section>
 
 <!-- NEW PEOPLE -->
@@ -214,7 +253,7 @@ tr.zero td{color:var(--dim)}
 <!-- FEEDBACK -->
 <section id="s-feedback" hidden>
  <div class="two">
-  <div class="card"><h3>In the app <span class="src">latest 20</span></h3><div id="fb"></div></div>
+  <div class="card"><div class="shead"><h3 style="margin:0">In the app <span class="src">latest 20</span></h3><button class="btn" id="fbCopyAll">Copy all</button></div><div id="fb"></div></div>
   <div class="card"><h3>App Store reviews <span class="src" data-src="asc"></span></h3><div id="asRev"></div></div>
  </div>
 </section>
@@ -226,7 +265,7 @@ tr.zero td{color:var(--dim)}
 const FN='https://vsqlyitcuawszzxyeueg.supabase.co/functions/v1/owner-dashboard';
 var D, CH={}, loadedAt=0;
 const PER={'24h':'Last 24 hours','7d':'Last 7 days','30d':'Last 30 days','since2':'Since 2.0 (8 Nov)'};
-const SECTIONS=['overview','growth','newpeople','usage','money','health','audience','feedback'];
+const SECTIONS=['overview','people','growth','newpeople','usage','money','health','audience','feedback'];
 function getW(){try{const w=localStorage.getItem('an.owner.w');return PER[w]?w:'since2'}catch(e){return'since2'}}
 function setW(w){try{localStorage.setItem('an.owner.w',w)}catch(e){}}
 var win=getW();
@@ -266,7 +305,7 @@ const NAMES={app_first_open:'Opened the app for the first time',onboarding_start
 const nm=e=>NAMES[e]||e;
 const MODEL={'iPhone12,1':'iPhone 11','iPhone12,3':'iPhone 11 Pro','iPhone12,5':'iPhone 11 Pro Max','iPhone12,8':'iPhone SE (2nd)','iPhone13,1':'iPhone 12 mini','iPhone13,2':'iPhone 12','iPhone13,3':'iPhone 12 Pro','iPhone13,4':'iPhone 12 Pro Max','iPhone14,2':'iPhone 13 Pro','iPhone14,3':'iPhone 13 Pro Max','iPhone14,4':'iPhone 13 mini','iPhone14,5':'iPhone 13','iPhone14,6':'iPhone SE (3rd)','iPhone14,7':'iPhone 14','iPhone14,8':'iPhone 14 Plus','iPhone15,2':'iPhone 14 Pro','iPhone15,3':'iPhone 14 Pro Max','iPhone15,4':'iPhone 15','iPhone15,5':'iPhone 15 Plus','iPhone16,1':'iPhone 15 Pro','iPhone16,2':'iPhone 15 Pro Max','iPhone17,1':'iPhone 16 Pro','iPhone17,2':'iPhone 16 Pro Max','iPhone17,3':'iPhone 16','iPhone17,4':'iPhone 16 Plus','iPhone17,5':'iPhone 16e','iPhone18,1':'iPhone 17 Pro','iPhone18,2':'iPhone 17 Pro Max','iPhone18,3':'iPhone 17','iPhone18,4':'iPhone Air'};
 const model=d=>MODEL[d]||(String(d||'').startsWith('iPad')?'iPad ('+d+')':d);
-const LANG={ar:'Arabic',en:'English',ru:'Russian',es:'Spanish',fr:'French',de:'German',tr:'Turkish',ur:'Urdu',hi:'Hindi',fa:'Persian',id:'Indonesian',pt:'Portuguese',it:'Italian'};
+const LANG={ar:'Arabic',en:'English',ru:'Russian',es:'Spanish',fr:'French',de:'German',tr:'Turkish',ur:'Urdu',hi:'Hindi',fa:'Persian',id:'Indonesian',pt:'Portuguese',it:'Italian',uz:'Uzbek',kk:'Kazakh',az:'Azerbaijani',bn:'Bengali',zh:'Chinese',ja:'Japanese',ko:'Korean',nl:'Dutch',pl:'Polish',uk:'Ukrainian',he:'Hebrew',ms:'Malay',sw:'Swahili',so:'Somali',ku:'Kurdish',ps:'Pashto'};
 
 // a table; rows past `cap` fold behind a "Show all" link
 function table(id,head,rows,left,cap,zero){const n=i=>i&&!(left||[]).includes(i)?' class=n':'';const el=$(id);
@@ -426,7 +465,11 @@ table('plan',['Plan','People'],(A.plans||[]).map(x=>[esc(x.plan),x.people]));
 
 // ---- Feedback
 const FB=D.feedback||[], RV=AS.reviews||[];
-$('fb').innerHTML=FB.length?FB.map(f=>'<div class=fb><div class=sub>'+esc(f.ts)+' · '+esc(f.v||'')+' · '+Object.entries(f.answers||{}).map(([a,v])=>esc(a)+': '+esc(v)).join(', ')+'</div>'+(f.message?'<div class=m>'+esc(f.message)+'</div>':'')+'</div>').join(''):'<span class=sub>No feedback yet</span>';
+$('fb').innerHTML=FB.length?FB.map((f,i)=>'<div class=fbc><div class=hd><div class=sub>'+esc(f.ts)+' · '+esc(f.v||'')+(f.id?' · <a href="#people" data-pid="'+esc(f.id)+'">person '+esc(f.id)+'</a>':'')+'</div><button class=btn data-copy-fb="'+i+'">Copy</button></div>'+
+  '<div class=qa>'+fbRows(f.answers).map(r=>'<div'+(r.key?' class=key':'')+'><span>'+esc(r.q)+'</span><span class='+(r.a?'yes':'no')+'>'+(r.a?'Yes':'No')+'</span></div>').join('')+'</div>'+
+  (f.message?'<div class=m>'+esc(f.message)+'</div>':'<div class="sub dim">No message written</div>')+'</div>').join(''):'<span class=sub>No feedback yet</span>';
+$('fbCopyAll').hidden=!FB.length;
+drawPeople();
 $('asRev').innerHTML=RV.length?RV.map(r=>'<div class=fb><div class=sub>'+esc(r.ts)+' · '+esc(r.territory||'')+' · <span class=stars>'+'★'.repeat(r.rating||0)+'</span></div><div class=m><b>'+esc(r.title||'')+'</b> '+esc(r.body||'')+'</div></div>').join(''):'<span class=sub>No written reviews yet</span>';
 $('nFb').textContent=FB.length+RV.length; $('nFb').hidden=!(FB.length+RV.length);
 
@@ -436,5 +479,97 @@ document.querySelectorAll('[data-src]').forEach(e=>{const x=SRC[e.dataset.src];e
 const stamp=(l,t,ok,err)=>'<span'+(ok===false?' style="color:var(--am)" title="'+esc(err||'')+'"':'')+'>'+l+' '+ago(t)+(ok===false?' (failed)':'')+'</span>';
 $('stamps').innerHTML=stamp('updated',D.refreshed_at||D.generated_at,true)+(J.apple_ads?.ok===false?' · '+stamp('Apple Ads',J.apple_ads.ts,false,J.apple_ads.error):'')+(J.app_store?.ok===false?' · '+stamp('App Store',J.app_store.ts,false,J.app_store.error):'');
 }
+
+// ---- People: one card per person since 2.0, whatever the tab says
+const FBQ=[['would_miss','Would be disappointed if ActionNote disappeared',1],['note_as_expected','Notes arrived the way they expected'],['transcript_seen','Opened “What you said” (their exact words)'],
+ ['ask_tried','Tried asking their notes'],['widget_added','Added the widget'],['brief_received','Gets the Morning Brief'],['multilingual','Switches language in the middle of a note']];
+function fbRows(a){a=a||{};const r=FBQ.filter(q=>a[q[0]]!=null).map(q=>({q:q[1],a:!!a[q[0]],key:!!q[2]}));
+ Object.keys(a).filter(k=>!FBQ.some(q=>q[0]===k)).forEach(k=>r.push({q:k,a:!!a[k]}));return r}
+function fbText(f){return 'Feedback '+f.ts+' · '+(f.v||'')+(f.id?' · person '+f.id:'')+'\n'+fbRows(f.answers).map(r=>'• '+r.q+': '+(r.a?'Yes':'No')).join('\n')+'\n'+(f.message?'Message: '+f.message:'No message written')}
+
+const CTX={onboarding_first_note:'after their first note',polish:'on Polish',today_banner:'from the Today banner',settings_plan:'from Settings',after_notes:'after their 3rd note',more_minutes:'for more meeting minutes',upgrade:'at the note limit',plan_card:'from the plan card',capture_paused:'when capture paused'};
+const PLAN={'com.actionnote.note.monthly':'Pro monthly','com.actionnote.note.annually':'Pro yearly','com.actionnote.proplus.monthly':'Pro+ monthly','com.actionnote.proplus.yearly':'Pro+ yearly','com.actionnote.pro.lifetime':'Lifetime','com.actionnote.pro.lifetime.launch':'Lifetime (launch price)'};
+const SRCN={text:'typed',voice:'voice',screenshot:'photo',photo:'photo',import:'imported audio',share:'shared in'};
+const plural=(n,a,b)=>a==='time'?(n===1?'once':n===2?'twice':n+' times'):n+' '+(n===1?a:(b||a+'s'));
+const when=t=>t?new Date(t).toLocaleString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}):'';
+const day=t=>t?new Date(t).toLocaleDateString('en-GB',{day:'numeric',month:'short'}):'';
+const NEW='needs building';
+// the launch prices end 30 Nov 23:59 Gulf time; after that the advice stops naming them
+const SALE=Date.now()<Date.parse('2026-11-30T23:59:00+04:00');
+const FIRSTYEAR=SALE?'the first year price (US $19.99 until 30 Nov)':'the yearly price';
+
+// the stage decides the colour, the order and what to do next; first match wins
+const STAGES=[
+ {k:'paying',l:'Paying',c:'var(--gr)',t:p=>p.bought,next:p=>['Already paying. Nothing to sell; keep them happy and listen to them.']},
+ {k:'tried',l:'Tried to buy',c:'var(--pk)',t:p=>p.started>0,next:p=>['Stopped at Apple’s payment sheet'+((p.result||[]).includes('cancelled')?' (cancelled)':'')+'.','Show '+FIRSTYEAR+' once more on their next open',NEW]},
+ {k:'picked',l:'Picked a plan',c:'var(--pk)',t:p=>(p.picked||[]).length>0,next:p=>{const m=(p.picked||[]).some(x=>/monthly/.test(x));return m?['Picked monthly, then stopped. Put '+FIRSTYEAR+' right beside monthly',NEW]:['Picked a plan, then stopped. Show '+FIRSTYEAR+' once more on their next open',NEW]}},
+ {k:'polish',l:'Wants Polish',c:'var(--vi)',t:p=>(p.paywall_ctx||[]).includes('polish'),next:p=>['Polish is the paid feature they reached for. Give a free taste (for example 3 polishes), then the paywall with '+FIRSTYEAR,NEW]},
+ {k:'meetings',l:'Meetings',c:'var(--bl)',t:p=>p.meetings>0,next:p=>['Pro+ when their 30 free minutes run out. The minutes prompt already offers it; check it reached them.']},
+ {k:'looking',l:'Looking',c:'var(--am)',t:p=>p.sale_tapped||p.lifetime_seen||p.paywall>=3,next:p=>['Looked at the offers more than once. The after 3 notes paywall in 2.0.2 will ask them again'+(p.notes>=3?' (they already have '+p.notes+' notes)':'')+'.']},
+ {k:'engaged',l:'Engaged',c:'var(--gr)',t:p=>p.notes>=3||p.days>=2,next:p=>{const a=['The after 3 notes paywall in 2.0.2 reaches them'+(p.notes>=3?'':' at their 3rd note')+'.'];if(!p.asks)a[0]+=' They have not tried Ask yet: it is the ✨ at the top of Today.';return a}},
+ {k:'one',l:'Made a note',c:'var(--mut)',t:p=>p.notes>0,next:p=>['Not ready to sell to. The goal is a second note on another day'+(p.reminders?'; they allowed reminders.':'.')]},
+ {k:'failed',l:'First note failed',c:'var(--am)',t:p=>p.failed>0,next:p=>['Their note failed before any worked. Check Health for the error first; nobody pays after a failure.']},
+ {k:'mic',l:'Microphone off',c:'var(--am)',t:p=>p.mic_denied,next:p=>['Said no to the microphone and never typed a note. Typing a note is the way in for them.']},
+ {k:'none',l:'No note yet',c:'var(--dim)',t:p=>true,next:p=>['Opened the app but never made a note. That is an onboarding problem, not a buying one.']}];
+const stageOf=p=>STAGES.find(s=>s.t(p));
+
+function didLine(p){const a=[];
+ if(p.notes){const s=Object.entries(p.sources||{}).sort((x,y)=>y[1]-x[1]).map(([k,n])=>n+' '+(SRCN[k]||k));a.push(plural(p.notes,'note')+' organized'+(s.length?' ('+s.join(', ')+')':''))}
+ if(p.failed)a.push(plural(p.failed,'note')+' failed');
+ if(p.done)a.push(plural(p.done,'action')+' ticked');
+ if(p.viewed)a.push('opened notes '+plural(p.viewed,'time'));
+ if(p.asks)a.push('asked '+plural(p.asks,'question'));
+ if(p.meetings)a.push(plural(p.meetings,'meeting'));
+ if(p.mic_denied)a.push('said no to the microphone');
+ a.push('active on '+plural(p.days,'day'));
+ return a.join(', ')}
+function signsLine(p){const a=[];
+ if(p.paywall){const c=(p.paywall_ctx||[]).map(x=>CTX[x]||x);a.push('saw the paywall '+plural(p.paywall,'time')+(c.length?' ('+c.join(', ')+')':''))}
+ if((p.picked||[]).length)a.push('picked '+p.picked.map(x=>PLAN[x]||x).join(' and '));
+ if(p.started)a.push('started paying '+plural(p.started,'time'));
+ if((p.result||[]).includes('cancelled'))a.push('cancelled at Apple’s sheet');
+ if(p.continue_free)a.push('tapped Continue free');
+ if(p.sale_tapped)a.push('tapped the sale banner');
+ if(p.lifetime_seen)a.push('looked at Lifetime');
+ if(p.bought)a.push('bought');
+ return a.join(', ')}
+function whoLine(p){return [LANG[p.lang]||p.lang,p.device?model(p.device):'',p.version?String(p.version).split(' ')[0]:'',p.signed_in?'signed in':'',p.push?'notifications on':''].filter(Boolean).join(' · ')}
+// advice is sentences, plus NEW when it is a rule the app does not have yet
+const sentences=n=>n.filter(x=>x!==NEW).map(x=>/[.!?]$/.test(x)?x:x+'.').join(' ');
+function nextHtml(n){return esc(sentences(n))+(n.includes(NEW)?' <span class=tag>'+NEW+'</span>':'')}
+function nextText(n){return sentences(n)+(n.includes(NEW)?' ('+NEW+')':'')}
+function personText(p){const s=stageOf(p),sg=signsLine(p);
+ return 'Person '+p.id+' · '+s.l+'\n'+(whoLine(p)?whoLine(p)+'\n':'')+'First seen '+when(p.first)+', last seen '+when(p.last)+'\n'+
+  'Did: '+didLine(p)+'\nBuying signs: '+(sg||'none yet')+'\nNext: '+nextText(s.next(p))+(p.feedback?'\n'+fbText(Object.assign({id:''},p.feedback)).replace(/^Feedback /,'Their feedback '):'')}
+
+var PF='all', PALL=false;
+function pplList(){const P=(D.people||[]).map(p=>Object.assign({},p,{_s:stageOf(p)}));
+ const rank=p=>STAGES.indexOf(p._s);return P.sort((a,b)=>rank(a)-rank(b)||new Date(b.last)-new Date(a.last))}
+function drawPeople(){const P=pplList();
+ const hot=P.filter(p=>['paying','tried','picked','polish','meetings','looking'].includes(p._s.k)).length;
+ $('nPpl').textContent=hot;$('nPpl').hidden=!hot;
+ $('pplSum').textContent=plural(P.length,'person','people')+' since 2.0, App Store build only. '+(hot?hot+' showed a sign of wanting to pay or use meetings.':'Nobody has shown a sign of wanting to pay yet.')+' The id is the start of the anonymous install id; the app has no names.';
+ const counts={};P.forEach(p=>counts[p._s.k]=(counts[p._s.k]||0)+1);
+ $('pplFilters').innerHTML='<button data-pf="all"'+(PF==='all'?' class=on':'')+'>Everyone<i>'+P.length+'</i></button>'+STAGES.filter(s=>counts[s.k]).map(s=>'<button data-pf="'+s.k+'"'+(PF===s.k?' class=on':'')+'>'+s.l+'<i>'+counts[s.k]+'</i></button>').join('');
+ const L=P.filter(p=>PF==='all'||p._s.k===PF), cap=PF==='all'&&!PALL?20:1e9;
+ $('ppl').innerHTML=L.length?L.slice(0,cap).map(p=>{const s=p._s,sg=signsLine(p);return '<div class=person id="p-'+esc(p.id)+'" style="--c:'+s.c+'"><div class=hd><div class=who><span class=chip>'+esc(s.l)+'</span><span class=id>'+esc(p.id)+'</span><span class=sub>'+esc(whoLine(p))+'</span></div><button class=btn data-copy-p="'+esc(p.id)+'">Copy</button></div>'+
+  '<dl><dt>Seen</dt><dd class=sub>first '+esc(when(p.first))+', last '+esc(ago(p.last))+'</dd><dt>Did</dt><dd>'+esc(didLine(p))+'</dd><dt>Buying signs</dt><dd'+(sg?'':' class="sub dim"')+'>'+esc(sg||'none yet')+'</dd><dt>Next</dt><dd class=next>'+nextHtml(s.next(p))+'</dd>'+
+  (p.feedback?'<dt>Feedback</dt><dd><div class=sub>'+esc(p.feedback.ts)+'</div><div class=qa>'+fbRows(p.feedback.answers).map(r=>'<div'+(r.key?' class=key':'')+'><span>'+esc(r.q)+'</span><span class='+(r.a?'yes':'no')+'>'+(r.a?'Yes':'No')+'</span></div>').join('')+'</div>'+(p.feedback.message?'<div class=m style="margin-top:6px">'+esc(p.feedback.message)+'</div>':'')+'</dd>':'')+'</dl></div>'}).join(''):'<div class="card sub">Nobody here yet</div>';
+ $('pplMore').hidden=!(L.length>cap);$('pplMore').textContent='Show all '+L.length}
+
+// copying: the clipboard when allowed, a hidden text box otherwise
+function toast(t){let e=$('toast');if(!e){e=document.createElement('div');e.id='toast';document.body.appendChild(e)}e.textContent=t;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('on'),1600)}
+function copy(text,what){const done=()=>toast('Copied '+what);
+ const old=()=>{const a=document.createElement('textarea');a.value=text;a.setAttribute('readonly','');a.style.cssText='position:fixed;opacity:0;top:0';document.body.appendChild(a);a.select();let ok=false;try{ok=document.execCommand('copy')}catch(e){}a.remove();ok?done():toast('Could not copy')};
+ if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(text).then(done,old);else old()}
+document.addEventListener('click',e=>{
+ const f=e.target.closest('[data-pf]');if(f){PF=f.dataset.pf;PALL=false;drawPeople();return}
+ if(e.target.id==='pplMore'){PALL=true;drawPeople();return}
+ const cp=e.target.closest('[data-copy-p]');if(cp){const p=(D.people||[]).find(x=>x.id===cp.dataset.copyP);if(p)copy(personText(p),'person '+p.id);return}
+ if(e.target.id==='pplCopyAll'){const L=pplList().filter(p=>PF==='all'||p._s.k===PF);copy(L.map(personText).join('\n\n'),plural(L.length,'person','people'));return}
+ const cf=e.target.closest('[data-copy-fb]');if(cf){copy(fbText(D.feedback[+cf.dataset.copyFb]),'feedback');return}
+ if(e.target.id==='fbCopyAll'){copy((D.feedback||[]).map(fbText).join('\n\n'),'all feedback');return}
+ const pid=e.target.closest('[data-pid]');if(pid){e.preventDefault();PF='all';PALL=true;location.hash='people';setTimeout(()=>{drawPeople();window.scrollTo({top:0});const el=$('p-'+pid.dataset.pid);if(el){el.scrollIntoView({block:'center'});el.style.borderColor='var(--bl)'}},150)}
+});
 load();
 </script></body></html>
