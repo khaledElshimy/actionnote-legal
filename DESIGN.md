@@ -1,4 +1,4 @@
-# ActionNote web design system — "The Ledger"
+# NotoMix web design system — "The Ledger"
 
 Adopted Aug 14, 2026 (replaced "Neon Signal"). Master spec lives in the app
 repo: `docs/DESIGN-LEDGER.md`. This file is the web summary.

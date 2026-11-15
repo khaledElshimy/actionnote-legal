@@ -1,4 +1,4 @@
-// Where ActionNote lives outside the app. One list for every page.
+// Where NotoMix lives outside the app. One list for every page.
 //
 // Instagram has two accounts: actionnote.arab for the Arab countries and for
 // anyone reading in Arabic, actionnote0 for everyone else. The country comes
@@ -38,7 +38,7 @@
   }
 
   function iconOnly(l) {
-    return '<a class="an-soc-i" href="' + l.href + '" target="_blank" rel="noopener" aria-label="ActionNote on ' + l.name + '" title="' + l.name + '" data-umami-event="social-click" data-umami-event-place="' + l.key + '-top">' +
+    return '<a class="an-soc-i" href="' + l.href + '" target="_blank" rel="noopener" aria-label="NotoMix on ' + l.name + '" title="' + l.name + '" data-umami-event="social-click" data-umami-event-place="' + l.key + '-top">' +
       '<svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">' + ICON[l.key] + '</svg></a>';
   }
 

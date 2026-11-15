@@ -1,4 +1,4 @@
-/* Country, language and App Store prices for getactionnote.com.
+/* Country, language and App Store prices for notomix.app.
    The country comes from the phone's own time zone (nothing is sent anywhere),
    then from the region in its language setting. ?cc=AE forces one, for testing.
    Prices are Apple's own price for each App Store country, read from App Store

@@ -1,6 +1,6 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow">
-<title>ActionNote numbers</title>
+<title>NotoMix numbers</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
 :root{--bg:#0B1226;--card:#141D3B;--card2:#1A2550;--line:#26325F;--fg:#F6F5F0;--mut:#93A1B3;--dim:#64708A;--vi:#8B5CF6;--pk:#EC4899;--am:#F59E0B;--gr:#4ADE80;--bl:#6AA8FF;color-scheme:dark}
@@ -119,12 +119,12 @@ tr.zero td{color:var(--dim)}
 #toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--gr);color:#06210f;font-weight:800;border-radius:999px;padding:8px 16px;z-index:20;opacity:0;transition:opacity .2s;pointer-events:none}
 #toast.on{opacity:1}
 </style></head><body>
-<form id="gate" hidden><h1>ActionNote numbers</h1><div class="sub">Owner only. The password stays on this device.</div>
+<form id="gate" hidden><h1>NotoMix numbers</h1><div class="sub">Owner only. The password stays on this device.</div>
 <input id="pw" type="password" autocomplete="current-password" placeholder="Password" required><button>Open</button><div id="msg"></div></form>
 
 <div id="dash" class="wrap0" hidden>
 <div class="top">
- <div><h1>ActionNote numbers</h1><div class="sub"><span id="per"></span> · version 2 · <span id="stamps"></span> · <a href="#" id="out">Sign out</a></div></div>
+ <div><h1>NotoMix numbers</h1><div class="sub"><span id="per"></span> · version 2 · <span id="stamps"></span> · <a href="#" id="out">Sign out</a></div></div>
  <div class="win" id="tabs"><button data-w="24h">24h</button><button data-w="7d">7d</button><button data-w="30d">30d</button><button data-w="since2">Since 2.0</button></div>
 </div>
 
@@ -495,7 +495,7 @@ $('stamps').innerHTML=stamp('updated',D.refreshed_at||D.generated_at,true)+(J.ap
 }
 
 // ---- People: one card per person since 2.0, whatever the tab says
-const FBQ=[['would_miss','Would be disappointed if ActionNote disappeared',1],['note_as_expected','Notes arrived the way they expected'],['transcript_seen','Opened “What you said” (their exact words)'],
+const FBQ=[['would_miss','Would be disappointed if NotoMix disappeared',1],['note_as_expected','Notes arrived the way they expected'],['transcript_seen','Opened “What you said” (their exact words)'],
  ['ask_tried','Tried asking their notes'],['widget_added','Added the widget'],['brief_received','Gets the Morning Brief'],['multilingual','Switches language in the middle of a note']];
 function fbRows(a){a=a||{};const r=FBQ.filter(q=>a[q[0]]!=null).map(q=>({q:q[1],a:!!a[q[0]],key:!!q[2]}));
  Object.keys(a).filter(k=>!FBQ.some(q=>q[0]===k)).forEach(k=>r.push({q:k,a:!!a[k]}));return r}

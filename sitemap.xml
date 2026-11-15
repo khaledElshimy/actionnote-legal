@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://getactionnote.com/</loc><priority>1.0</priority></url>
-  <url><loc>https://getactionnote.com/lectures.html</loc><priority>0.8</priority></url>
-  <url><loc>https://getactionnote.com/meetings.html</loc><priority>0.8</priority></url>
-  <url><loc>https://getactionnote.com/support.html</loc><priority>0.5</priority></url>
-  <url><loc>https://getactionnote.com/privacy.html</loc><priority>0.3</priority></url>
-  <url><loc>https://getactionnote.com/terms.html</loc><priority>0.3</priority></url>
-  <url><loc>https://getactionnote.com/guides.html</loc></url>
+  <url><loc>https://notomix.app/</loc><priority>1.0</priority></url>
+  <url><loc>https://notomix.app/lectures.html</loc><priority>0.8</priority></url>
+  <url><loc>https://notomix.app/meetings.html</loc><priority>0.8</priority></url>
+  <url><loc>https://notomix.app/support.html</loc><priority>0.5</priority></url>
+  <url><loc>https://notomix.app/privacy.html</loc><priority>0.3</priority></url>
+  <url><loc>https://notomix.app/terms.html</loc><priority>0.3</priority></url>
+  <url><loc>https://notomix.app/guides.html</loc></url>
 <url>
-<loc>https://getactionnote.com/ar.html</loc>
+<loc>https://notomix.app/ar.html</loc>
 <priority>0.9</priority>
 </url>
 <url>
-<loc>https://getactionnote.com/lectures-ar.html</loc>
+<loc>https://notomix.app/lectures-ar.html</loc>
 <priority>0.8</priority>
 </url>
 <url>
-<loc>https://getactionnote.com/meetings-ar.html</loc>
+<loc>https://notomix.app/meetings-ar.html</loc>
 <priority>0.8</priority>
 </url>
 </urlset>
