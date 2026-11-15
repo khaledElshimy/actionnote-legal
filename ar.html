@@ -218,6 +218,9 @@ a{color:var(--lav)}
 .plan .n{margin:0;font-size:19px;font-weight:900}
 .plan .p{margin:8px 0 0;font-size:32px;font-weight:900;letter-spacing:-1px}
 .plan .p span{font-size:14px;font-weight:600;opacity:.7}
+/* Local currencies run longer than $4.99 (AED 119.99, EGP 1,499.99): smaller, and the period never splits. */
+.plan .p.mid{font-size:27px;letter-spacing:-.8px}.plan .p.long{font-size:23px;letter-spacing:-.6px}
+.plan .p span{white-space:nowrap;display:inline-block}
 .plan .a{margin:2px 0 0;font-size:13px;color:#4ADE80;font-weight:600;min-height:1em}
 .plan ul{margin:12px 0 0;padding-inline-start:18px;font-size:14px;line-height:1.7;color:var(--muted)}
 .plan.life ul{color:#3A4152}
@@ -374,6 +377,7 @@ noscript .ns{position:relative;z-index:9;max-width:720px;margin:0 auto;padding:1
 </div>
 <div id="toast" role="status"></div>
 
+<script src="assets/locale.js"></script>
 <script>
 (function(){
 'use strict';
@@ -458,7 +462,7 @@ en: {
   wayImgs: ['en-today', 'en-capture', 'en-photo', 'en-mixed'],
   plans: { noto: 'Like it here? Move in.', h1: 'start free,', h2: 'upgrade when you want', period: ['Monthly', 'Yearly'], foot: 'Prices in US dollars; your App Store shows your own currency. Cancel any time in your App Store settings.', rev: 'What people say', faq: 'Questions', idea: 'Tell me what to build next' },
   planList: [
-    { n: 'Free', p: '$0', per: '', a: '', items: ['5 notes organized a month', 'Your first note needs no account', 'Meetings recorded and transcribed on your iPhone', 'Noto, his room and the jar'] },
+    { n: 'Free', p: '$0', per: '', a: '', items: ['10 notes organized a month', 'Your first note needs no account', 'Meetings recorded and transcribed on your iPhone', 'Noto, his room and the jar'] },
     { n: 'Pro', p: '$4.99', per: 'a month', a: 'or $29.99 a year', y: { p: '$29.99', per: 'a year', a: '$2.50 a month, billed yearly', intro: 'New subscribers: $19.99 for your first year, until 30 November' }, hot: true, items: ['Unlimited notes organized', 'Polish your words', '30 minutes of cloud meetings a month'] },
     { n: 'Pro+', p: '$12.99', per: 'a month', a: 'or $79.99 a year', y: { p: '$79.99', per: 'a year', a: '$6.67 a month, billed yearly' }, items: ['Everything in Pro', 'Meetings with speakers, minutes and decisions', '900 minutes of cloud meetings a month'] },
     { n: 'Pro Lifetime', p: '$69.99', per: 'once', a: '', launch: { p: '$39.99', a: 'Launch price, instead of $69.99' }, life: true, items: ['Pro for good, no subscription', 'Restore on any iPhone or iPad with your Apple ID'] }
@@ -548,6 +552,12 @@ ar: {
 };
 
 // ---------- state ----------
+// Prices in the visitor's own App Store currency (assets/locale.js).
+if (window.ANLocale) {
+  ANLocale.walk(T.en, 'en'); ANLocale.walk(T.ar, 'ar');
+  T.en.plans.foot = ANLocale.foot('en', T.en.plans.foot);
+  T.ar.plans.foot = ANLocale.foot('ar', T.ar.plans.foot);
+}
 var saved = null;
 try { saved = localStorage.getItem('an.lang'); } catch (e) {}
 var qs = new URLSearchParams(location.search);
@@ -667,7 +677,7 @@ function renderPanel(animate) {
       '<div class="grid">' + L.planList.map(function (x) {
         // The first year price is said only while the offer runs (13 to 30 Nov 2026).
         var v = x.launch && LAUNCH.lifetime && launchOn() ? { p: x.launch.p, per: x.per, a: x.launch.a } : st.yearly && x.y ? x.y : x, intro = v.intro && launchOn() ? '<p class="intro">' + esc(v.intro) + '</p>' : '';
-        return '<div class="plan' + (x.hot ? ' hot' : '') + (x.life ? ' life' : '') + '"><p class="n">' + esc(x.n) + '</p><p class="p">' + esc(v.p) + ' <span>' + esc(v.per) + '</span></p><p class="a">' + esc(v.a) + '</p>' + intro + '<ul>' +
+        return '<div class="plan' + (x.hot ? ' hot' : '') + (x.life ? ' life' : '') + '"><p class="n">' + esc(x.n) + '</p><p class="p' + (v.p.length > 10 ? ' long' : v.p.length > 8 ? ' mid' : '') + '">' + esc(v.p) + ' <span>' + esc(v.per) + '</span></p><p class="a">' + esc(v.a) + '</p>' + intro + '<ul>' +
           x.items.map(function (i) { return '<li>' + esc(i) + '</li>'; }).join('') + '</ul></div>'; }).join('') + '</div>' +
       '<p class="note2">' + esc(P.foot) + '</p>' +
       '<h3>' + esc(P.rev) + '</h3><div class="grid">' + REVIEWS.map(function (r, i) {
