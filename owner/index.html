@@ -132,6 +132,7 @@ tr.zero td{color:var(--dim)}
  <a href="#overview">Overview <span class="n" id="nAttn" hidden></span></a>
  <a href="#growth">Growth</a>
  <a href="#people">People <span class="n" id="nPpl" hidden></span></a>
+ <a href="#gifts">Gifts</a>
  <a href="#newpeople">New people</a>
  <a href="#usage">Usage</a>
  <a href="#money">Money</a>
@@ -187,6 +188,18 @@ tr.zero td{color:var(--dim)}
  <div class="filters" id="pplFilters" style="margin-top:12px"></div></div>
  <div class="plist" id="ppl"></div>
  <button class="more" id="pplMore" hidden></button>
+</section>
+
+<!-- GIFTS -->
+<section id="s-gifts" hidden>
+ <div class="shead"><div><h2>Noto's gifts</h2><div class="sub">The envelope, the wheel and the scratch card, since they began. Every tab shows the same.</div></div><button class="btn" id="giftCopy">Copy</button></div>
+ <div class="card"><h3>From seeing a game to paying</h3><div class="funnel" id="giftFunnel"></div></div>
+ <div class="grid" id="giftKpis"></div>
+ <div class="two">
+  <div class="card tw"><h3>By game</h3><table id="giftGames"></table></div>
+  <div class="card tw"><h3>By prize <span class="src">chance from the server, change it there</span></h3><table id="giftPrizes"></table></div>
+ </div>
+ <div class="card tw"><h3>Latest plays</h3><table id="giftRecent"></table></div>
 </section>
 
 <!-- NEW PEOPLE -->
@@ -265,7 +278,7 @@ tr.zero td{color:var(--dim)}
 const FN='https://vsqlyitcuawszzxyeueg.supabase.co/functions/v1/owner-dashboard';
 var D, CH={}, loadedAt=0;
 const PER={'24h':'Last 24 hours','7d':'Last 7 days','30d':'Last 30 days','since2':'Since 2.0 (8 Nov)'};
-const SECTIONS=['overview','people','growth','newpeople','usage','money','health','audience','feedback'];
+const SECTIONS=['overview','people','gifts','growth','newpeople','usage','money','health','audience','feedback'];
 function getW(){try{const w=localStorage.getItem('an.owner.w');return PER[w]?w:'since2'}catch(e){return'since2'}}
 function setW(w){try{localStorage.setItem('an.owner.w',w)}catch(e){}}
 var win=getW();
@@ -470,6 +483,7 @@ $('fb').innerHTML=FB.length?FB.map((f,i)=>'<div class=fbc><div class=hd><div cla
   (f.message?'<div class=m>'+esc(f.message)+'</div>':'<div class="sub dim">No message written</div>')+'</div>').join(''):'<span class=sub>No feedback yet</span>';
 $('fbCopyAll').hidden=!FB.length;
 drawPeople();
+drawGifts();
 $('asRev').innerHTML=RV.length?RV.map(r=>'<div class=fb><div class=sub>'+esc(r.ts)+' · '+esc(r.territory||'')+' · <span class=stars>'+'★'.repeat(r.rating||0)+'</span></div><div class=m><b>'+esc(r.title||'')+'</b> '+esc(r.body||'')+'</div></div>').join(''):'<span class=sub>No written reviews yet</span>';
 $('nFb').textContent=FB.length+RV.length; $('nFb').hidden=!(FB.length+RV.length);
 
@@ -488,7 +502,7 @@ function fbRows(a){a=a||{};const r=FBQ.filter(q=>a[q[0]]!=null).map(q=>({q:q[1],
 function fbText(f){return 'Feedback '+f.ts+' · '+(f.v||'')+(f.id?' · person '+f.id:'')+'\n'+fbRows(f.answers).map(r=>'• '+r.q+': '+(r.a?'Yes':'No')).join('\n')+'\n'+(f.message?'Message: '+f.message:'No message written')}
 
 const CTX={onboarding_first_note:'after their first note',polish:'on Polish',today_banner:'from the Today banner',settings_plan:'from Settings',after_notes:'after their 3rd note',more_minutes:'for more meeting minutes',upgrade:'at the note limit',plan_card:'from the plan card',capture_paused:'when capture paused'};
-const PLAN={'com.actionnote.note.monthly':'Pro monthly','com.actionnote.note.annually':'Pro yearly','com.actionnote.proplus.monthly':'Pro+ monthly','com.actionnote.proplus.yearly':'Pro+ yearly','com.actionnote.pro.lifetime':'Lifetime','com.actionnote.pro.lifetime.launch':'Lifetime (launch price)'};
+const PLAN={'com.actionnote.note.monthly':'Pro monthly','com.actionnote.note.annually':'Pro yearly','com.actionnote.proplus.monthly':'Pro+ monthly','com.actionnote.proplus.yearly':'Pro+ yearly','com.actionnote.pro.lifetime':'Lifetime','com.actionnote.pro.lifetime.launch':'Lifetime (launch price)','com.actionnote.note.annually.gift':'Pro yearly (gift price)','com.actionnote.pro.lifetime.gift':'Lifetime (gift price)'};
 const SRCN={text:'typed',voice:'voice',screenshot:'photo',photo:'photo',import:'imported audio',share:'shared in'};
 const plural=(n,a,b)=>a==='time'?(n===1?'once':n===2?'twice':n+' times'):n+' '+(n===1?a:(b||a+'s'));
 const when=t=>t?new Date(t).toLocaleString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}):'';
@@ -523,6 +537,14 @@ function didLine(p){const a=[];
  if(p.mic_denied)a.push('said no to the microphone');
  a.push('active on '+plural(p.days,'day'));
  return a.join(', ')}
+const GAME={envelope:'the envelope',wheel:'the wheel',scratch:'the scratch card'};
+const PRIZE={pro_7:'7 days of Pro',pro_3:'3 days of Pro',notes_5:'5 more notes',yearly_offer:'Pro yearly first year price',lifetime_offer:'Lifetime gift price'};
+function giftLine(p){const g=p.gifts||[];if(!g.length&&!p.gift_shown)return'';
+ const a=g.map(x=>(PRIZE[x.prize]||x.prize)+' from '+(GAME[x.game]||x.game)+' on '+day(x.won)+(x.started?' (started '+day(x.started)+')':''));
+ if(!g.length)a.push('saw a game '+plural(p.gift_shown,'time')+', did not play');
+ if(p.gift_offer_tapped)a.push('tapped a gift price');
+ if(p.gift_notify)a.push('gift notifications: '+p.gift_notify);
+ return a.join('; ')}
 function signsLine(p){const a=[];
  if(p.paywall){const c=(p.paywall_ctx||[]).map(x=>CTX[x]||x);a.push('saw the paywall '+plural(p.paywall,'time')+(c.length?' ('+c.join(', ')+')':''))}
  if((p.picked||[]).length)a.push('picked '+p.picked.map(x=>PLAN[x]||x).join(' and '));
@@ -540,7 +562,7 @@ function nextHtml(n){return esc(sentences(n))+(n.includes(NEW)?' <span class=tag
 function nextText(n){return sentences(n)+(n.includes(NEW)?' ('+NEW+')':'')}
 function personText(p){const s=stageOf(p),sg=signsLine(p);
  return 'Person '+p.id+' · '+s.l+'\n'+(whoLine(p)?whoLine(p)+'\n':'')+'First seen '+when(p.first)+', last seen '+when(p.last)+'\n'+
-  'Did: '+didLine(p)+'\nBuying signs: '+(sg||'none yet')+'\nNext: '+nextText(s.next(p))+(p.feedback?'\n'+fbText(Object.assign({id:''},p.feedback)).replace(/^Feedback /,'Their feedback '):'')}
+  'Did: '+didLine(p)+'\nBuying signs: '+(sg||'none yet')+(giftLine(p)?'\nGifts: '+giftLine(p):'')+'\nNext: '+nextText(s.next(p))+(p.feedback?'\n'+fbText(Object.assign({id:''},p.feedback)).replace(/^Feedback /,'Their feedback '):'')}
 
 var PF='all', PALL=false;
 function pplList(){const P=(D.people||[]).map(p=>Object.assign({},p,{_s:stageOf(p)}));
@@ -553,9 +575,24 @@ function drawPeople(){const P=pplList();
  $('pplFilters').innerHTML='<button data-pf="all"'+(PF==='all'?' class=on':'')+'>Everyone<i>'+P.length+'</i></button>'+STAGES.filter(s=>counts[s.k]).map(s=>'<button data-pf="'+s.k+'"'+(PF===s.k?' class=on':'')+'>'+s.l+'<i>'+counts[s.k]+'</i></button>').join('');
  const L=P.filter(p=>PF==='all'||p._s.k===PF), cap=PF==='all'&&!PALL?20:1e9;
  $('ppl').innerHTML=L.length?L.slice(0,cap).map(p=>{const s=p._s,sg=signsLine(p);return '<div class=person id="p-'+esc(p.id)+'" style="--c:'+s.c+'"><div class=hd><div class=who><span class=chip>'+esc(s.l)+'</span><span class=id>'+esc(p.id)+'</span><span class=sub>'+esc(whoLine(p))+'</span></div><button class=btn data-copy-p="'+esc(p.id)+'">Copy</button></div>'+
-  '<dl><dt>Seen</dt><dd class=sub>first '+esc(when(p.first))+', last '+esc(ago(p.last))+'</dd><dt>Did</dt><dd>'+esc(didLine(p))+'</dd><dt>Buying signs</dt><dd'+(sg?'':' class="sub dim"')+'>'+esc(sg||'none yet')+'</dd><dt>Next</dt><dd class=next>'+nextHtml(s.next(p))+'</dd>'+
+  '<dl><dt>Seen</dt><dd class=sub>first '+esc(when(p.first))+', last '+esc(ago(p.last))+'</dd><dt>Did</dt><dd>'+esc(didLine(p))+'</dd><dt>Buying signs</dt><dd'+(sg?'':' class="sub dim"')+'>'+esc(sg||'none yet')+'</dd>'+(giftLine(p)?'<dt>Gifts</dt><dd>'+esc(giftLine(p))+'</dd>':'')+'<dt>Next</dt><dd class=next>'+nextHtml(s.next(p))+'</dd>'+
   (p.feedback?'<dt>Feedback</dt><dd><div class=sub>'+esc(p.feedback.ts)+'</div><div class=qa>'+fbRows(p.feedback.answers).map(r=>'<div'+(r.key?' class=key':'')+'><span>'+esc(r.q)+'</span><span class='+(r.a?'yes':'no')+'>'+(r.a?'Yes':'No')+'</span></div>').join('')+'</div>'+(p.feedback.message?'<div class=m style="margin-top:6px">'+esc(p.feedback.message)+'</div>':'')+'</dd>':'')+'</dl></div>'}).join(''):'<div class="card sub">Nobody here yet</div>';
  $('pplMore').hidden=!(L.length>cap);$('pplMore').textContent='Show all '+L.length}
+
+// ---- Gifts
+function drawGifts(){const G=D.gifts||{},T=G.totals||{};
+ const steps=[['Saw a game',T.shown_people,'people'],['Played',T.played_people,'people'],['Started Pro days',T.pro_started,'weeks'],['Tapped a gift price',T.offer_tapped_people,'people'],['Bought within 14 days',T.bought,'purchases']];
+ const top=Math.max(1,...steps.map(x=>x[1]||0));
+ $('giftFunnel').innerHTML=steps.map((x,i)=>'<div class=fstep><div class=k>'+x[0]+'</div><div class=v>'+(x[1]||0)+'</div><div class=r>'+(i&&steps[0][1]?pct(x[1]||0,steps[0][1])+' of those who saw one':'')+'</div><div class=o>'+x[2]+'</div><div class=fbar style="width:'+Math.max(3,100*(x[1]||0)/top)+'%"></div></div>').join('')+'<div></div>';
+ const W=G.pro_weeks||{};
+ $('giftKpis').innerHTML=stat('Plays',T.played||0,plural(T.played_people||0,'person','people'))+stat('Free Pro weeks ended',W.ended||0,(W.paid_by_end||0)+' paid by the end')+stat('Pro days waiting',T.pro_waiting||0,'won, not started')+stat('Gift price purchases',T.bought_gift_products||0,'$14.99 yearly or $29.99 Lifetime')+stat('Gift notifications',(T.notify_yes||0)+' yes',(T.notify_no||0)+' no');
+ const cap=t=>t.replace(/^the /,'').replace(/^./,c=>c.toUpperCase());
+ table('giftGames',['Game','Seen','People','Played','Closed','Bought'],(G.by_game||[]).map(x=>[esc(cap(GAME[x.game]||x.game)),x.shown,x.shown_people,x.played,x.closed,x.bought]),[0],0,r=>!r[1]&&!r[3]);
+ table('giftPrizes',['Prize','Chance','Won','Started','Tapped','Bought'],(G.by_prize||[]).map(x=>[esc(PRIZE[x.prize]||x.prize),x.chance+'%',x.won,x.kind==='pro_days'?x.started:'',x.kind==='offer'?x.tapped:'',x.bought]),[0],0,r=>!r[2]);
+ table('giftRecent',['Person','Game','Prize','Won','Started','Bought'],(G.recent||[]).map(x=>[x.id?'<a href="#people" data-pid="'+esc(x.id)+'">'+esc(x.id)+'</a>':'<span class=dim>unknown</span>',esc(cap(GAME[x.game]||x.game)),esc(PRIZE[x.prize]||x.prize),esc(when(x.won)),esc(x.started?day(x.started):''),esc(x.bought?(PLAN[x.bought]||x.bought):'')]),[0,1,2,3,4,5],10);
+}
+function giftsText(){const G=D.gifts||{},T=G.totals||{},W=G.pro_weeks||{};
+ return "Noto's gifts, since they began\nSaw a game: "+(T.shown_people||0)+' people\nPlayed: '+(T.played||0)+' plays by '+(T.played_people||0)+' people\nStarted Pro days: '+(T.pro_started||0)+'\nTapped a gift price: '+(T.offer_tapped_people||0)+' people\nBought within 14 days: '+(T.bought||0)+' ('+(T.bought_gift_products||0)+' at a gift price)\nFree Pro weeks ended: '+(W.ended||0)+', paid by the end: '+(W.paid_by_end||0)+'\nGift notifications: '+(T.notify_yes||0)+' yes, '+(T.notify_no||0)+' no\n\nBy prize:\n'+(G.by_prize||[]).map(x=>'• '+(PRIZE[x.prize]||x.prize)+' ('+x.chance+'%): won '+x.won+', bought '+x.bought).join('\n')}
 
 // copying: the clipboard when allowed, a hidden text box otherwise
 function toast(t){let e=$('toast');if(!e){e=document.createElement('div');e.id='toast';document.body.appendChild(e)}e.textContent=t;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('on'),1600)}
@@ -568,6 +605,7 @@ document.addEventListener('click',e=>{
  const cp=e.target.closest('[data-copy-p]');if(cp){const p=(D.people||[]).find(x=>x.id===cp.dataset.copyP);if(p)copy(personText(p),'person '+p.id);return}
  if(e.target.id==='pplCopyAll'){const L=pplList().filter(p=>PF==='all'||p._s.k===PF);copy(L.map(personText).join('\n\n'),plural(L.length,'person','people'));return}
  const cf=e.target.closest('[data-copy-fb]');if(cf){copy(fbText(D.feedback[+cf.dataset.copyFb]),'feedback');return}
+ if(e.target.id==='giftCopy'){copy(giftsText(),'the gifts');return}
  if(e.target.id==='fbCopyAll'){copy((D.feedback||[]).map(fbText).join('\n\n'),'all feedback');return}
  const pid=e.target.closest('[data-pid]');if(pid){e.preventDefault();PF='all';PALL=true;location.hash='people';setTimeout(()=>{drawPeople();window.scrollTo({top:0});const el=$('p-'+pid.dataset.pid);if(el){el.scrollIntoView({block:'center'});el.style.borderColor='var(--bl)'}},150)}
 });
