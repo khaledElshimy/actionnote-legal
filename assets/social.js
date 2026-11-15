@@ -37,15 +37,22 @@
       '<svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">' + ICON[l.key] + '</svg><span>' + l.name + '</span></a>';
   }
 
-  // lang: the language the page is showing; Arabic always gets the Arabic account
-  function html(lang) {
-    var arabic = lang === 'ar' || document.documentElement.lang === 'ar' || arabicVisitor();
-    return links(arabic).map(anchor).join('');
+  function iconOnly(l) {
+    return '<a class="an-soc-i" href="' + l.href + '" target="_blank" rel="noopener" aria-label="ActionNote on ' + l.name + '" title="' + l.name + '" data-umami-event="social-click" data-umami-event-place="' + l.key + '-top">' +
+      '<svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">' + ICON[l.key] + '</svg></a>';
   }
+
+  // lang: the language the page is showing; Arabic always gets the Arabic account
+  function isArabic(lang) { return lang === 'ar' || document.documentElement.lang === 'ar' || arabicVisitor(); }
+  function html(lang) { return links(isArabic(lang)).map(anchor).join(''); }
+  // icons with no names, for a header that is always on screen
+  function icons(lang) { return links(isArabic(lang)).map(iconOnly).join(''); }
 
   var css = '.an-soc{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}' +
     '.an-soc svg{width:16px;height:16px;flex:none}' +
-    '[data-social]{display:inline-flex;flex-wrap:wrap;gap:inherit;align-items:center}';
+    '[data-social]{display:inline-flex;flex-wrap:wrap;gap:inherit;align-items:center}' +
+    '.an-soc-i{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:999px;color:inherit}' +
+    '.an-soc-i svg{width:17px;height:17px}';
   var style = document.createElement('style');
   style.textContent = css;
   (document.head || document.documentElement).appendChild(style);
@@ -56,5 +63,5 @@
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fill); else fill();
 
-  window.ANSocial = { html: html, links: links, arabic: arabicVisitor };
+  window.ANSocial = { html: html, icons: icons, links: links, arabic: arabicVisitor };
 })();

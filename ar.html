@@ -109,6 +109,8 @@ a{color:var(--lav)}
 .lang{display:flex;background:rgba(30,43,77,.9);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:3px}
 .lang button{border:0;background:transparent;color:var(--cream);font:800 13px Archivo,sans-serif;padding:8px 12px;border-radius:999px;cursor:pointer;min-height:36px}
 .lang button[aria-pressed=true]{background:var(--cream);color:var(--wall)}
+.soctop{display:flex;background:rgba(30,43,77,.9);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:3px;color:var(--cream)}.soctop:empty{display:none}
+.soctop a:hover,.soctop a:focus-visible{background:rgba(255,255,255,.12)}
 
 .panel{position:absolute;z-index:4;top:96px;width:min(600px,calc(100% - 48px))}
 .side-r .panel{right:48px}.side-l .panel{left:48px}
@@ -288,11 +290,21 @@ noscript .ns{position:relative;z-index:9;max-width:720px;margin:0 auto;padding:1
   .panel.wide{left:8px;right:8px;transform:none;width:auto;top:66px;bottom:76px}
   .ttl{font-size:24px}
   .top{padding:12px}
+  .top>div{gap:6px!important}
+  .soctop{padding:2px}.soctop a{width:30px;height:30px}.soctop svg{width:15px;height:15px}
   .brand span{font-size:17px}
   .cta{padding:10px 14px;font-size:13px}
   .dot span{display:none}.dot[aria-current=step] span{display:inline}
   .veil,[dir=rtl] .veil{background:linear-gradient(0deg,rgba(16,26,46,.96),rgba(16,26,46,.9) 50%,rgba(16,26,46,.1) 72%)}
   .plans h2{font-size:30px}
+}
+/* a phone: Noto's face stands for the name so the social icons fit */
+@container stage (max-width: 520px){
+  .brand span{display:none}
+}
+@container stage (max-width: 360px){
+  .top{padding:10px 8px}.soctop a{width:26px;height:26px}.soctop svg{width:14px;height:14px}
+  .lang button{padding:6px 9px;min-height:32px}.cta{padding:9px 11px;font-size:12px}
 }
 @container stage (max-height: 700px){
   .panel.hero{bottom:96px}
@@ -338,6 +350,7 @@ noscript .ns{position:relative;z-index:9;max-width:720px;margin:0 auto;padding:1
       <span>ActionNote</span>
     </a>
     <div style="display:flex;align-items:center;gap:10px">
+      <nav class="soctop" id="socTop" aria-label="ActionNote on social media"></nav>
       <div class="lang" role="group" aria-label="Language">
         <button type="button" id="toEn" lang="en">EN</button>
         <button type="button" id="toAr" lang="ar">ع</button>
@@ -741,6 +754,7 @@ function renderChrome() {
   html.lang = st.lang; html.dir = 'ltr';
   $('stage').dir = L.dir; $('msg-back').dir = L.dir;
   $('stage').classList.toggle('ar', st.lang === 'ar');
+  if (window.ANSocial) $('socTop').innerHTML = ANSocial.icons(st.lang);
   $('msg-back').classList.toggle('ar', st.lang === 'ar');
   document.title = L.title;
   $('toEn').setAttribute('aria-pressed', String(st.lang === 'en'));
