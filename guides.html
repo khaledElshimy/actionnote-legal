@@ -1,13 +1,16 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>The NotoMix Playbook — every feature in a minute</title>
-<meta name="description" content="Short, simple tutorials for every NotoMix feature: recording, Siri, widgets, WhatsApp import, Ask Your Notes, tasks and reminders, two-language notes, and more." />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>The NotoMix Playbook: how every part of the app works</title>
+<meta name="description" content="Short, honest guides to NotoMix: your first note, actions and promises, Noto's jar, Ask your notes, meetings, photos, sharing, two languages, the Morning Brief, Siri, widgets, the keyboard and Apple Watch." />
+<link rel="alternate" hreflang="en" href="https://notomix.app/guides.html" />
+<link rel="alternate" hreflang="ar" href="https://notomix.app/guides-ar.html" />
+<link rel="alternate" hreflang="x-default" href="https://notomix.app/guides.html" />
 <link rel="canonical" href="https://notomix.app/guides.html" />
-<meta property="og:title" content="The NotoMix Playbook — every feature in a minute" />
-<meta property="og:description" content="Short, simple tutorials for every NotoMix feature." />
+<meta property="og:title" content="The NotoMix Playbook" />
+<meta property="og:description" content="How every part of NotoMix works, a few steps each." />
 <meta property="og:image" content="https://notomix.app/assets/og.jpg" />
 <meta property="og:url" content="https://notomix.app/guides.html" />
 <meta name="twitter:card" content="summary_large_image" />
@@ -19,339 +22,330 @@
 <meta name="theme-color" content="#16213A" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="persona.css">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;800;900&family=Caveat:wght@700&family=IBM+Plex+Sans+Arabic:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="guides.css">
 <script defer src="https://cloud.umami.is/script.js" data-website-id="d4933bf3-fbb3-4342-a2df-f88abf4e54f3"></script>
-<style>
-  .ghero{padding:56px 0 8px;}
-  .ghero h1{font-family:var(--sora);font-size:52px;letter-spacing:-1px;font-weight:900;line-height:1.1;letter-spacing:-1.6px;}
-  .ghero h1 em{font-style:normal;color:var(--gold);}
-  .ghero p{color:var(--muted);font-size:17px;margin-top:14px;max-width:600px;}
-  details.guide{background:var(--ink-2);border:1px solid var(--line);border-radius:14px;margin-top:18px;scroll-margin-top:24px;overflow:hidden;}
-  .gsum{display:flex;align-items:center;gap:16px;padding:22px 28px;cursor:pointer;list-style:none;user-select:none;}
-  .gsum::-webkit-details-marker{display:none;}
-  .gsum:hover{background:rgba(196,181,253,.03);}
-  .gsum .gtitle{font-family:var(--sora);font-size:21px;font-weight:700;letter-spacing:-.3px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;flex:1;}
-  .gsum .chev{margin-left:auto;flex:none;width:34px;height:34px;border-radius:50%;border:1.5px solid var(--line);
-    display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:17px;transition:transform .2s;}
-  details.guide[open] .gsum .chev{transform:rotate(90deg);border-color:rgba(196,181,253,.45);color:var(--brand);}
-  details.guide[open] .gsum{border-bottom:1px solid var(--line);}
-  .ginner{padding:20px 32px 32px;}
-  .gbody{display:grid;grid-template-columns:1fr 1.05fr;gap:30px;align-items:start;margin-top:8px;}
-  @media (max-width:860px){.gbody{grid-template-columns:1fr;}}
-  .guide h2{font-family:var(--sora);font-size:26px;text-align:left;letter-spacing:-.4px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;}
-  .guide h2 .em{font-size:26px;}
-  .gsoon{font-family:var(--inter);font-size:10.5px;font-weight:700;letter-spacing:1.5px;color:var(--brand);
-    border:1.5px solid rgba(196,181,253,.5);border-radius:3px;padding:4px 10px;transform:rotate(-1.2deg);white-space:nowrap;}
-  .guide .why{color:var(--muted);font-size:15.5px;margin-top:10px;}
-  .steps{margin-top:14px;counter-reset:st;}
-  .step{display:flex;gap:14px;padding:13px 14px;border-radius:10px;font-size:15.5px;align-items:baseline;
-    cursor:pointer;border:1.5px solid transparent;transition:all .15s;}
-  .step:hover{background:rgba(196,181,253,.04);}
-  .step.on{background:#26355C;border-color:rgba(196,181,253,.35);box-shadow:0 6px 18px rgba(5,10,22,.06);}
-  .step::before{counter-increment:st;content:counter(st);font-family:var(--sora);font-weight:700;
-    color:var(--muted);font-size:18px;min-width:24px;transition:color .15s;}
-  .step.on::before{color:var(--brand);}
-  .step b{font-weight:600;}
-  .step span{color:var(--muted);}
-  .tip{margin-top:18px;background:rgba(74,222,128,.07);border:1px solid rgba(74,222,128,.25);border-radius:10px;
-    padding:14px 18px;font-size:14.5px;color:var(--muted);}
-  .tip b{color:#4ADE80;font-weight:700;}
-  .gplayer{margin-top:0;position:sticky;top:20px;}
-  .gvis{width:100%;border-radius:12px 12px 0 0;border:1px solid var(--line);border-bottom:none;
-    box-shadow:0 12px 32px rgba(5,10,22,.10);display:block;}
-  .gctl{display:flex;align-items:center;justify-content:space-between;background:var(--ink-2);
-    border:1px solid var(--line);border-radius:0 0 12px 12px;padding:8px 12px;}
-  .gctl button{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--text);background:transparent;
-    color:var(--text);font-size:20px;cursor:pointer;line-height:1;}
-  .gctl button:hover{background:var(--text);color:var(--ink-0);}
-  .gdots{display:flex;gap:8px;}
-  .gdots i{width:9px;height:9px;border-radius:50%;background:var(--line);cursor:pointer;}
-  .gdots i.on{background:var(--brand);}
-  @media (max-width:700px){.ghero h1{font-size:36px;}.guide{padding:26px 20px;}}
-</style>
 </head>
 <body>
-<div class="wrap">
-  <nav>
-    <a class="logo" href="index.html"><img src="assets/icon.png" alt="NotoMix" /> NotoMix</a>
-    <div class="nav-links">
-      <a href="index.html#how">How it works</a>
-      <a href="index.html#pricing">Pricing</a>
-      <a href="index.html#roadmap">Roadmap</a>
-      <a class="nav-cta" href="https://apps.apple.com/app/id6789915282">Download</a>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <a class="brand" href="index.html" aria-label="NotoMix home">
+    <img src="assets/world/noto.svg" alt="">
+    <span>NotoMix</span>
+  </a>
+  <div class="right">
+    <nav class="soctop" id="socTop" aria-label="NotoMix on social media"></nav>
+    <div class="lang" role="group" aria-label="Language">
+      <a href="guides.html" lang="en" aria-current="page">EN</a>
+      <a href="guides-ar.html" lang="ar" hreflang="ar">ع</a>
     </div>
-  </nav>
+    <a class="cta" data-umami-event="store-click" data-umami-event-place="guides-nav" href="https://apps.apple.com/app/id6789915282">Get the app</a>
+  </div>
+</header>
 
-  <header class="ghero">
-    <div class="kicker">📖 THE PLAYBOOK</div>
-    <h1>Every feature, <em>one minute each.</em></h1>
-    <p>Short, honest tutorials. No videos to sit through — each one is a few numbered steps and a tip you'll actually use.</p>
-  </header>
+<main id="main" class="wrap">
+  <div class="intro">
+    <div>
+      <p class="hand">Hi, I'm Noto. Here's how I work.</p>
+      <h1>the NotoMix <b>playbook</b></h1>
+      <p class="lead">Every part of the app in a few steps, with the real screens. No videos to sit through. Read the one you need and get back to your day.</p>
+      <span class="freenote">Written for NotoMix 2.0 on iPhone</span>
+    </div>
+    <nav class="index" aria-label="Guides">
+      <p>IN THIS PLAYBOOK</p>
+      <ol>
+        <li><a href="#record">Your first note</a></li>
+        <li><a href="#note">What a note becomes</a></li>
+        <li><a href="#jar">Today and Noto's jar</a></li>
+        <li><a href="#ask">Ask your notes</a></li>
+        <li><a href="#meetings">Meetings</a></li>
+        <li><a href="#photo">Photo a page</a></li>
+        <li><a href="#whatsapp">Bring in voice notes</a></li>
+        <li><a href="#share">Share a note</a></li>
+        <li><a href="#languages">Two languages, one note</a></li>
+        <li><a href="#brief">Morning Brief</a></li>
+        <li><a href="#siri">Siri, widgets and the lock screen</a></li>
+        <li><a href="#keyboard">The NotoMix keyboard</a></li>
+        <li><a href="#watch">Apple Watch</a></li>
+        <li><a href="#insights">Insights</a></li>
+        <li><a href="#account">Your account and your notes</a></li>
+      </ol>
+    </nav>
+  </div>
 
-  <section style="padding:20px 0 80px;">
-
-    <details class="guide" id="record">
-      <summary class="gsum"><span class="gtitle"><span class="em">🎙️</span> Record your first note</span><span class="chev">›</span></summary>
-      <div class="ginner">
-      <p class="why">The core loop: talk messy, get a clean note with a title, summary, key points, and real tasks.</p>
-      <div class="gbody">
-        <div>
-          <div class="steps">
-        <div class="step"><div><b>Tap the mic button</b> <span>— the big one at the bottom, or the "Capture an idea" card on Home.</span></div></div>
-        <div class="step"><div><b>Say it how it comes out.</b> <span>Rambling is the point: "call mom tomorrow… we're out of coffee… Sara's birthday is Friday, cake before Thursday."</span></div></div>
-        <div class="step"><div><b>Tap stop, then Save.</b> <span>A few seconds later the note opens itself: summary, key points, and tasks with the dates you said out loud.</span></div></div>
+  <section class="g" id="record" aria-labelledby="h-record">
+    <div class="row">
+      <div class="board">
+        <p class="kick">01 · THE BASICS</p>
+        <h2 id="h-record">Your first note</h2>
+        <p class="say">Talk the way it comes out. Messy is fine, that's my job.</p>
+        <ol class="steps">
+          <li>Tap the <b>+</b> in the middle of the tab bar. A sheet asks <span class="ui">What do you want to capture?</span></li>
+          <li>Pick one: <span class="ui">Talk</span> (any language, even two in one sentence), <span class="ui">Type</span>, <span class="ui">Photo a page</span>, <span class="ui">Import audio</span> or <span class="ui">Record a meeting</span>.</li>
+          <li>For a voice note, just talk, then stop. A few seconds later the note is ready, organized.</li>
+        </ol>
+        <div class="tip gold"><strong>Faster</strong>Hold the plus to start a voice note at once. Lock the screen or switch apps while you talk: the recording carries on.</div>
       </div>
-          <div class="tip"><b>Tip:</b> lock the screen or switch apps mid-thought — the recording keeps going, and you'll get a notification when the note is ready.</div>
-        </div>
-        <div class="gplayer" data-g="record"><img class="gvis" src="assets/guides/frames/record-0.png" alt="Step-by-step: Record a voice note and turn voice to text" loading="lazy" /><div class="gctl"><button class="gprev" aria-label="Previous step">‹</button><span class="gdots"></span><button class="gnext" aria-label="Next step">›</button></div><noscript><img class="gvis" style="border-radius:12px;border-bottom:1px solid var(--line)" src="assets/guides/record.gif" alt="How to: Record a voice note and turn voice to text" /></noscript></div>
-      </div></div>
-    </details>
-
-    <details class="guide" id="siri">
-      <summary class="gsum"><span class="gtitle"><span class="em">🗣️</span> Hands-free with Siri</span><span class="chev">›</span></summary>
-      <div class="ginner">
-      <p class="why">Capture without touching the phone — even from your pocket, even locked.</p>
-      <div class="gbody">
-        <div>
-          <div class="steps">
-        <div class="step"><div><b>Say "Hey Siri, record with NotoMix."</b> <span>The app opens straight into a running recording.</span></div></div>
-        <div class="step"><div><b>Talk.</b> <span>As long as you like.</span></div></div>
-        <div class="step"><div><b>Say "Hey Siri, stop recording in NotoMix."</b> <span>It saves and organizes — this works from the lock screen too.</span></div></div>
-      </div>
-          <div class="tip"><b>Tip:</b> driving? Mount the phone, keep it unlocked with navigation on, and the two phrases make the whole capture hands-free.</div>
-        </div>
-        <div class="gplayer" data-g="siri"><img class="gvis" src="assets/guides/frames/siri-0.png" alt="Step-by-step: Start a voice note with Siri" loading="lazy" /><div class="gctl"><button class="gprev" aria-label="Previous step">‹</button><span class="gdots"></span><button class="gnext" aria-label="Next step">›</button></div><noscript><img class="gvis" style="border-radius:12px;border-bottom:1px solid var(--line)" src="assets/guides/siri.gif" alt="How to: Start a voice note with Siri" /></noscript></div>
-      </div></div>
-    </details>
-
-    <details class="guide" id="widget">
-      <summary class="gsum"><span class="gtitle"><span class="em">⚡</span> Quick Record widget &amp; Action Button</span><span class="chev">›</span></summary>
-      <div class="ginner">
-      <p class="why">One tap from the lock screen or home screen to a running recording.</p>
-      <div class="gbody">
-        <div>
-          <div class="steps">
-        <div class="step"><div><b>Lock screen:</b> <span>long-press the lock screen → Customize → add the NotoMix circular widget below the clock.</span></div></div>
-        <div class="step"><div><b>Home screen:</b> <span>long-press any empty spot → Edit → Add Widget → NotoMix.</span></div></div>
-        <div class="step"><div><b>Action Button (iPhone 15 Pro and later):</b> <span>Settings → Action Button → Shortcut → "Record with NotoMix".</span></div></div>
-      </div>
-          <div class="tip"><b>Tip:</b> every one of these skips the splash screen — you're recording in under a second.</div>
-        </div>
-        <div class="gplayer" data-g="widget"><img class="gvis" src="assets/guides/frames/widget-0.png" alt="Step-by-step: Record from the Quick Record widget" loading="lazy" /><div class="gctl"><button class="gprev" aria-label="Previous step">‹</button><span class="gdots"></span><button class="gnext" aria-label="Next step">›</button></div><noscript><img class="gvis" style="border-radius:12px;border-bottom:1px solid var(--line)" src="assets/guides/widget.gif" alt="How to: Record from the Quick Record widget" /></noscript></div>
-      </div></div>
-    </details>
-
-    <details class="guide" id="whatsapp">
-      <summary class="gsum"><span class="gtitle"><span class="em">📲</span> Import WhatsApp voice notes</span><span class="chev">›</span></summary>
-      <div class="ginner">
-      <p class="why">The 7-minute voice note from your friend, readable in 20 seconds.</p>
-      <div class="gbody">
-        <div>
-          <div class="steps">
-        <div class="step"><div><b>Long-press the voice note</b> <span>in WhatsApp (or any audio file, anywhere) and choose Forward → Share.</span></div></div>
-        <div class="step"><div><b>Pick NotoMix</b> <span>in the share sheet.</span></div></div>
-        <div class="step"><div><b>Open NotoMix.</b> <span>The note is processed like your own recording — summary, points, tasks.</span></div></div>
-      </div>
-          <div class="tip"><b>Tip:</b> works with voice memos, meeting recordings, and audio files from anywhere the share sheet exists.</div>
-        </div>
-        <div class="gplayer" data-g="whatsapp"><img class="gvis" src="assets/guides/frames/whatsapp-0.png" alt="Step-by-step: Turn a WhatsApp voice message to text" loading="lazy" /><div class="gctl"><button class="gprev" aria-label="Previous step">‹</button><span class="gdots"></span><button class="gnext" aria-label="Next step">›</button></div><noscript><img class="gvis" style="border-radius:12px;border-bottom:1px solid var(--line)" src="assets/guides/whatsapp.gif" alt="How to: Turn a WhatsApp voice message to text" /></noscript></div>
-      </div></div>
-    </details>
-
-    <details class="guide" id="ask">
-      <summary class="gsum"><span class="gtitle"><span class="em">💬</span> Ask Your Notes</span><span class="chev">›</span></summary>
-      <div class="ginner">
-      <p class="why">Everything you've ever captured becomes something you can question.</p>
-      <div class="gbody">
-        <div>
-          <div class="steps">
-        <div class="step"><div><b>Open Ask</b> <span>from Home.</span></div></div>
-        <div class="step"><div><b>Ask like you'd ask a person:</b> <span>"What did I promise Sara?" · "When is the dentist?" · "What was my idea about the trip?"</span></div></div>
-        <div class="step"><div><b>Check the source.</b> <span>Every answer cites the note it came from — tap it to read the original.</span></div></div>
-      </div>
-          <div class="tip"><b>Tip:</b> you can also ask by voice — "Hey Siri, ask NotoMix what I promised Sara" — and hear the answer read back.</div>
-        </div>
-        <div class="gplayer" data-g="ask"><img class="gvis" src="assets/guides/frames/ask-0.png" alt="Step-by-step: Ask your notes with the AI note taker" loading="lazy" /><div class="gctl"><button class="gprev" aria-label="Previous step">‹</button><span class="gdots"></span><button class="gnext" aria-label="Next step">›</button></div><noscript><img class="gvis" style="border-radius:12px;border-bottom:1px solid var(--line)" src="assets/guides/ask.gif" alt="How to: Ask your notes with the AI note taker" /></noscript></div>
-      </div></div>
-    </details>
-
-    <details class="guide" id="tasks">
-      <summary class="gsum"><span class="gtitle"><span class="em">✅</span> Tasks &amp; reminders</span><span class="chev">›</span></summary>
-      <div class="ginner">
-      <p class="why">Dates you say out loud become reminders that actually ring.</p>
-      <div class="gbody">
-        <div>
-          <div class="steps">
-        <div class="step"><div><b>Say the deadline while recording:</b> <span>"send the report before Thursday" — the task arrives with Thursday attached.</span></div></div>
-        <div class="step"><div><b>Tap the bell</b> <span>on any task to add or change its reminder.</span></div></div>
-        <div class="step"><div><b>Promote key points:</b> <span>tap the + next to any key point to turn it into a task, or "Convert all to to-do list".</span></div></div>
-      </div>
-          <div class="tip"><b>Tip:</b> the Tasks tab collects every open task across all notes — one list, all your notes.</div>
-        </div>
-        <div class="gplayer" data-g="tasks"><img class="gvis" src="assets/guides/frames/tasks-0.png" alt="Step-by-step: Manage your to do list and reminders" loading="lazy" /><div class="gctl"><button class="gprev" aria-label="Previous step">‹</button><span class="gdots"></span><button class="gnext" aria-label="Next step">›</button></div><noscript><img class="gvis" style="border-radius:12px;border-bottom:1px solid var(--line)" src="assets/guides/tasks.gif" alt="How to: Manage your to do list and reminders" /></noscript></div>
-      </div></div>
-    </details>
-
-    <details class="guide" id="languages">
-      <summary class="gsum"><span class="gtitle"><span class="em">🌍</span> Two languages, one note</span><span class="chev">›</span></summary>
-      <div class="ginner">
-      <p class="why">Speak how you actually speak — Arabic and English in the same sentence is the reason this app exists.</p>
-      <div class="gbody">
-        <div>
-          <div class="steps">
-        <div class="step"><div><b>First, turn the switch on:</b> <span>Settings → <b>Organize in my language</b>. This is what makes the ⇄ flip possible.</span></div></div>
-        <div class="step"><div><b>Just record.</b> <span>Mix languages mid-sentence — speak how it actually comes out.</span></div></div>
-        <div class="step"><div><b>The note arrives in your language,</b> <span>with a ⇄ chip next to "Ready".</span></div></div>
-        <div class="step"><div><b>Tap ⇄ to flip</b> <span>to the spoken version — and back, anytime.</span></div></div>
-      </div>
-          <div class="tip"><b>Tip:</b> the transcript always keeps exactly what you said, in the languages you said it.</div>
-        </div>
-        <div class="gplayer" data-g="languages" data-n="4"><img class="gvis" src="assets/guides/frames/languages-0.png" alt="Step-by-step: Arabic and English in one note" loading="lazy" /><div class="gctl"><button class="gprev" aria-label="Previous step">‹</button><span class="gdots"></span><button class="gnext" aria-label="Next step">›</button></div><noscript><img class="gvis" style="border-radius:12px;border-bottom:1px solid var(--line)" src="assets/guides/languages.gif" alt="How to: Arabic and English in one note" /></noscript></div>
-      </div></div>
-    </details>
-
-    <details class="guide" id="share">
-      <summary class="gsum"><span class="gtitle"><span class="em">📤</span> Share &amp; export</span><span class="chev">›</span></summary>
-      <div class="ginner">
-      <p class="why">Clean formatted text that pastes nicely anywhere — free for everyone.</p>
-      <div class="gbody">
-        <div>
-          <div class="steps">
-        <div class="step"><div><b>Open a note → share icon.</b> <span>You get formatted text with the title, summary, and tasks.</span></div></div>
-        <div class="step"><div><b>Paste anywhere:</b> <span>Notion, Todoist, email, WhatsApp — it lands clean.</span></div></div>
-        <div class="step"><div><b>Sharing to another NotoMix user?</b> <span>The share carries the note itself — they tap once to import it.</span></div></div>
-      </div>
-          <div class="tip"><b>Tip:</b> exporting is free forever — your notes are yours, subscribed or not.</div>
-        </div>
-        <div class="gplayer" data-g="share"><img class="gvis" src="assets/guides/frames/share-0.png" alt="Step-by-step: Share text, audio or photos into NotoMix" loading="lazy" /><div class="gctl"><button class="gprev" aria-label="Previous step">‹</button><span class="gdots"></span><button class="gnext" aria-label="Next step">›</button></div><noscript><img class="gvis" style="border-radius:12px;border-bottom:1px solid var(--line)" src="assets/guides/share.gif" alt="How to: Share text, audio or photos into NotoMix" /></noscript></div>
-      </div></div>
-    </details>
-
-    <details class="guide" id="account">
-      <summary class="gsum"><span class="gtitle"><span class="em">☁️</span> Account &amp; backup</span><span class="chev">›</span></summary>
-      <div class="ginner">
-      <p class="why">Notes live on your iPhone and your own iCloud — there is no NotoMix database.</p>
-      <div class="gbody">
-        <div>
-          <div class="steps">
-        <div class="step"><div><b>Try first, sign in later.</b> <span>Your first notes work with no account at all.</span></div></div>
-        <div class="step"><div><b>When you sign in,</b> <span>the notes you made as a guest come with you automatically.</span></div></div>
-        <div class="step"><div><b>iCloud backup is on by default:</b> <span>reinstall the app, sign in, and everything returns.</span></div></div>
-      </div>
-          <div class="tip"><b>Tip:</b> cancel any subscription anytime — your notes stay on your device and iCloud. You just go back to the free monthly limits.</div>
-        </div>
-        <div class="gplayer" data-g="account"><img class="gvis" src="assets/guides/frames/account-0.png" alt="Step-by-step: Manage your NotoMix account" loading="lazy" /><div class="gctl"><button class="gprev" aria-label="Previous step">‹</button><span class="gdots"></span><button class="gnext" aria-label="Next step">›</button></div><noscript><img class="gvis" style="border-radius:12px;border-bottom:1px solid var(--line)" src="assets/guides/account.gif" alt="How to: Manage your NotoMix account" /></noscript></div>
-      </div></div>
-    </details>
-
-    <details class="guide" id="watch">
-      <summary class="gsum"><span class="gtitle"><span class="em">⌚</span> Apple Watch</span><span class="chev">›</span></summary>
-      <div class="ginner">
-      <p class="why">Record on your wrist — even offline on a run. The phone does the thinking.</p>
-      <div class="gbody">
-        <div>
-          <div class="steps">
-        <div class="step"><div><b>Open NotoMix on the watch.</b> <span>It starts recording immediately — that's the whole UI.</span></div></div>
-        <div class="step"><div><b>Tap stop.</b> <span>"Saved — will sync when your iPhone is nearby."</span></div></div>
-        <div class="step"><div><b>That's it.</b> <span>The note appears on your phone, processed like any other — even if the phone was at home the whole time.</span></div></div>
-      </div>
-          <div class="tip"><b>Tip:</b> no pairing, no setup, no account on the watch. If it's paired to your iPhone, it just works.</div>
-        </div>
-        <div class="gplayer" data-g="watch"><img class="gvis" src="assets/guides/frames/watch-0.png" alt="Step-by-step: Record a voice memo on Apple Watch" loading="lazy" /><div class="gctl"><button class="gprev" aria-label="Previous step">‹</button><span class="gdots"></span><button class="gnext" aria-label="Next step">›</button></div><noscript><img class="gvis" style="border-radius:12px;border-bottom:1px solid var(--line)" src="assets/guides/watch.gif" alt="How to: Record a voice memo on Apple Watch" /></noscript></div>
-      </div></div>
-    </details>
-
-    <details class="guide" id="brief">
-      <summary class="gsum"><span class="gtitle"><span class="em">☀️</span> Morning Brief</span><span class="chev">›</span></summary>
-      <div class="ginner">
-      <p class="why">Your tasks, deadlines, and meetings in one notification, every morning. Free forever.</p>
-      <div class="gbody">
-        <div>
-          <div class="steps">
-        <div class="step"><div><b>It's on automatically</b> <span>— arrives at 8:30 by default.</span></div></div>
-        <div class="step"><div><b>Change the time:</b> <span>Settings → Morning Brief.</span></div></div>
-        <div class="step"><div><b>Want your meetings in it?</b> <span>Settings → Morning Brief → turn on <b>Include calendar</b>. Read on-device — never uploaded.</span></div></div>
-      </div>
-          <div class="tip"><b>Tip:</b> quiet days stay quiet — no tasks and no meetings means a gentler brief, not guilt.</div>
-        </div>
-        <div class="gplayer" data-g="brief"><img class="gvis" src="assets/guides/frames/brief-0.png" alt="Step-by-step: Your morning brief" loading="lazy" /><div class="gctl"><button class="gprev" aria-label="Previous step">‹</button><span class="gdots"></span><button class="gnext" aria-label="Next step">›</button></div><noscript><img class="gvis" style="border-radius:12px;border-bottom:1px solid var(--line)" src="assets/guides/brief.gif" alt="How to: Your morning brief" /></noscript></div>
-      </div></div>
-    </details>
-
-    <details class="guide" id="links">
-      <summary class="gsum"><span class="gtitle"><span class="em">🔗</span> Share a note as a link</span><span class="chev">›</span></summary>
-      <div class="ginner">
-      <p class="why">Send a note to anyone — they read it in the browser, no app needed.</p>
-      <div class="gbody">
-        <div>
-          <div class="steps">
-        <div class="step"><div><b>Share a note</b> <span>— the share text now carries a notomix.app link.</span></div></div>
-        <div class="step"><div><b>They open it anywhere.</b> <span>Clean web page: title, summary, tasks.</span></div></div>
-        <div class="step"><div><b>Privacy stays intact:</b> <span>the note travels inside the link itself — its content never touches a server, including ours.</span></div></div>
-      </div>
-          <div class="tip"><b>Tip:</b> if they have NotoMix installed, the same link imports the note straight into their app.</div>
-        </div>
-        <div class="gplayer" data-g="links"><img class="gvis" src="assets/guides/frames/links-0.png" alt="Step-by-step: Open links from your notes" loading="lazy" /><div class="gctl"><button class="gprev" aria-label="Previous step">‹</button><span class="gdots"></span><button class="gnext" aria-label="Next step">›</button></div><noscript><img class="gvis" style="border-radius:12px;border-bottom:1px solid var(--line)" src="assets/guides/links.gif" alt="How to: Open links from your notes" /></noscript></div>
-      </div></div>
-    </details>
-
+      <img class="phone" src="assets/world/en-capture.jpg" alt="The capture sheet: Talk, Type, Photo a page, Import audio and Record a meeting" loading="lazy" width="250" height="543">
+    </div>
   </section>
 
-  <footer>
-    <div>© 2026 NotoMix</div>
-    <div class="fl">
-      <a href="index.html">Home</a>
-      <a href="support.html">Support</a>
-      <a href="privacy.html">Privacy</a>
-      <a href="mailto:info@notomix.app">Contact</a>
-      <span data-social="en"><a href="https://www.linkedin.com/company/actionnote" target="_blank" rel="noopener">LinkedIn</a> <a href="https://www.instagram.com/actionnote0/" target="_blank" rel="noopener">Instagram</a> <a href="https://www.tiktok.com/@action.note" target="_blank" rel="noopener">TikTok</a></span>
+  <section class="g" id="note" aria-labelledby="h-note">
+    <div class="row">
+      <div class="board">
+        <p class="kick">02 · WHAT YOU GET</p>
+        <h2 id="h-note">What a note becomes</h2>
+        <p class="say">One ramble in, a clean page out.</p>
+        <ol class="steps">
+          <li>A <b>title</b>, a short <b>summary</b> and the <b>key points</b>.</li>
+          <li><b>Actions</b> with the dates you said out loud. Tap <span class="ui">When</span> or the bell on an action to set or change its reminder.</li>
+          <li>Promises go both ways, with names: what you owe lands in <span class="ui">You promised</span>, what Sara or Omar owe you lands in <span class="ui">Others promised</span>.</li>
+          <li>Your own words stay under the summary in <span class="ui">What you said</span>, untouched, so you can always check.</li>
+        </ol>
+        <div class="tip"><strong>Tip</strong>Tap the <b>+</b> next to a key point to make it an action, or <span class="ui">Add an action</span> to write one yourself.</div>
+      </div>
+      <img class="phone" src="assets/world/en-board.jpg" alt="A first note on Noto's board: You promised Sara the quote, Omar promised the budget" loading="lazy" width="250" height="543">
     </div>
-  </footer>
-</div>
-<script>
-(function(){
-  var players = document.querySelectorAll('.gplayer');
-  players.forEach(function(p){
-    var gid = p.getAttribute('data-g');
-    var img = p.querySelector('.gvis');
-    var dots = p.querySelector('.gdots');
-    var N = parseInt(p.getAttribute('data-n') || '3', 10), idx = 0, manual = false;
-    var guide = p.closest('.guide');
-    var stepEls = guide ? guide.querySelectorAll('.step') : [];
-    // preload
-    for (var i = 1; i < N; i++) { new Image().src = 'assets/guides/frames/' + gid + '-' + i + '.png'; }
-    for (var i = 0; i < N; i++) {
-      var d = document.createElement('i');
-      if (i === 0) d.className = 'on';
-      (function(k){ d.addEventListener('click', function(){ manual = true; show(k); }); })(i);
-      dots.appendChild(d);
-    }
-    function show(k){
-      idx = (k + N) % N;
-      img.src = 'assets/guides/frames/' + gid + '-' + idx + '.png';
-      dots.querySelectorAll('i').forEach(function(el, j){ el.className = j === idx ? 'on' : ''; });
-      stepEls.forEach(function(el, j){ el.classList.toggle('on', j === idx); });
-    }
-    stepEls.forEach(function(el, j){
-      el.addEventListener('click', function(){ manual = true; show(j); });
-    });
-    show(0);
-    p.querySelector('.gprev').addEventListener('click', function(){ manual = true; show(idx - 1); });
-    p.querySelector('.gnext').addEventListener('click', function(){ manual = true; show(idx + 1); });
-    // automatic until the user takes over
-    setInterval(function(){ if (!manual) show(idx + 1); }, 3000);
-  });
-  function openTarget(){
-    var id = location.hash.replace('#','');
-    if (!id) return;
-    var d = document.getElementById(id);
-    if (d && d.tagName === 'DETAILS') { d.open = true; }
-  }
-  window.addEventListener('hashchange', openTarget);
-  openTarget();
-})();
-</script>
+  </section>
+
+  <section class="g" id="jar" aria-labelledby="h-jar">
+    <div class="row">
+      <div class="board">
+        <p class="kick">03 · TODAY</p>
+        <h2 id="h-jar">Today and Noto's jar</h2>
+        <p class="say">The <span class="ui">Today</span> tab is your day: <span class="ui">Today's actions</span>, what you promised, and my corner of the room.</p>
+        <ol class="steps">
+          <li>Tick an action when it's done. A paper star flies into my jar.</li>
+          <li>Keep a promise to someone and it's a <b>gold star</b>, with a <span class="ui">promise kept</span> card.</li>
+          <li>Want to tell them? <span class="ui">Share this</span> shares that card only, nothing else from your notes.</li>
+        </ol>
+        <div class="tip pink"><strong>Good to know</strong>Prefer less movement? Settings has <span class="ui">Calm mode</span>, and it turns on by itself in meetings.</div>
+      </div>
+      <img class="phone" src="assets/world/en-kept.jpg" alt="The promise kept card: You kept your word to Omar, gold star into the jar, Share this" loading="lazy" width="250" height="543">
+    </div>
+  </section>
+
+  <section class="g" id="ask" aria-labelledby="h-ask">
+    <div class="row">
+      <div class="board">
+        <p class="kick">04 · ASK</p>
+        <h2 id="h-ask">Ask your notes</h2>
+        <p class="say">Everything you've said becomes something you can ask, in any language.</p>
+        <ol class="steps">
+          <li>On Today, tap the sparkle at the top. You can also type a question in the search on the Notes tab.</li>
+          <li>Ask it like you'd ask a person: <span class="siri">What did I promise Omar?</span></li>
+          <li>The answer names the notes it came from. Tap one to read the original.</li>
+        </ol>
+        <div class="tip mint"><strong>Tip</strong>Answers come from your own notes only.</div>
+      </div>
+      <img class="phone" src="assets/world/en-ask.jpg" alt="Ask your notes: What did I promise Omar, answered with the two notes it came from" loading="lazy" width="250" height="543">
+    </div>
+  </section>
+
+  <section class="g" id="meetings" aria-labelledby="h-meetings">
+    <div class="row">
+      <div class="board">
+        <p class="kick">05 · MEETINGS</p>
+        <h2 id="h-meetings">Meetings</h2>
+        <p class="say">Put the phone on the table. No bot, no invite, no link.</p>
+        <ol class="steps">
+          <li>Open the <span class="ui">Meetings</span> tab and tap <span class="ui">Start a meeting</span>. Add a title and who's joining if you like; both are optional.</li>
+          <li>Choose what you get, then tap <span class="ui">Start meeting</span>.</li>
+          <li>Pause or end it from the screen, the lock screen or the Dynamic Island. <span class="ui">Mark this moment</span> pins a point you want to find later.</li>
+          <li>You get a notification when your minutes are ready: speakers named, decisions, open questions and actions for each person.</li>
+        </ol>
+        <div class="duo">
+          <div class="st"><b>Transcript, speakers and recap</b>In the cloud. Mixed languages, the speakers told apart, and the minutes. Uses cloud minutes.</div>
+          <div class="st"><b>Transcript on this iPhone</b>Free. Nothing is uploaded. No speakers and no recap.</div>
+        </div>
+        <div class="tip violet"><strong>Then ask it</strong>Inside a meeting, <span class="ui">Ask about this meeting</span> asks that one meeting on its own. How many cloud minutes each plan has is on the <a href="index.html#plans">Plans</a> page.</div>
+      </div>
+      <img class="phone" src="assets/world/en-minutes.jpg" alt="Meeting minutes for a budget review with Omar: speakers, summary, decisions and action items for each person" loading="lazy" width="250" height="543">
+    </div>
+  </section>
+
+  <section class="g" id="photo" aria-labelledby="h-photo">
+    <div class="row">
+      <div class="board">
+        <p class="kick">06 · PAPER</p>
+        <h2 id="h-photo">Photo a page</h2>
+        <p class="say">A whiteboard, a handout, a screenshot of a long chat.</p>
+        <ol class="steps">
+          <li>Tap <b>+</b>, then <span class="ui">Photo a page</span>. Snap or pick up to five pages or screenshots.</li>
+          <li>I read every page and write it up like any other note.</li>
+          <li>Anything asked of you becomes an action, with its date when one is written there.</li>
+        </ol>
+      </div>
+      <img class="phone" src="assets/world/en-photo.jpg" alt="Reading a page: Friday planning, with three lines that became actions" loading="lazy" width="250" height="543">
+    </div>
+  </section>
+
+  <section class="g solo" id="whatsapp" aria-labelledby="h-whatsapp">
+    <div class="row">
+      <div class="board">
+        <p class="kick">07 · FROM OTHER APPS</p>
+        <h2 id="h-whatsapp">Bring in voice notes and more</h2>
+        <p class="say">The seven minute voice note from a friend, readable in seconds.</p>
+        <ol class="steps">
+          <li>In WhatsApp, Telegram, Mail, Files, Photos or any app, tap <b>Share</b> on a voice note, a piece of text or up to five pictures.</li>
+          <li>Pick <b>NotoMix</b> in the share sheet.</li>
+          <li>It becomes a note like your own: summary, key points and actions.</li>
+        </ol>
+        <div class="tip"><strong>Or from inside the app</strong>Tap <b>+</b>, then <span class="ui">Import audio</span> to pick an audio file yourself.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="g solo" id="share" aria-labelledby="h-share">
+    <div class="row">
+      <div class="board">
+        <p class="kick">08 · SHARING</p>
+        <h2 id="h-share">Share a note</h2>
+        <p class="say">Send the parts that matter, as text, a picture or a link.</p>
+        <ol class="steps">
+          <li>Open a note and tap the share button at the top. <span class="ui">Share this note</span> opens.</li>
+          <li><span class="ui">Tick what goes.</span> Summary, key points, actions, the transcript, a card picture, the recording, or a link.</li>
+          <li>Send it with Message or Mail, <span class="ui">Copy</span> it, or tap <span class="ui">More</span> for any other app.</li>
+        </ol>
+        <div class="tip gold" id="links"><strong>About the link</strong>It opens in any browser, no app needed. The note travels inside the link itself, it is never stored on a server, ours included. Anyone who has NotoMix can import it with one tap.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="g" id="languages" aria-labelledby="h-languages">
+    <div class="row">
+      <div class="board">
+        <p class="kick">09 · LANGUAGES</p>
+        <h2 id="h-languages">Two languages, one note</h2>
+        <p class="say">Arabic and English in the same sentence is how a lot of us talk. Talk that way.</p>
+        <ol class="steps">
+          <li>Just record. Switch languages mid sentence whenever you like.</li>
+          <li>Want every note written in one language? Settings, <span class="ui">Organize in my language</span>. Notes are written in the app's language, whatever you speak.</li>
+          <li>When a note was turned into your language, a <b>⇄</b> chip at the top says which language you spoke. Tap it to see the note the way you said it, and tap again to go back.</li>
+        </ol>
+        <div class="tip mint"><strong>Tip</strong><span class="ui">What you said</span> always keeps your exact words, in the languages you said them.</div>
+      </div>
+      <img class="phone" src="assets/world/en-mixed.jpg" alt="A note said in Arabic and English, kept in both, with an action, the person mentioned and what you said" loading="lazy" width="250" height="543">
+    </div>
+  </section>
+
+  <section class="g solo" id="brief" aria-labelledby="h-brief">
+    <div class="row">
+      <div class="board">
+        <p class="kick">10 · MORNINGS</p>
+        <h2 id="h-brief">Morning Brief</h2>
+        <p class="say">One notification every morning: your actions, what's due, and your day.</p>
+        <ol class="steps">
+          <li>On Today, tap your picture at the top, then <span class="ui">Settings</span>.</li>
+          <li>Under <span class="ui">Morning Brief</span>, set the <span class="ui">Brief time</span> you want.</li>
+          <li>Turn on <span class="ui">Include calendar</span> to see your meetings in it too. Your calendar is read on your iPhone only.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="g solo" id="siri" aria-labelledby="h-siri">
+    <div class="row">
+      <div class="board">
+        <p class="kick">11 · WITHOUT OPENING THE APP</p>
+        <h2 id="h-siri">Siri, widgets and the lock screen</h2>
+        <p class="say">The quickest way in is the one already on your screen.</p>
+        <ol class="steps">
+          <li><b>Siri:</b> <span class="siri">Record with NotoMix</span> <span class="siri">Stop recording in NotoMix</span> <span class="siri">Start a meeting in NotoMix</span> <span class="siri">What did I promise today in NotoMix</span> <span class="siri">Ask NotoMix</span></li>
+          <li><b>Action Button</b> (iPhone 15 Pro and later): Settings, Action Button, Shortcut, then NotoMix and <span class="ui">Record</span>.</li>
+          <li id="widget"><b>Widgets:</b> <span class="ui">Your day</span> (medium) shows what's due and lets you tick it off. <span class="ui">Quick Record</span> goes on the Home Screen (small) or under the clock on the lock screen.</li>
+          <li><b>Control Center</b> (iOS 18): add the <span class="ui">Record a note</span> control.</li>
+          <li><b>While you record:</b> the lock screen and the Dynamic Island show it, with <span class="ui">Pause</span> and <span class="ui">End</span>.</li>
+        </ol>
+        <div class="tip violet"><strong>Tip</strong>Siri knows the app by the name under its icon on your Home Screen, so say that name in the phrase.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="g solo" id="keyboard" aria-labelledby="h-keyboard">
+    <div class="row">
+      <div class="board">
+        <p class="kick">12 · TALK IN ANY APP</p>
+        <h2 id="h-keyboard">The NotoMix keyboard</h2>
+        <p class="say">Dictate into any text box, and I clean up the ums.</p>
+        <ol class="steps">
+          <li>Open the iPhone Settings app: General, Keyboard, Keyboards, Add New Keyboard, then NotoMix.</li>
+          <li>Tap NotoMix in that list and turn on <b>Allow Full Access</b>. It is only for the microphone: nothing you type is kept or sent.</li>
+          <li>In any app, switch to the NotoMix keyboard with the globe, and tap the microphone.</li>
+          <li>NotoMix opens to listen. Go back to where you were typing with the arrow at the top left, and talk. Your words are written into that app.</li>
+        </ol>
+        <div class="tip"><strong>Tip</strong>Turn on <span class="ui">Save as a note too</span> and what you dictate also becomes a note, actions and all. After that I stay ready for three minutes, so the next time the keyboard starts me itself.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="g solo" id="watch" aria-labelledby="h-watch">
+    <div class="row">
+      <div class="board">
+        <p class="kick">13 · ON YOUR WRIST</p>
+        <h2 id="h-watch">Apple Watch</h2>
+        <p class="say">Record on your wrist, even with the phone at home.</p>
+        <ol class="steps">
+          <li>Open NotoMix on the watch. It starts recording right away.</li>
+          <li>Tap <span class="ui">Stop and send</span>.</li>
+          <li>It goes to your iPhone when it's nearby and is organized there, like any other note.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="g solo" id="insights" aria-labelledby="h-insights">
+    <div class="row">
+      <div class="board">
+        <p class="kick">14 · LOOKING BACK</p>
+        <h2 id="h-insights">Insights</h2>
+        <p class="say">What you captured, what you finished and the promises you kept.</p>
+        <ol class="steps">
+          <li>Open the <span class="ui">Insights</span> tab and pick <span class="ui">Day</span>, <span class="ui">Week</span>, <span class="ui">Month</span> or <span class="ui">Year</span>.</li>
+          <li>See your day hour by hour, your chattiest day, and who promised you what.</li>
+          <li>Omar still owes you something? <span class="ui">Send a nudge</span> opens your share sheet with a friendly message. I never send it myself.</li>
+        </ol>
+        <div class="tip mint"><strong>Good to know</strong>Every number here is counted on your iPhone.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="g solo" id="account" aria-labelledby="h-account">
+    <div class="row">
+      <div class="board">
+        <p class="kick">15 · YOUR STUFF</p>
+        <h2 id="h-account">Your account and your notes</h2>
+        <p class="say">Your notes live on your iPhone and in your own iCloud.</p>
+        <ol class="steps">
+          <li>Your first note needs no account. Sign in or create one whenever you want, from your picture at the top of Today.</li>
+          <li>With iCloud on, your notes are backed up there. Settings shows when the last backup was, and audio and photo backups are yours to switch on.</li>
+          <li>To leave, Settings, <span class="ui">Delete account</span>. It removes your account and your notes from this device and your iCloud.</li>
+        </ol>
+        <div class="tip gold"><strong>Plans</strong>The free plan and what Pro and Pro+ add are on the <a href="index.html#plans">Plans</a> page, with the price for your country.</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="end wrap">
+  <p class="hand">Something missing here? Tell me and I'll add it.</p>
+  <h2>never forget <b>what you promised</b></h2>
+  <a class="cta" data-umami-event="store-click" data-umami-event-place="guides-end" href="https://apps.apple.com/app/id6789915282">Download on the App Store</a>
+  <nav aria-label="Footer">
+    <a href="index.html">Home</a>
+    <a href="meetings.html">For meetings</a>
+    <a href="lectures.html">For lectures</a>
+    <a href="index.html#plans">Plans</a>
+    <a href="support.html">Support</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="terms.html">Terms</a>
+    <a href="mailto:info@notomix.app">Contact</a>
+  </nav>
+  <div class="socnav"><span>Follow NotoMix</span><span data-social="en"><a href="https://www.linkedin.com/company/actionnote" target="_blank" rel="noopener">LinkedIn</a> <a href="https://www.instagram.com/actionnote0/" target="_blank" rel="noopener">Instagram</a> <a href="https://www.tiktok.com/@action.note" target="_blank" rel="noopener">TikTok</a></span></div>
+  <p class="copy">© 2026 NotoMix</p>
+</footer>
+<script src="assets/locale.js"></script>
 <script src="assets/social.js"></script>
+<script>if (window.ANSocial) document.getElementById('socTop').innerHTML = ANSocial.icons('en');</script>
 </body>
 </html>

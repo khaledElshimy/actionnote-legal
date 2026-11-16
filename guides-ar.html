@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>دليل NotoMix: كيف يعمل كل جزء في التطبيق</title>
+<meta name="description" content="أدلة قصيرة وصادقة لتطبيق NotoMix: ملاحظتك الأولى، المهام والوعود، جرّة نوتو، اسأل ملاحظاتك، الاجتماعات، الصور، المشاركة، لغتان في ملاحظة واحدة، موجز الصباح، سيري، الأدوات، لوحة المفاتيح وساعة Apple." />
+<link rel="alternate" hreflang="en" href="https://notomix.app/guides.html" />
+<link rel="alternate" hreflang="ar" href="https://notomix.app/guides-ar.html" />
+<link rel="alternate" hreflang="x-default" href="https://notomix.app/guides.html" />
+<link rel="canonical" href="https://notomix.app/guides-ar.html" />
+<meta property="og:title" content="دليل NotoMix" />
+<meta property="og:description" content="كيف يعمل كل جزء في NotoMix، ببضع خطوات لكل واحد." />
+<meta property="og:image" content="https://notomix.app/assets/og.jpg" />
+<meta property="og:url" content="https://notomix.app/guides-ar.html" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="assets/favicon-16.png" sizes="16x16" type="image/png" />
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+<link rel="manifest" href="site.webmanifest" />
+<meta name="theme-color" content="#16213A" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;800;900&family=IBM+Plex+Sans+Arabic:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="guides.css">
+<script defer src="https://cloud.umami.is/script.js" data-website-id="d4933bf3-fbb3-4342-a2df-f88abf4e54f3"></script>
+</head>
+<body>
+<a class="skip" href="#main">انتقل إلى المحتوى</a>
+<header class="top">
+  <a class="brand" href="ar.html" aria-label="الصفحة الرئيسية لـ NotoMix">
+    <img src="assets/world/noto.svg" alt="">
+    <span class="en">NotoMix</span>
+  </a>
+  <div class="right">
+    <nav class="soctop" id="socTop" aria-label="NotoMix على مواقع التواصل"></nav>
+    <div class="lang" role="group" aria-label="اللغة">
+      <a href="guides.html" lang="en" hreflang="en">EN</a>
+      <a href="guides-ar.html" lang="ar" aria-current="page">ع</a>
+    </div>
+    <a class="cta" data-umami-event="store-click" data-umami-event-place="guides-ar-nav" href="https://apps.apple.com/app/id6789915282">حمّل التطبيق</a>
+  </div>
+</header>
+
+<main id="main" class="wrap">
+  <div class="intro">
+    <div>
+      <p class="hand">أهلاً، أنا نوتو. هكذا أعمل.</p>
+      <h1>دليل <b>NotoMix</b></h1>
+      <p class="lead">كل جزء في التطبيق ببضع خطوات، مع الشاشات الحقيقية. بلا فيديوهات طويلة. اقرأ ما تحتاجه وارجع إلى يومك.</p>
+      <span class="freenote">مكتوب لإصدار NotoMix 2.0 على الآيفون</span>
+    </div>
+    <nav class="index" aria-label="الأدلة">
+      <p>في هذا الدليل</p>
+      <ol>
+        <li><a href="#record">ملاحظتك الأولى</a></li>
+        <li><a href="#note">ماذا تصير الملاحظة</a></li>
+        <li><a href="#jar">اليوم وجرّة نوتو</a></li>
+        <li><a href="#ask">اسأل ملاحظاتك</a></li>
+        <li><a href="#meetings">الاجتماعات</a></li>
+        <li><a href="#photo">صوّر صفحة</a></li>
+        <li><a href="#whatsapp">أدخل الرسائل الصوتية</a></li>
+        <li><a href="#share">شارك ملاحظة</a></li>
+        <li><a href="#languages">لغتان في ملاحظة واحدة</a></li>
+        <li><a href="#brief">موجز الصباح</a></li>
+        <li><a href="#siri">سيري والأدوات وشاشة القفل</a></li>
+        <li><a href="#keyboard">لوحة مفاتيح NotoMix</a></li>
+        <li><a href="#watch">ساعة Apple</a></li>
+        <li><a href="#insights">حصادك</a></li>
+        <li><a href="#account">حسابك وملاحظاتك</a></li>
+      </ol>
+    </nav>
+  </div>
+
+  <section class="g" id="record" aria-labelledby="h-record">
+    <div class="row">
+      <div class="board">
+        <p class="kick">01 · البداية</p>
+        <h2 id="h-record">ملاحظتك الأولى</h2>
+        <p class="say">تكلّم كما يخرج الكلام منك. لا بأس بالفوضى، فترتيبها شغلي.</p>
+        <ol class="steps">
+          <li>اضغط زر <b>+</b> في وسط الشريط السفلي. ستسألك نافذة: <span class="ui">ماذا تريد أن تسجّل؟</span></li>
+          <li>اختر واحداً: <span class="ui">تحدّث</span> (بأي لغة، حتى لغتين في جملة واحدة)، أو <span class="ui">اكتب</span>، أو <span class="ui">صوّر صفحة</span>، أو <span class="ui">استورد صوتاً</span>، أو <span class="ui">سجّل اجتماعاً</span>.</li>
+          <li>في الملاحظة الصوتية تكلّم ثم أوقف التسجيل. بعد ثوانٍ تصبح الملاحظة جاهزة ومرتّبة.</li>
+        </ol>
+        <div class="tip gold"><strong>أسرع</strong>اضغط مطولاً على زر الإضافة لبدء ملاحظة صوتية فوراً. اقفل الشاشة أو انتقل إلى تطبيق آخر وأنت تتكلم، والتسجيل يستمر.</div>
+      </div>
+      <img class="phone" src="assets/world/ar-capture.jpg" alt="نافذة التسجيل: تحدّث، اكتب، صوّر صفحة، استورد صوتاً، سجّل اجتماعاً" loading="lazy" width="250" height="543">
+    </div>
+  </section>
+
+  <section class="g" id="note" aria-labelledby="h-note">
+    <div class="row">
+      <div class="board">
+        <p class="kick">02 · ماذا تحصل عليه</p>
+        <h2 id="h-note">ماذا تصير الملاحظة</h2>
+        <p class="say">كلام متشعّب يدخل، وصفحة مرتّبة تخرج.</p>
+        <ol class="steps">
+          <li><b>عنوان</b>، و<b>ملخص</b> قصير، و<b>النقاط الرئيسية</b>.</li>
+          <li><b>مهام</b> بالمواعيد التي قلتها بصوتك. اضغط <span class="ui">متى</span> أو الجرس بجانب المهمة لتضبط تذكيرها أو تغيّره.</li>
+          <li>الوعود في الاتجاهين، بالأسماء: ما عليك يذهب إلى <span class="ui">وعدتَ بها</span>، وما على سارة أو عمر لك يذهب إلى <span class="ui">وعدك بها آخرون</span>.</li>
+          <li>كلماتك نفسها تبقى تحت الملخص في <span class="ui">ما قلته</span>، كما هي، لتتأكد متى شئت.</li>
+        </ol>
+        <div class="tip"><strong>نصيحة</strong>اضغط <b>+</b> بجانب أي نقطة رئيسية لتجعلها مهمة، أو <span class="ui">أضف مهمة</span> لتكتب واحدة بنفسك.</div>
+      </div>
+      <img class="phone" src="assets/world/ar-board.jpg" alt="أول ملاحظة على لوحة نوتو: وعدت سارة بعرض السعر، ووعدك عمر بالميزانية" loading="lazy" width="250" height="543">
+    </div>
+  </section>
+
+  <section class="g" id="jar" aria-labelledby="h-jar">
+    <div class="row">
+      <div class="board">
+        <p class="kick">03 · اليوم</p>
+        <h2 id="h-jar">اليوم وجرّة نوتو</h2>
+        <p class="say">تبويب <span class="ui">اليوم</span> هو يومك: <span class="ui">مهام اليوم</span>، وما وعدت به، وركني من الغرفة.</p>
+        <ol class="steps">
+          <li>علّم المهمة حين تنجزها، فتطير نجمة ورقية إلى جرّتي.</li>
+          <li>وفِ بوعد لأحد، وتكون النجمة <b>ذهبية</b>، مع بطاقة <span class="ui">وعدٌ وفيت به</span>.</li>
+          <li>تريد أن تخبره؟ <span class="ui">شاركها</span> تشارك هذه البطاقة وحدها، ولا شيء آخر من ملاحظاتك.</li>
+        </ol>
+        <div class="tip pink"><strong>للعلم</strong>تفضّل حركة أقل؟ في الإعدادات <span class="ui">الوضع الهادئ</span>، ويعمل وحده أثناء الاجتماعات.</div>
+      </div>
+      <img class="phone" src="assets/world/ar-kept.jpg" alt="بطاقة وعد وفيت به: وفيت بوعدك تجاه عمر، نجمة ذهبية في الجرّة، شاركها" loading="lazy" width="250" height="543">
+    </div>
+  </section>
+
+  <section class="g" id="ask" aria-labelledby="h-ask">
+    <div class="row">
+      <div class="board">
+        <p class="kick">04 · اسأل</p>
+        <h2 id="h-ask">اسأل ملاحظاتك</h2>
+        <p class="say">كل ما قلته يصبح شيئاً تستطيع أن تسأله، بأي لغة.</p>
+        <ol class="steps">
+          <li>في تبويب اليوم اضغط زر النجمة اللامعة في الأعلى. ويمكنك أيضاً كتابة سؤالك في البحث في تبويب الملاحظات.</li>
+          <li>اسأل كما تسأل شخصاً: <span class="siri">ماذا وعدتُ عمر؟</span></li>
+          <li>الجواب يذكر الملاحظات التي جاء منها. اضغط أياً منها لتقرأ الأصل.</li>
+        </ol>
+        <div class="tip mint"><strong>نصيحة</strong>الإجابات تأتي من ملاحظاتك أنت فقط.</div>
+      </div>
+      <img class="phone" src="assets/world/ar-ask.jpg" alt="اسأل ملاحظاتك: ماذا وعدت عمر، والجواب مع الملاحظتين اللتين جاء منهما" loading="lazy" width="250" height="543">
+    </div>
+  </section>
+
+  <section class="g" id="meetings" aria-labelledby="h-meetings">
+    <div class="row">
+      <div class="board">
+        <p class="kick">05 · الاجتماعات</p>
+        <h2 id="h-meetings">الاجتماعات</h2>
+        <p class="say">ضع الهاتف على الطاولة. بلا بوت، ولا دعوة، ولا رابط.</p>
+        <ol class="steps">
+          <li>افتح تبويب <span class="ui">الاجتماعات</span> واضغط <span class="ui">ابدأ اجتماعاً</span>. أضف عنواناً ومن سينضم إن أردت، وكلاهما اختياري.</li>
+          <li>اختر ما تريد أن تحصل عليه، ثم اضغط <span class="ui">ابدأ الاجتماع</span>.</li>
+          <li>أوقفه مؤقتاً أو أنهِه من الشاشة، أو من شاشة القفل، أو من <span class="en">Dynamic Island</span>. و<span class="ui">علّم هذه اللحظة</span> تثبّت نقطة تريد أن تجدها لاحقاً.</li>
+          <li>يصلك إشعار حين يصبح محضرك جاهزاً: أسماء المتحدثين، والقرارات، والأسئلة المفتوحة، ومهام كل شخص.</li>
+        </ol>
+        <div class="duo">
+          <div class="st"><b>نص وتحديد المتحدثين وملخص</b>في السحابة. لغات مختلفة، والمتحدثون يُفصلون، والمحضر. يستخدم الدقائق السحابية.</div>
+          <div class="st"><b>نص على هذا الـ<span class="en">iPhone</span></b>مجاناً. لا شيء يُرفع. بلا فصل للمتحدثين وبلا ملخص.</div>
+        </div>
+        <div class="tip violet"><strong>ثم اسأله</strong>داخل الاجتماع، <span class="ui">اسأل عن هذا الاجتماع</span> تسأل ذلك الاجتماع وحده. وعدد الدقائق السحابية في كل خطة تجده في <a href="ar.html#plans">صفحة الخطط</a>.</div>
+      </div>
+      <img class="phone" src="assets/world/ar-minutes.jpg" alt="محضر اجتماع مراجعة الميزانية مع عمر: المتحدثون والملخص والقرارات ومهام كل شخص" loading="lazy" width="250" height="543">
+    </div>
+  </section>
+
+  <section class="g solo" id="photo" aria-labelledby="h-photo">
+    <div class="row">
+      <div class="board">
+        <p class="kick">06 · الورق</p>
+        <h2 id="h-photo">صوّر صفحة</h2>
+        <p class="say">سبّورة، أو ورقة من محاضرة، أو لقطة شاشة لمحادثة طويلة.</p>
+        <ol class="steps">
+          <li>اضغط <b>+</b> ثم <span class="ui">صوّر صفحة</span>. التقط أو اختر حتى خمس صفحات أو لقطات شاشة.</li>
+          <li>أقرأ كل صفحة وأكتبها كأي ملاحظة أخرى.</li>
+          <li>أي شيء مطلوب منك يصبح مهمة، بموعده إن كان مكتوباً.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="g solo" id="whatsapp" aria-labelledby="h-whatsapp">
+    <div class="row">
+      <div class="board">
+        <p class="kick">07 · من تطبيقات أخرى</p>
+        <h2 id="h-whatsapp">أدخل الرسائل الصوتية وغيرها</h2>
+        <p class="say">الرسالة الصوتية ذات السبع دقائق من صديقك، تقرؤها في ثوانٍ.</p>
+        <ol class="steps">
+          <li>في واتساب أو تيليجرام أو البريد أو الملفات أو الصور أو أي تطبيق، اضغط <b>مشاركة</b> على رسالة صوتية، أو نص، أو حتى خمس صور.</li>
+          <li>اختر <b class="en">NotoMix</b> من قائمة المشاركة.</li>
+          <li>تصبح ملاحظة مثل ملاحظاتك: ملخص ونقاط رئيسية ومهام.</li>
+        </ol>
+        <div class="tip"><strong>أو من داخل التطبيق</strong>اضغط <b>+</b> ثم <span class="ui">استورد صوتاً</span> لتختار ملفاً صوتياً بنفسك.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="g solo" id="share" aria-labelledby="h-share">
+    <div class="row">
+      <div class="board">
+        <p class="kick">08 · المشاركة</p>
+        <h2 id="h-share">شارك ملاحظة</h2>
+        <p class="say">أرسل الأجزاء المهمة، نصاً أو صورة أو رابطاً.</p>
+        <ol class="steps">
+          <li>افتح الملاحظة واضغط زر المشاركة في الأعلى، فتظهر <span class="ui">شارك هذه الملاحظة</span>.</li>
+          <li><span class="ui">اختر ما يُرسل.</span> الملخص، والنقاط الرئيسية، والمهام، والنص الحرفي، وصورة البطاقة، والتسجيل، أو رابط.</li>
+          <li>أرسلها برسالة أو بالبريد، أو اضغط <span class="ui">نسخ</span>، أو <span class="ui">المزيد</span> لأي تطبيق آخر.</li>
+        </ol>
+        <div class="tip gold" id="links"><strong>عن الرابط</strong>يُفتح في أي متصفح، بلا حاجة إلى التطبيق. الملاحظة تسافر داخل الرابط نفسه، ولا تُحفظ على أي خادم، ولا خادمنا. ومن عنده <span class="en">NotoMix</span> يستوردها بضغطة واحدة.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="g" id="languages" aria-labelledby="h-languages">
+    <div class="row">
+      <div class="board">
+        <p class="kick">09 · اللغات</p>
+        <h2 id="h-languages">لغتان في ملاحظة واحدة</h2>
+        <p class="say">عربي وإنجليزي في الجملة نفسها، هكذا يتكلم كثير منا. تكلّم هكذا.</p>
+        <ol class="steps">
+          <li>سجّل فقط، وانتقل بين اللغتين في منتصف الجملة متى شئت.</li>
+          <li>تريد كل ملاحظة بلغة واحدة؟ من الإعدادات فعّل <span class="ui">نظّم بلغتي</span>. تُكتب الملاحظات بلغة التطبيق، مهما كانت اللغة التي تتحدث بها.</li>
+          <li>حين تُكتب الملاحظة بلغتك، تظهر في أعلاها شارة <b>⇄</b> تقول بأي لغة تكلّمت. اضغطها لترى الملاحظة كما قلتها، واضغطها مرة أخرى لتعود.</li>
+        </ol>
+        <div class="tip mint"><strong>نصيحة</strong><span class="ui">ما قلته</span> يحفظ كلماتك بحروفها دائماً، باللغات التي قلتها بها.</div>
+      </div>
+      <img class="phone" src="assets/world/ar-mixed.jpg" alt="ملاحظة قيلت بالعربية والإنجليزية وحُفظت بهما، مع مهمة والشخص المذكور وما قلته" loading="lazy" width="250" height="543">
+    </div>
+  </section>
+
+  <section class="g solo" id="brief" aria-labelledby="h-brief">
+    <div class="row">
+      <div class="board">
+        <p class="kick">10 · الصباح</p>
+        <h2 id="h-brief">موجز الصباح</h2>
+        <p class="say">إشعار واحد كل صباح: مهامك، وما استحق، ويومك.</p>
+        <ol class="steps">
+          <li>في تبويب اليوم اضغط صورتك في الأعلى، ثم <span class="ui">الإعدادات</span>.</li>
+          <li>في <span class="ui">موجز الصباح</span> اختر <span class="ui">وقت الملخص</span> الذي يناسبك.</li>
+          <li>فعّل <span class="ui">تضمين التقويم</span> لترى اجتماعاتك فيه أيضاً. تقويمك يُقرأ على الآيفون فقط.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="g solo" id="siri" aria-labelledby="h-siri">
+    <div class="row">
+      <div class="board">
+        <p class="kick">11 · بلا فتح التطبيق</p>
+        <h2 id="h-siri">سيري والأدوات وشاشة القفل</h2>
+        <p class="say">أسرع طريق هو الموجود على شاشتك أصلاً.</p>
+        <ol class="steps">
+          <li><b>سيري:</b> <span class="siri">سجّل مع <span class="en">NotoMix</span></span> <span class="siri">أوقف التسجيل في <span class="en">NotoMix</span></span> <span class="siri">ابدأ اجتماعًا في <span class="en">NotoMix</span></span> <span class="siri">ماذا وعدت اليوم في <span class="en">NotoMix</span></span> <span class="siri">اسأل <span class="en">NotoMix</span></span></li>
+          <li><b>زر الإجراءات</b> (في <span class="en">iPhone 15 Pro</span> وما بعده): الإعدادات، زر الإجراءات، اختصار، ثم <span class="en">NotoMix</span> و<span class="ui">تسجيل</span>.</li>
+          <li id="widget"><b>الأدوات:</b> <span class="ui">يومك</span> (متوسطة) تعرض ما يستحق وتتيح لك تعليمه منجزاً. و<span class="ui">تسجيل سريع</span> على الشاشة الرئيسية (صغيرة) أو تحت الساعة في شاشة القفل.</li>
+          <li><b>مركز التحكم</b> (<span class="en">iOS 18</span>): أضف زر <span class="ui">سجّل ملاحظة</span>.</li>
+          <li><b>أثناء التسجيل:</b> تظهره شاشة القفل و<span class="en">Dynamic Island</span>، مع <span class="ui">إيقاف مؤقت</span> و<span class="ui">إنهاء</span>.</li>
+        </ol>
+        <div class="tip violet"><strong>نصيحة</strong>سيري تعرف التطبيق بالاسم المكتوب تحت أيقونته على شاشتك الرئيسية، فقل هذا الاسم في الجملة.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="g solo" id="keyboard" aria-labelledby="h-keyboard">
+    <div class="row">
+      <div class="board">
+        <p class="kick">12 · تكلّم في أي تطبيق</p>
+        <h2 id="h-keyboard">لوحة مفاتيح <span class="en">NotoMix</span></h2>
+        <p class="say">أملِ في أي خانة نص، وأنا أحذف الأصوات الزائدة مثل اممم.</p>
+        <ol class="steps">
+          <li>افتح تطبيق الإعدادات في الآيفون: عام، لوحة المفاتيح، لوحات المفاتيح، إضافة لوحة مفاتيح جديدة، ثم <span class="en">NotoMix</span>.</li>
+          <li>اضغط <span class="en">NotoMix</span> في تلك القائمة وفعّل <b>السماح بالوصول الكامل</b>. هو للميكروفون فقط: لا شيء مما تكتبه يُحفظ أو يُرسل.</li>
+          <li>في أي تطبيق، انتقل إلى لوحة <span class="en">NotoMix</span> بزر الكرة الأرضية، واضغط الميكروفون.</li>
+          <li>يُفتح <span class="en">NotoMix</span> ليستمع. ارجع إلى حيث كنت تكتب بالسهم أعلى الشاشة، وتكلّم. كلماتك تُكتب في ذلك التطبيق.</li>
+        </ol>
+        <div class="tip"><strong>نصيحة</strong>فعّل <span class="ui">احفظه كملاحظة أيضًا</span> ليصبح ما تمليه ملاحظة أيضاً، بمهامها. وبعدها أبقى جاهزاً ثلاث دقائق، فتشغّلني لوحة المفاتيح في المرة التالية بنفسها.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="g solo" id="watch" aria-labelledby="h-watch">
+    <div class="row">
+      <div class="board">
+        <p class="kick">13 · على معصمك</p>
+        <h2 id="h-watch">ساعة <span class="en">Apple</span></h2>
+        <p class="say">سجّل من معصمك، حتى لو بقي الهاتف في البيت.</p>
+        <ol class="steps">
+          <li>افتح <span class="en">NotoMix</span> على الساعة، فيبدأ التسجيل فوراً.</li>
+          <li>اضغط <span class="ui">أوقف وأرسل</span>.</li>
+          <li>تُرسل إلى الآيفون حين يكون قريباً، وتُرتّب هناك كأي ملاحظة أخرى.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="g solo" id="insights" aria-labelledby="h-insights">
+    <div class="row">
+      <div class="board">
+        <p class="kick">14 · نظرة إلى الوراء</p>
+        <h2 id="h-insights">حصادك</h2>
+        <p class="say">ما سجّلته، وما أنجزته، والوعود التي وفيت بها.</p>
+        <ol class="steps">
+          <li>افتح تبويب <span class="ui">حصادك</span> واختر <span class="ui">يوم</span> أو <span class="ui">أسبوع</span> أو <span class="ui">شهر</span> أو <span class="ui">سنة</span>.</li>
+          <li>شاهد يومك ساعة بساعة، واليوم الأكثر كلاماً، ومن وعدك بماذا.</li>
+          <li>عمر ما زال مديناً لك بشيء؟ <span class="ui">أرسل تذكيراً لطيفاً</span> تفتح نافذة المشاركة مع رسالة ودودة، ولا أرسلها بنفسي أبداً.</li>
+        </ol>
+        <div class="tip mint"><strong>للعلم</strong>كل رقم هنا محسوب على هاتفك.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="g solo" id="account" aria-labelledby="h-account">
+    <div class="row">
+      <div class="board">
+        <p class="kick">15 · أشياؤك</p>
+        <h2 id="h-account">حسابك وملاحظاتك</h2>
+        <p class="say">ملاحظاتك تعيش على آيفونك وفي <span class="en">iCloud</span> الخاص بك.</p>
+        <ol class="steps">
+          <li>أول ملاحظة لا تحتاج حساباً. سجّل الدخول أو أنشئ حساباً متى شئت، من صورتك أعلى تبويب اليوم.</li>
+          <li>حين يكون <span class="en">iCloud</span> مفعّلاً تُنسخ ملاحظاتك احتياطياً هناك. الإعدادات تعرض وقت آخر نسخة، ونسخ الصوت والصور تفعّله أنت إن أردت.</li>
+          <li>للمغادرة: الإعدادات، <span class="ui">حذف الحساب</span>. يحذف حسابك وملاحظاتك من هذا الجهاز ومن <span class="en">iCloud</span> الخاص بك.</li>
+        </ol>
+        <div class="tip gold"><strong>الخطط</strong>الخطة المجانية وما يضيفه <span class="en">Pro</span> و<span class="en">Pro+</span> في <a href="ar.html#plans">صفحة الخطط</a>، بسعر بلدك.</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="end wrap">
+  <p class="hand">ينقص شيء هنا؟ أخبرني وسأضيفه.</p>
+  <h2>لا تنسَ أبداً <b>ما وعدت به</b></h2>
+  <a class="cta" data-umami-event="store-click" data-umami-event-place="guides-ar-end" href="https://apps.apple.com/app/id6789915282">حمّله من App Store</a>
+  <nav aria-label="روابط الموقع">
+    <a href="ar.html">الرئيسية</a>
+    <a href="meetings-ar.html">للاجتماعات</a>
+    <a href="lectures-ar.html">للمحاضرات</a>
+    <a href="ar.html#plans">الخطط</a>
+    <a href="support.html">الدعم</a>
+    <a href="privacy.html">الخصوصية</a>
+    <a href="terms.html">الشروط</a>
+    <a href="mailto:info@notomix.app">تواصل</a>
+  </nav>
+  <div class="socnav"><span>تابع NotoMix</span><span data-social="ar"><a href="https://www.linkedin.com/company/actionnote" target="_blank" rel="noopener">LinkedIn</a> <a href="https://www.instagram.com/actionnote.arab/" target="_blank" rel="noopener">Instagram</a> <a href="https://www.tiktok.com/@action.note" target="_blank" rel="noopener">TikTok</a></span></div>
+  <p class="copy">© 2026 NotoMix</p>
+</footer>
+<script src="assets/locale.js"></script>
+<script src="assets/social.js"></script>
+<script>if (window.ANSocial) document.getElementById('socTop').innerHTML = ANSocial.icons('ar');</script>
+</body>
+</html>

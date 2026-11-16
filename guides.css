@@ -1,0 +1,130 @@
+/* The Playbook (guides.html and guides-ar.html): Noto's room at night, the home page's tokens. */
+:root{--wall:#16213A;--floor:#101A2E;--card:#1E2B4D;--cream:#F6F2E8;--muted:#CBD2DD;--dim:#93A1B3;--lav:#C4B5FD;--gold:#F5C451;--cork:#B98A5A;--frame:#8A5A34;--blue:#8FB8FF;--violet:#B79CFF;--pin:#EC4899;--sticky:#FAEBA0;--mint:#9EE6C9;--pink:#F9B8D4}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--wall) radial-gradient(1200px 520px at 85% -10%,rgba(196,181,253,.12),transparent 60%) no-repeat;color:var(--cream);font-family:Archivo,system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.55;overflow-x:hidden}
+a{color:var(--lav)}
+img{display:block;max-width:100%}
+.skip{position:absolute;inset-inline-start:8px;top:-60px;z-index:20;background:var(--cream);color:var(--wall);padding:8px 14px;border-radius:8px}
+.skip:focus{top:8px}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+/* the bar at the top, as on the home page */
+.top{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 24px;background:rgba(22,33,58,.88);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.08)}
+.brand{display:flex;align-items:center;gap:10px;color:var(--cream);text-decoration:none}
+.brand img{width:30px;height:34px}
+.brand span{font-weight:900;font-size:20px;letter-spacing:-.5px}
+.right{display:flex;align-items:center;gap:10px}
+.cta{display:inline-block;background:linear-gradient(135deg,#8B5CF6,#EC4899 55%,#F59E0B);color:#FFF;text-decoration:none;padding:11px 18px;border-radius:999px;font-weight:900;font-size:15px;white-space:nowrap}
+.lang{display:flex;background:rgba(30,43,77,.9);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:3px}
+.lang a{color:var(--cream);text-decoration:none;font:800 13px Archivo,sans-serif;padding:8px 12px;border-radius:999px;min-height:36px;display:flex;align-items:center}
+.lang a[aria-current=page]{background:var(--cream);color:var(--wall)}
+.lang a[lang=ar]{font-family:'IBM Plex Sans Arabic',sans-serif}
+.soctop{display:flex;background:rgba(30,43,77,.9);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:3px;color:var(--cream)}
+.soctop:empty{display:none}
+.soctop a:hover,.soctop a:focus-visible{background:rgba(255,255,255,.12)}
+
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+/* the opening: a line from Noto, the title, a sticky note */
+.intro{padding:56px 0 18px;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:40px;align-items:start}
+.hand{margin:0;font:700 26px Caveat,cursive;color:var(--lav)}
+h1{margin:6px 0 0;font:300 60px/1.02 Archivo,sans-serif;letter-spacing:-2px}
+h1 b{font-weight:900}
+.lead{margin:16px 0 0;font-size:18px;color:var(--muted);max-width:560px}
+.freenote{display:inline-block;margin:18px 0 0;padding:8px 14px 9px;background:var(--sticky);color:#2A2416;border-radius:4px;font:700 20px/1.2 Caveat,cursive;transform:rotate(-1.5deg);box-shadow:0 10px 22px rgba(0,0,0,.35)}
+
+/* contents: a cream index card pinned to the wall */
+.index{position:relative;background:var(--cream);color:#1B1B2B;border-radius:3px 3px 3px 18px;padding:24px 20px 16px;box-shadow:6px 8px 0 rgba(5,10,22,.45);transform:rotate(1deg)}
+.index::before{content:"";position:absolute;top:-9px;left:50%;width:18px;height:18px;margin-left:-9px;border-radius:50%;background:var(--pin);box-shadow:1px 3px 0 rgba(60,40,120,.45)}
+.index p{margin:0;font:900 12px Archivo,sans-serif;letter-spacing:1.4px;color:#6D28D9}
+.index ol{margin:10px 0 0;padding:0;list-style:none;counter-reset:i;columns:1}
+.index li{counter-increment:i;margin:0;padding:3px 0;font-size:14.5px;font-weight:700;break-inside:avoid}
+.index li::before{content:counter(i) ".";display:inline-block;min-width:30px;color:#8A5A34;font-weight:900}
+.index a{color:#1B1B2B;text-decoration:none}
+.index a:hover{text-decoration:underline}
+
+/* one guide: a cork board with the steps, and the real screen beside it */
+.g{padding:30px 0;scroll-margin-top:80px}
+.g .row{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:40px;align-items:center}
+.g.solo .row{grid-template-columns:minmax(0,1fr)}
+.g.solo .board{max-width:780px}
+.board{position:relative;background:var(--cork);color:#1B1B2B;border:14px solid var(--frame);border-radius:20px;padding:26px 28px 22px;box-shadow:0 30px 60px rgba(5,10,22,.5),inset 0 0 0 1px rgba(0,0,0,.08)}
+.kick{margin:0;font:900 12px Archivo,sans-serif;letter-spacing:1.4px;color:#3D2A10}
+.board h2{margin:6px 0 0;font:900 30px/1.08 Archivo,sans-serif;letter-spacing:-.8px}
+.board .say{margin:10px 0 0;font-size:16.5px;color:#1B2440}
+.steps{margin:16px 0 0;padding:0;list-style:none;counter-reset:s;display:grid;gap:9px}
+.steps li{counter-increment:s;position:relative;background:var(--cream);border-radius:3px 3px 3px 12px;box-shadow:4px 5px 0 rgba(90,58,30,.5);padding:11px 14px 11px 50px;font-size:15.5px;line-height:1.5}
+.steps li::before{content:counter(s);position:absolute;left:12px;top:10px;width:26px;height:26px;border-radius:50%;background:#1B1B2B;color:var(--cream);font:900 13px/26px Archivo,sans-serif;text-align:center}
+.steps b,.board .say b{font-weight:800}
+.board a{color:#5B21B6;font-weight:800;text-decoration:underline;text-underline-offset:3px}
+.ui{display:inline;font-weight:800;color:#5B21B6;white-space:normal}
+.siri{display:inline-block;margin:2px 0;padding:1px 8px;border-radius:999px;background:rgba(27,27,43,.08);font-weight:800}
+.tip{position:relative;margin:18px 0 4px;background:var(--blue);color:#1B1B2B;padding:14px 16px 12px;border-radius:3px 3px 3px 16px;box-shadow:5px 6px 0 rgba(90,58,30,.55);transform:rotate(-.6deg);font-size:15px}
+.tip.gold{background:var(--sticky)}
+.tip.mint{background:var(--mint)}
+.tip.pink{background:var(--pink)}
+.tip.violet{background:var(--violet)}
+.tip strong{display:block;font:700 22px/1 Caveat,cursive;margin-bottom:4px}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.duo .st{background:var(--cream);border-radius:3px 3px 3px 12px;box-shadow:4px 5px 0 rgba(90,58,30,.5);padding:12px 14px;font-size:14.5px}
+.duo .st b{display:block;font-size:15.5px;font-weight:900;margin-bottom:3px}
+.phone{justify-self:center;width:250px;border-radius:30px;border:6px solid #1B2230;box-shadow:10px 14px 0 rgba(5,10,22,.45),0 30px 60px rgba(5,10,22,.5);transform:rotate(1.5deg)}
+.g:nth-of-type(even) .phone{transform:rotate(-1.5deg)}
+
+/* the end: as on the home page */
+.end{text-align:center;margin:40px 0 0;padding:40px 0 56px;border-top:1px solid rgba(255,255,255,.1)}
+.end .hand{font-size:24px}
+.end h2{margin:6px 0 0;font:300 38px/1.1 Archivo,sans-serif;letter-spacing:-1.2px}
+.end h2 b{font-weight:900}
+.end .cta{margin-top:22px;padding:14px 26px;font-size:16px}
+.end nav{display:flex;flex-wrap:wrap;gap:12px 18px;justify-content:center;margin-top:26px;font-size:14px}
+.end nav a{color:var(--muted);text-decoration:none}
+.end nav a:hover{color:var(--cream)}
+.end .socnav{display:flex;flex-wrap:wrap;gap:10px 18px;justify-content:center;align-items:center;margin-top:16px;font-size:14px;color:var(--muted)}
+.end .socnav>span:first-child{color:var(--dim)}
+.end .socnav a{color:var(--muted);text-decoration:none}
+.copy{margin-top:16px;font-size:12px;color:var(--dim)}
+
+/* Arabic */
+[dir=rtl] body,[dir=rtl] h1,[dir=rtl] h2,[dir=rtl] .kick,[dir=rtl] .index p,[dir=rtl] .cta,[dir=rtl] .steps li::before{font-family:'IBM Plex Sans Arabic',system-ui,sans-serif;letter-spacing:0}
+[dir=rtl] body{line-height:1.7}
+[dir=rtl] .hand,[dir=rtl] .freenote,[dir=rtl] .tip strong{font:700 18px/1.5 'IBM Plex Sans Arabic',sans-serif}
+[dir=rtl] .freenote{transform:rotate(1.5deg);font-size:15px}
+[dir=rtl] h1{font-weight:300;line-height:1.25}
+[dir=rtl] .steps li{padding:11px 50px 11px 14px}
+[dir=rtl] .steps li::before{left:auto;right:12px;line-height:26px}
+[dir=rtl] .index{transform:rotate(-1deg)}
+[dir=rtl] .tip{transform:rotate(.6deg)}
+[dir=rtl] .phone{transform:rotate(-1.5deg)}
+[dir=rtl] .g:nth-of-type(even) .phone{transform:rotate(1.5deg)}
+[dir=rtl] .end h2{font-weight:300;letter-spacing:0}
+.en{direction:ltr;unicode-bidi:isolate}
+
+@media (max-width:860px){
+  .intro{grid-template-columns:minmax(0,1fr);gap:28px;padding-top:34px}
+  h1{font-size:44px;letter-spacing:-1.4px}
+  .lead{font-size:16.5px}
+  .g .row{grid-template-columns:minmax(0,1fr);gap:24px}
+  .phone{width:210px}
+  .board{border-width:10px;padding:22px 18px 18px}
+  .board h2{font-size:25px}
+  .index ol{columns:2;column-gap:14px}
+}
+@media (max-width:520px){
+  .top{padding:12px}
+  .right{gap:6px}
+  .brand span{display:none}
+  .soctop{padding:2px}.soctop a{width:30px;height:30px}.soctop svg{width:15px;height:15px}
+  .cta{padding:10px 14px;font-size:13px}
+  .wrap{padding:0 16px}
+  .index ol{columns:1}
+  .duo{grid-template-columns:1fr}
+  .steps li{font-size:15px}
+  .end h2{font-size:30px}
+}
+@media (max-width:360px){
+  .top{padding:10px 8px}.soctop a{width:26px;height:26px}.soctop svg{width:14px;height:14px}
+  .lang a{padding:6px 9px;min-height:32px}.cta{padding:9px 11px;font-size:12px}
+}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}

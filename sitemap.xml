@@ -6,7 +6,8 @@
   <url><loc>https://notomix.app/support.html</loc><priority>0.5</priority></url>
   <url><loc>https://notomix.app/privacy.html</loc><priority>0.3</priority></url>
   <url><loc>https://notomix.app/terms.html</loc><priority>0.3</priority></url>
-  <url><loc>https://notomix.app/guides.html</loc></url>
+  <url><loc>https://notomix.app/guides.html</loc><priority>0.6</priority></url>
+  <url><loc>https://notomix.app/guides-ar.html</loc><priority>0.6</priority></url>
 <url>
 <loc>https://notomix.app/ar.html</loc>
 <priority>0.9</priority>
