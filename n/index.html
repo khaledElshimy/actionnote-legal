@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>A note shared with you — NotoMix</title>
+<title>A note shared with you · NotoMix</title>
 <meta name="robots" content="noindex" />
-<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
-<link rel="icon" href="../assets/favicon-32.png" sizes="32x32" type="image/png" />
-<link rel="icon" href="../assets/favicon-16.png" sizes="16x16" type="image/png" />
-<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png" />
-<link rel="manifest" href="../site.webmanifest" />
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="/assets/favicon-16.png" sizes="16x16" type="image/png" />
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
 <meta name="theme-color" content="#F6F5F0" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#14161E" media="(prefers-color-scheme: dark)" />
 <style>
@@ -42,7 +42,7 @@
 </head>
 <body>
 <div class="wrap">
-  <div class="from"><img src="../assets/favicon.svg" alt=""><span>Someone shared an NotoMix with you</span></div>
+  <div class="from"><img src="/assets/favicon.svg" alt=""><span>Someone shared a NotoMix note with you</span></div>
   <div id="note" class="card" hidden>
     <h1 id="title"></h1>
     <div id="s-summary" hidden><div class="sec">Summary</div><p class="summary" id="summary"></p></div>
@@ -50,12 +50,12 @@
     <div id="s-kp" hidden><div class="sec">Key Points</div><ul class="kp" id="kps"></ul></div>
   </div>
   <div id="error" class="err" hidden>This link doesn't contain a readable note. Ask the sender to share it again.</div>
-  <a class="cta" href="https://apps.apple.com/app/id6789915282">Get NotoMix — free</a>
+  <a class="cta" href="https://apps.apple.com/app/id6789915282">Get NotoMix, free</a>
   <p class="sub">Voice notes that organize themselves into tasks. If you already have NotoMix, this note imported automatically.</p>
 </div>
 <script>
 (async function(){
-  // The note lives in the fragment — it never reaches any server, including
+  // The note lives in the fragment, it never reaches any server, including
   // ours. "z"-prefixed fragments are raw-DEFLATE compressed (short enough for
   // chat apps to linkify); plain fragments are legacy JSON.
   try {
