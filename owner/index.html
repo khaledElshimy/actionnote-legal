@@ -501,13 +501,14 @@ function fbRows(a){a=a||{};const r=FBQ.filter(q=>a[q[0]]!=null).map(q=>({q:q[1],
  Object.keys(a).filter(k=>!FBQ.some(q=>q[0]===k)).forEach(k=>r.push({q:k,a:!!a[k]}));return r}
 function fbText(f){return 'Feedback '+f.ts+' · '+(f.v||'')+(f.id?' · person '+f.id:'')+'\n'+fbRows(f.answers).map(r=>'• '+r.q+': '+(r.a?'Yes':'No')).join('\n')+'\n'+(f.message?'Message: '+f.message:'No message written')}
 
-const CTX={onboarding_first_note:'after their first note',polish:'on Polish',today_banner:'from the Today banner',settings_plan:'from Settings',after_notes:'after their 3rd note',more_minutes:'for more meeting minutes',upgrade:'at the note limit',plan_card:'from the plan card',capture_paused:'when capture paused'};
+const CTX={onboarding_first_note:'after their first note',polish:'on Polish',today_banner:'from the Today banner',settings_plan:'from Settings',after_notes:'after their 3rd note',more_minutes:'for more meeting minutes',upgrade:'at the note limit',plan_card:'from the plan card',capture_paused:'when capture paused',record_limit:'at the free limit',upload_limit:'importing past the free limit',win_back:'from the day after reminder'};
 const PLAN={'com.actionnote.note.monthly':'Pro monthly','com.actionnote.note.annually':'Pro yearly','com.actionnote.proplus.monthly':'Pro+ monthly','com.actionnote.proplus.yearly':'Pro+ yearly','com.actionnote.pro.lifetime':'Lifetime','com.actionnote.pro.lifetime.launch':'Lifetime (launch price)','com.actionnote.note.annually.gift':'Pro yearly (gift price)','com.actionnote.pro.lifetime.gift':'Lifetime (gift price)'};
 const SRCN={text:'typed',voice:'voice',screenshot:'photo',photo:'photo',import:'imported audio',share:'shared in'};
 const plural=(n,a,b)=>a==='time'?(n===1?'once':n===2?'twice':n+' times'):n+' '+(n===1?a:(b||a+'s'));
 const when=t=>t?new Date(t).toLocaleString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}):'';
 const day=t=>t?new Date(t).toLocaleDateString('en-GB',{day:'numeric',month:'short'}):'';
 const NEW='needs building';
+const SOON='in the next build';
 // the launch prices end 30 Nov 23:59 Gulf time; after that the advice stops naming them
 const SALE=Date.now()<Date.parse('2026-11-30T23:59:00+04:00');
 const FIRSTYEAR=SALE?'the first year price (US $19.99 until 30 Nov)':'the yearly price';
@@ -515,13 +516,13 @@ const FIRSTYEAR=SALE?'the first year price (US $19.99 until 30 Nov)':'the yearly
 // the stage decides the colour, the order and what to do next; first match wins
 const STAGES=[
  {k:'paying',l:'Paying',c:'var(--gr)',t:p=>p.bought,next:p=>['Already paying. Nothing to sell; keep them happy and listen to them.']},
- {k:'tried',l:'Tried to buy',c:'var(--pk)',t:p=>p.started>0,next:p=>['Stopped at Apple’s payment sheet'+((p.result||[]).includes('cancelled')?' (cancelled)':'')+'.','Show '+FIRSTYEAR+' once more on their next open',NEW]},
- {k:'picked',l:'Picked a plan',c:'var(--pk)',t:p=>(p.picked||[]).length>0,next:p=>{const m=(p.picked||[]).some(x=>/monthly/.test(x));return m?['Picked monthly, then stopped. Put '+FIRSTYEAR+' right beside monthly',NEW]:['Picked a plan, then stopped. Show '+FIRSTYEAR+' once more on their next open',NEW]}},
- {k:'polish',l:'Wants Polish',c:'var(--vi)',t:p=>(p.paywall_ctx||[]).includes('polish'),next:p=>['Polish is the paid feature they reached for. Give a free taste (for example 3 polishes), then the paywall with '+FIRSTYEAR,NEW]},
+ {k:'tried',l:'Tried to buy',c:'var(--pk)',t:p=>p.started>0,next:p=>['Stopped at Apple’s payment sheet'+((p.result||[]).includes('cancelled')?' (cancelled)':'')+'.','From the next build, one notification the day after takes them back to the plans with '+FIRSTYEAR+(p.push?'':'; their notifications are off, so it cannot reach them'),SOON]},
+ {k:'picked',l:'Picked a plan',c:'var(--pk)',t:p=>(p.picked||[]).length>0,next:p=>{const m=(p.picked||[]).some(x=>/monthly/.test(x));const r=p.push?'one notification the day after takes them back to the plans':'their notifications are off, so the day after reminder cannot reach them';return m?['Picked monthly, then stopped. From the next build the monthly view shows '+FIRSTYEAR+' right beside it, and '+r,SOON]:['Picked a plan, then stopped. From the next build '+r,SOON]}},
+ {k:'polish',l:'Wants Polish',c:'var(--vi)',t:p=>(p.paywall_ctx||[]).includes('polish'),next:p=>['Polish is the paid feature they reached for. From the next build every account gets 3 free polishes, then the paywall',SOON]},
  {k:'meetings',l:'Meetings',c:'var(--bl)',t:p=>p.meetings>0,next:p=>['Pro+ when their 30 free minutes run out. The minutes prompt already offers it; check it reached them.']},
  {k:'looking',l:'Looking',c:'var(--am)',t:p=>p.sale_tapped||p.lifetime_seen||p.paywall>=3,next:p=>['Looked at the offers more than once. The after 3 notes paywall in 2.0.2 will ask them again'+(p.notes>=3?' (they already have '+p.notes+' notes)':'')+'.']},
- {k:'engaged',l:'Engaged',c:'var(--gr)',t:p=>p.notes>=3||p.days>=2,next:p=>{const a=['The after 3 notes paywall in 2.0.2 reaches them'+(p.notes>=3?'':' at their 3rd note')+'.'];if(!p.asks)a[0]+=' They have not tried Ask yet: it is the ✨ at the top of Today.';return a}},
- {k:'one',l:'Made a note',c:'var(--mut)',t:p=>p.notes>0,next:p=>['Not ready to sell to. The goal is a second note on another day'+(p.reminders?'; they allowed reminders.':'.')]},
+ {k:'engaged',l:'Engaged',c:'var(--gr)',t:p=>p.notes>0&&(p.notes>=3||p.days>=2),next:p=>{const a=['The after 3 notes paywall in 2.0.2 reaches them'+(p.notes>=3?'':' at their 3rd note')+'.'];if(!p.asks)a[0]+=' They have not tried Ask yet: it is the ✨ at the top of Today.';return a}},
+ {k:'one',l:'Made a note',c:'var(--mut)',t:p=>p.notes>0,next:p=>['Not ready to sell to. The goal is a second note on another day'+(p.reminders?'; they allowed reminders.':'.'),'From the next build Noto’s envelope waits for them on their next visit',SOON]},
  {k:'failed',l:'First note failed',c:'var(--am)',t:p=>p.failed>0,next:p=>['Their note failed before any worked. Check Health for the error first; nobody pays after a failure.']},
  {k:'mic',l:'Microphone off',c:'var(--am)',t:p=>p.mic_denied,next:p=>['Said no to the microphone and never typed a note. Typing a note is the way in for them.']},
  {k:'none',l:'No note yet',c:'var(--dim)',t:p=>true,next:p=>['Opened the app but never made a note. That is an onboarding problem, not a buying one.']}];
@@ -557,14 +558,14 @@ function signsLine(p){const a=[];
  return a.join(', ')}
 function whoLine(p){return [LANG[p.lang]||p.lang,p.device?model(p.device):'',p.version?String(p.version).split(' ')[0]:'',p.signed_in?'signed in':'',p.push?'notifications on':''].filter(Boolean).join(' · ')}
 // advice is sentences, plus NEW when it is a rule the app does not have yet
-const sentences=n=>n.filter(x=>x!==NEW).map(x=>/[.!?]$/.test(x)?x:x+'.').join(' ');
-function nextHtml(n){return esc(sentences(n))+(n.includes(NEW)?' <span class=tag>'+NEW+'</span>':'')}
-function nextText(n){return sentences(n)+(n.includes(NEW)?' ('+NEW+')':'')}
+const sentences=n=>n.filter(x=>x!==NEW&&x!==SOON).map(x=>/[.!?]$/.test(x)?x:x+'.').join(' ');
+function nextHtml(n){return esc(sentences(n))+[NEW,SOON].filter(t=>n.includes(t)).map(t=>' <span class=tag>'+t+'</span>').join('')}
+function nextText(n){return sentences(n)+[NEW,SOON].filter(t=>n.includes(t)).map(t=>' ('+t+')').join('')}
 function personText(p){const s=stageOf(p),sg=signsLine(p);
  return 'Person '+p.id+' · '+s.l+'\n'+(whoLine(p)?whoLine(p)+'\n':'')+'First seen '+when(p.first)+', last seen '+when(p.last)+'\n'+
   'Did: '+didLine(p)+'\nBuying signs: '+(sg||'none yet')+(giftLine(p)?'\nGifts: '+giftLine(p):'')+'\nNext: '+nextText(s.next(p))+(p.feedback?'\n'+fbText(Object.assign({id:''},p.feedback)).replace(/^Feedback /,'Their feedback '):'')}
 
-var PF='all', PALL=false;
+var PF='all', PALL=false, PR=false;
 function pplList(){const P=(D.people||[]).map(p=>Object.assign({},p,{_s:stageOf(p)}));
  const rank=p=>STAGES.indexOf(p._s);return P.sort((a,b)=>rank(a)-rank(b)||new Date(b.last)-new Date(a.last))}
 function drawPeople(){const P=pplList();
@@ -573,7 +574,9 @@ function drawPeople(){const P=pplList();
  $('pplSum').textContent=plural(P.length,'person','people')+' since 2.0, App Store build only. '+(hot?hot+' showed a sign of wanting to pay or use meetings.':'Nobody has shown a sign of wanting to pay yet.')+' The id is the start of the anonymous install id; the app has no names.';
  const counts={};P.forEach(p=>counts[p._s.k]=(counts[p._s.k]||0)+1);
  $('pplFilters').innerHTML='<button data-pf="all"'+(PF==='all'?' class=on':'')+'>Everyone<i>'+P.length+'</i></button>'+STAGES.filter(s=>counts[s.k]).map(s=>'<button data-pf="'+s.k+'"'+(PF===s.k?' class=on':'')+'>'+s.l+'<i>'+counts[s.k]+'</i></button>').join('');
- const L=P.filter(p=>PF==='all'||p._s.k===PF), cap=PF==='all'&&!PALL?20:1e9;
+ const reach=P.filter(p=>p.push).length;
+ $('pplFilters').innerHTML+='<button data-pr=1'+(PR?' class=on':'')+' title="People a notification can reach">Notifications on<i>'+reach+'</i></button>';
+ const L=P.filter(p=>(PF==='all'||p._s.k===PF)&&(!PR||p.push)), cap=PF==='all'&&!PR&&!PALL?20:1e9;
  $('ppl').innerHTML=L.length?L.slice(0,cap).map(p=>{const s=p._s,sg=signsLine(p);return '<div class=person id="p-'+esc(p.id)+'" style="--c:'+s.c+'"><div class=hd><div class=who><span class=chip>'+esc(s.l)+'</span><span class=id>'+esc(p.id)+'</span><span class=sub>'+esc(whoLine(p))+'</span></div><button class=btn data-copy-p="'+esc(p.id)+'">Copy</button></div>'+
   '<dl><dt>Seen</dt><dd class=sub>first '+esc(when(p.first))+', last '+esc(ago(p.last))+'</dd><dt>Did</dt><dd>'+esc(didLine(p))+'</dd><dt>Buying signs</dt><dd'+(sg?'':' class="sub dim"')+'>'+esc(sg||'none yet')+'</dd>'+(giftLine(p)?'<dt>Gifts</dt><dd>'+esc(giftLine(p))+'</dd>':'')+'<dt>Next</dt><dd class=next>'+nextHtml(s.next(p))+'</dd>'+
   (p.feedback?'<dt>Feedback</dt><dd><div class=sub>'+esc(p.feedback.ts)+'</div><div class=qa>'+fbRows(p.feedback.answers).map(r=>'<div'+(r.key?' class=key':'')+'><span>'+esc(r.q)+'</span><span class='+(r.a?'yes':'no')+'>'+(r.a?'Yes':'No')+'</span></div>').join('')+'</div>'+(p.feedback.message?'<div class=m style="margin-top:6px">'+esc(p.feedback.message)+'</div>':'')+'</dd>':'')+'</dl></div>'}).join(''):'<div class="card sub">Nobody here yet</div>';
@@ -601,9 +604,10 @@ function copy(text,what){const done=()=>toast('Copied '+what);
  if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(text).then(done,old);else old()}
 document.addEventListener('click',e=>{
  const f=e.target.closest('[data-pf]');if(f){PF=f.dataset.pf;PALL=false;drawPeople();return}
+ const r=e.target.closest('[data-pr]');if(r){PR=!PR;PALL=false;drawPeople();return}
  if(e.target.id==='pplMore'){PALL=true;drawPeople();return}
  const cp=e.target.closest('[data-copy-p]');if(cp){const p=(D.people||[]).find(x=>x.id===cp.dataset.copyP);if(p)copy(personText(p),'person '+p.id);return}
- if(e.target.id==='pplCopyAll'){const L=pplList().filter(p=>PF==='all'||p._s.k===PF);copy(L.map(personText).join('\n\n'),plural(L.length,'person','people'));return}
+ if(e.target.id==='pplCopyAll'){const L=pplList().filter(p=>(PF==='all'||p._s.k===PF)&&(!PR||p.push));copy(L.map(personText).join('\n\n'),plural(L.length,'person','people'));return}
  const cf=e.target.closest('[data-copy-fb]');if(cf){copy(fbText(D.feedback[+cf.dataset.copyFb]),'feedback');return}
  if(e.target.id==='giftCopy'){copy(giftsText(),'the gifts');return}
  if(e.target.id==='fbCopyAll'){copy((D.feedback||[]).map(fbText).join('\n\n'),'all feedback');return}
