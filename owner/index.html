@@ -39,6 +39,7 @@ section{display:flex;flex-direction:column;gap:14px}
 
 /* cards */
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;min-width:0}
+.mform{display:flex;flex-wrap:wrap;gap:12px}.mform label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--mut,#93A1B3);min-width:0;flex:1 1 150px}.mform input{font:inherit;font-size:15px;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card2);color:var(--fg);min-width:0}
 .grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(130px,1fr))}
 .two{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr))}
 .stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;min-width:0}
@@ -133,6 +134,7 @@ tr.zero td{color:var(--dim)}
  <a href="#growth">Growth</a>
  <a href="#people">People <span class="n" id="nPpl" hidden></span></a>
  <a href="#gifts">Gifts</a>
+ <a href="#meta">Meta</a>
  <a href="#newpeople">New people</a>
  <a href="#usage">Usage</a>
  <a href="#money">Money</a>
@@ -200,6 +202,21 @@ tr.zero td{color:var(--dim)}
   <div class="card tw"><h3>By prize <span class="src">chance from the server, change it there</span></h3><table id="giftPrizes"></table></div>
  </div>
  <div class="card tw"><h3>Latest plays</h3><table id="giftRecent"></table></div>
+</section>
+
+<!-- META CAMPAIGN -->
+<section id="s-meta" hidden>
+ <div class="shead"><div><h2>Meta campaign</h2><div class="sub">Every App Store install we counted, before and since the campaign started. Apple Ads installs are taken out of the days before, so the rest is the organic baseline. Use 30d or Since 2.0 to see the days before.</div></div></div>
+ <div class="card"><h3>The campaign <span class="src">kept in this browser only</span></h3>
+  <form id="metaForm" class="mform">
+   <label>Started<input type="date" id="metaStart"></label>
+   <label>Spent so far ($)<input type="number" step="0.01" min="0" id="metaSpend" placeholder="from Ads Manager"></label>
+   <label>Installs Meta reports<input type="number" step="1" min="0" id="metaReported" placeholder="from Ads Manager"></label>
+  </form>
+ </div>
+ <div class="grid" id="metaKpis"></div>
+ <div class="card tw"><h3>Day by day</h3><table id="metaDays"></table></div>
+ <div class="card"><h3>Meta's own numbers</h3><div class="sub" style="line-height:1.6">Ads Manager counts installs through Apple's SKAdNetwork, one to three days late, and only once Events Manager has SKAdNetwork set to "Use Facebook SDK" with events picked (Purchase and Subscribe highest, Complete tutorial next). Events Manager's App installs shows what the app itself reported. Apple's App Store Analytics adds the exact count two days later, as App referrer: Facebook or Instagram.</div></div>
 </section>
 
 <!-- NEW PEOPLE -->
@@ -278,7 +295,7 @@ tr.zero td{color:var(--dim)}
 const FN='https://vsqlyitcuawszzxyeueg.supabase.co/functions/v1/owner-dashboard';
 var D, CH={}, loadedAt=0;
 const PER={'24h':'Last 24 hours','7d':'Last 7 days','30d':'Last 30 days','since2':'Since 2.0 (8 Nov)'};
-const SECTIONS=['overview','people','gifts','growth','newpeople','usage','money','health','audience','feedback'];
+const SECTIONS=['overview','people','gifts','meta','growth','newpeople','usage','money','health','audience','feedback'];
 function getW(){try{const w=localStorage.getItem('an.owner.w');return PER[w]?w:'since2'}catch(e){return'since2'}}
 function setW(w){try{localStorage.setItem('an.owner.w',w)}catch(e){}}
 var win=getW();
@@ -484,6 +501,7 @@ $('fb').innerHTML=FB.length?FB.map((f,i)=>'<div class=fbc><div class=hd><div cla
 $('fbCopyAll').hidden=!FB.length;
 drawPeople();
 drawGifts();
+drawMeta();
 $('asRev').innerHTML=RV.length?RV.map(r=>'<div class=fb><div class=sub>'+esc(r.ts)+' · '+esc(r.territory||'')+' · <span class=stars>'+'★'.repeat(r.rating||0)+'</span></div><div class=m><b>'+esc(r.title||'')+'</b> '+esc(r.body||'')+'</div></div>').join(''):'<span class=sub>No written reviews yet</span>';
 $('nFb').textContent=FB.length+RV.length; $('nFb').hidden=!(FB.length+RV.length);
 
@@ -583,6 +601,33 @@ function drawPeople(){const P=pplList();
  $('pplMore').hidden=!(L.length>cap);$('pplMore').textContent='Show all '+L.length}
 
 // ---- Gifts
+// META: our own install count around the campaign start. The organic
+// baseline is the days before minus Apple Ads installs (Apple Ads is off
+// since 18 Nov); what is above it since the start is credited to Meta.
+function metaGet(k,d){try{return localStorage.getItem('an.owner.meta.'+k)??d}catch(e){return d}}
+function metaSet(k,v){try{localStorage.setItem('an.owner.meta.'+k,v)}catch(e){}}
+function drawMeta(){
+ const start=metaGet('start','2026-11-19'),spend=parseFloat(metaGet('spend',''))||0,rep=parseInt(metaGet('reported',''))||0;
+ $('metaStart').value=start;$('metaSpend').value=spend||'';$('metaReported').value=rep||'';
+ if(D.unit==='hour'){$('metaKpis').innerHTML='';table('metaDays',['Day'],[]);$('metaDays').innerHTML='<tr><td class=sub>Pick 7d, 30d or Since 2.0 to see days.</td></tr>';return}
+ const asa={};((D.ads||{}).daily||[]).forEach(x=>asa[x.day]=x.installs||0);
+ const ymdL=t=>t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0');
+ const days=(D.daily||[]).map(x=>{const d=ymdL(new Date(x.at));return{d,i:x.installs||0,a:asa[d]||0,act:x.active||0,n:x.notes||0,pw:x.paywalls||0,pu:x.purchases||0,on:d>=start}});
+ const before=days.filter(x=>!x.on).slice(-7),since=days.filter(x=>x.on);
+ const base=before.length?before.reduce((t,x)=>t+Math.max(0,x.i-x.a),0)/before.length:0;
+ const sI=since.reduce((t,x)=>t+x.i,0),est=Math.max(0,Math.round(since.reduce((t,x)=>t+(x.i-base),0)));
+ const sum=k=>since.reduce((t,x)=>t+x[k],0),avg=since.length?sI/since.length:0;
+ const per=(v,n)=>n?'$'+(v/n).toFixed(2):'';
+ $('metaKpis').innerHTML=stat('Installs since start',sI,since.length?avg.toFixed(1)+' a day over '+plural(since.length,'day','days'):'no days yet')
+  +stat('Organic baseline',base.toFixed(1),'a day, the '+plural(before.length,'day','days')+' before, Apple Ads taken out')
+  +stat('Above the baseline',est,'our estimate of Meta installs')
+  +stat('Meta reports',rep||'',rep?'installs in Ads Manager':'type it in above')
+  +stat('Cost per install',spend?per(spend,est):'',spend?per(spend,sI)+' over every install':'type the spend above')
+  +stat('Notes since start',sum('n'),sum('pw')+' paywall views, '+sum('pu')+' purchases');
+ const short=d=>new Date(d+'T12:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'short'});
+ table('metaDays',['Day','Installs','Apple Ads','Notes','Paywalls','Buys'],days.slice().reverse().map(x=>['<span style="white-space:nowrap">'+(x.on?'<b>'+short(x.d)+' · Meta</b>':short(x.d))+'</span>',x.i,x.a||'',x.n,x.pw,x.pu]),[0],14);
+}
+document.addEventListener('change',e=>{const m={metaStart:'start',metaSpend:'spend',metaReported:'reported'}[e.target.id];if(m&&D){metaSet(m,e.target.value);drawMeta()}});
 function drawGifts(){const G=D.gifts||{},T=G.totals||{};
  const steps=[['Saw a game',T.shown_people,'people'],['Played',T.played_people,'people'],['Started Pro days',T.pro_started,'weeks'],['Tapped a gift price',T.offer_tapped_people,'people'],['Bought within 14 days',T.bought,'purchases']];
  const top=Math.max(1,...steps.map(x=>x[1]||0));
