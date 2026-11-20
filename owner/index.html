@@ -134,6 +134,7 @@ tr.zero td{color:var(--dim)}
  <a href="#growth">Growth</a>
  <a href="#people">People <span class="n" id="nPpl" hidden></span></a>
  <a href="#gifts">Gifts</a>
+ <a href="#paywall">Paywall</a>
  <a href="#meta">Meta</a>
  <a href="#newpeople">New people</a>
  <a href="#usage">Usage</a>
@@ -202,6 +203,20 @@ tr.zero td{color:var(--dim)}
   <div class="card tw"><h3>By prize <span class="src">chance from the server, change it there</span></h3><table id="giftPrizes"></table></div>
  </div>
  <div class="card tw"><h3>Latest plays</h3><table id="giftRecent"></table></div>
+</section>
+
+<!-- NEW PAYWALL (2.1) AND INSTALLS -->
+<section id="s-paywall" hidden>
+ <div class="shead"><div><h2>Paywall</h2><div class="sub" id="pwSince">The new paywall ships with 2.1. People counted once, from the first time they saw it in this window.</div></div></div>
+ <div class="card"><h3>From seeing the paywall to paying</h3><div class="funnel" id="pwFunnel"></div></div>
+ <div class="grid" id="pwKpis"></div>
+ <div class="two">
+  <div class="card tw"><h3>What they bought</h3><table id="pwProducts"></table></div>
+  <div class="card tw"><h3>Where they saw it</h3><table id="pwDoors"></table></div>
+ </div>
+ <div class="shead"><div><h2>Installs</h2><div class="sub">First opens of App Store builds, internal phones left out. Days in Gulf time.</div></div></div>
+ <div class="grid" id="instKpis"></div>
+ <div class="card tw"><h3>Installs day by day</h3><table id="instDays"></table></div>
 </section>
 
 <!-- META CAMPAIGN -->
@@ -295,7 +310,7 @@ tr.zero td{color:var(--dim)}
 const FN='https://vsqlyitcuawszzxyeueg.supabase.co/functions/v1/owner-dashboard';
 var D, CH={}, loadedAt=0;
 const PER={'24h':'Last 24 hours','7d':'Last 7 days','30d':'Last 30 days','since2':'Since 2.0 (8 Nov)'};
-const SECTIONS=['overview','people','gifts','meta','growth','newpeople','usage','money','health','audience','feedback'];
+const SECTIONS=['overview','people','gifts','paywall','meta','growth','newpeople','usage','money','health','audience','feedback'];
 function getW(){try{const w=localStorage.getItem('an.owner.w');return PER[w]?w:'since2'}catch(e){return'since2'}}
 function setW(w){try{localStorage.setItem('an.owner.w',w)}catch(e){}}
 var win=getW();
@@ -373,7 +388,8 @@ const top=Math.max(1,...steps.map(s=>s[1]));
 $('funnel').innerHTML=steps.map((s,i)=>{const prev=i?steps[i-1][1]:0;const r=i===1?pct(s[1],prev)+' of views':i===3?pct(s[1],steps[2][1])+' of new':i===5?pct(s[1],steps[4][1])+' of paywall':i===2?(AT.installs||0)+' from ads':i===4?pct(s[1],steps[3][1])+' of activated':'';
  return '<div class=fstep><div class=k>'+s[0]+'</div><div class=v>'+s[1]+'</div><div class=r>'+(r||'&nbsp;')+'</div><div class=fbar style="width:'+Math.max(2,Math.round(100*Math.log10(1+s[1])/Math.log10(1+top)))+'%"></div></div>'}).join('');
 
-$('kpis').innerHTML=stat('Active people',k.active,'',dl('active'))+stat('Notes organized',k.notes,ppl(k.note_makers),dl('notes'))+stat('Ask questions',k.asks,'',dl('asks'))+stat('Meetings',k.meetings,'',dl('meetings'))+stat('Polish',k.polish,'',dl('polish'))+stat('Ad spend',usd(AT.spend),AT.installs?usd(AT.spend/AT.installs)+' per install':'')+stat('AI cost','$'+k.ai_cost_usd,'',dl('ai_cost_usd',true))+stat('Server errors',(k.error_rate??0)+'%','',dl('error_rate',true));
+const IN=D.installs||{};
+$('kpis').innerHTML=stat('New installs',IN.new_in_window??'',(IN.today_gulf??0)+' today')+stat('Total installs',IN.total_ever??'',(IN.total_v2??0)+' since 2.0')+stat('Active people',k.active,'',dl('active'))+stat('Notes organized',k.notes,ppl(k.note_makers),dl('notes'))+stat('Ask questions',k.asks,'',dl('asks'))+stat('Meetings',k.meetings,'',dl('meetings'))+stat('Polish',k.polish,'',dl('polish'))+stat('Ad spend',usd(AT.spend),AT.installs?usd(AT.spend/AT.installs)+' per install':'')+stat('AI cost','$'+k.ai_cost_usd,'',dl('ai_cost_usd',true))+stat('Server errors',(k.error_rate??0)+'%','',dl('error_rate',true));
 
 Chart.defaults.color='#93A1B3';Chart.defaults.borderColor='#26325F';Chart.defaults.font.family='-apple-system,BlinkMacSystemFont,Inter,sans-serif';
 const L=(D.daily||[]).map(x=>{const d=new Date(x.at);return D.unit==='hour'?String(d.getHours()).padStart(2,'0')+':00':d.toLocaleDateString('en-GB',{day:'numeric',month:'short'})});
@@ -502,6 +518,7 @@ $('fbCopyAll').hidden=!FB.length;
 drawPeople();
 drawGifts();
 drawMeta();
+drawPaywall();
 $('asRev').innerHTML=RV.length?RV.map(r=>'<div class=fb><div class=sub>'+esc(r.ts)+' · '+esc(r.territory||'')+' · <span class=stars>'+'★'.repeat(r.rating||0)+'</span></div><div class=m><b>'+esc(r.title||'')+'</b> '+esc(r.body||'')+'</div></div>').join(''):'<span class=sub>No written reviews yet</span>';
 $('nFb').textContent=FB.length+RV.length; $('nFb').hidden=!(FB.length+RV.length);
 
@@ -600,6 +617,22 @@ function drawPeople(){const P=pplList();
   (p.feedback?'<dt>Feedback</dt><dd><div class=sub>'+esc(p.feedback.ts)+'</div><div class=qa>'+fbRows(p.feedback.answers).map(r=>'<div'+(r.key?' class=key':'')+'><span>'+esc(r.q)+'</span><span class='+(r.a?'yes':'no')+'>'+(r.a?'Yes':'No')+'</span></div>').join('')+'</div>'+(p.feedback.message?'<div class=m style="margin-top:6px">'+esc(p.feedback.message)+'</div>':'')+'</dd>':'')+'</dl></div>'}).join(''):'<div class="card sub">Nobody here yet</div>';
  $('pplMore').hidden=!(L.length>cap);$('pplMore').textContent='Show all '+L.length}
 
+// ---- The new paywall (2.1) and installs
+function drawPaywall(){const P=D.paywall_new||{},IN=D.installs||{};
+ const steps=[['Saw the paywall',P.people,'people'],['Picked a plan',P.picked_plan,'people'],['Started buying',P.started_buying,'people'],['Started a trial',P.trials,'trials'],['Paid',P.paid,'purchases']];
+ const top=Math.max(1,...steps.map(x=>x[1]||0));
+ $('pwFunnel').innerHTML=steps.map((x,i)=>'<div class=fstep><div class=k>'+x[0]+'</div><div class=v>'+(x[1]||0)+'</div><div class=r>'+(i&&steps[0][1]?pct(x[1]||0,steps[0][1])+' of those who saw it':'')+'</div><div class=o>'+x[2]+'</div><div class=fbar style="width:'+Math.max(3,100*(x[1]||0)/top)+'%"></div></div>').join('')+'<div></div>';
+ $('pwSince').textContent=P.since?'The new paywall, first seen '+day(P.since)+'. People counted once, from the first time they saw it in this window.':'The new paywall ships with 2.1, so nobody has seen it yet. People are counted once, from the first time they see it in the window.';
+ $('pwKpis').innerHTML=stat('Views',P.views||0,plural(P.people||0,'person','people'))+stat('Bought',P.buyers||0,'people who started a trial or paid')+stat('Closed it',P.closed||0,'times')+stat('Cancelled at Apple',P.cancelled||0,'')+stat('Purchase errors',P.failed||0,'');
+ table('pwProducts',['Plan','Trial','Count'],(P.by_product||[]).map(x=>[esc(PLAN[x.product]||x.product||'unknown'),x.trial?x.trial+' days':'paid',x.count]),[0,1]);
+ if(!(P.by_product||[]).length)$('pwProducts').innerHTML='<tr><td class=sub>No purchases yet</td></tr>';
+ table('pwDoors',['Door','People'],(P.by_door||[]).map(x=>[esc((x.door||'unknown').replace(/_/g,' ')),x.people]),[0]);
+ if(!(P.by_door||[]).length)$('pwDoors').innerHTML='<tr><td class=sub>No views yet</td></tr>';
+ const appleDay=IN.apple_last_day?new Date(IN.apple_last_day+'T12:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'short'}):'';
+ $('instKpis').innerHTML=stat('New in this window',IN.new_in_window??0,'')+stat('Today',IN.today_gulf??0,'Gulf time')+stat('Since 2.0',IN.total_v2??0,'from 8 Nov')+stat('Total installs',IN.total_ever??0,IN.first_ever?'since '+day(IN.first_ever):'')+stat('Apple downloads',IN.apple_downloads_since_2_0??0,appleDay?'since 2.0, Apple counts to '+appleDay:'');
+ const short=d=>new Date(d+'T12:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'short'});
+ table('instDays',['Day','Installs'],(IN.daily||[]).slice().reverse().map(x=>['<span style="white-space:nowrap">'+short(x.day)+'</span>',x.installs]),[0],14);
+}
 // ---- Gifts
 // META: our own install count around the campaign start. The organic
 // baseline is the days before minus Apple Ads installs (Apple Ads is off
