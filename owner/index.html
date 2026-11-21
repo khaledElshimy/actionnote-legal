@@ -600,9 +600,12 @@ function personText(p){const s=stageOf(p),sg=signsLine(p);
  return 'Person '+p.id+' · '+s.l+'\n'+(whoLine(p)?whoLine(p)+'\n':'')+'First seen '+when(p.first)+', last seen '+when(p.last)+'\n'+
   'Did: '+didLine(p)+'\nBuying signs: '+(sg||'none yet')+(giftLine(p)?'\nGifts: '+giftLine(p):'')+'\nNext: '+nextText(s.next(p))+(p.feedback?'\n'+fbText(Object.assign({id:''},p.feedback)).replace(/^Feedback /,'Their feedback '):'')}
 
-var PF='all', PALL=false, PR=false;
+var PF='all', PALL=false, PR=false, PS='date';
 function pplList(){const P=(D.people||[]).map(p=>Object.assign({},p,{_s:stageOf(p)}));
- const rank=p=>STAGES.indexOf(p._s);return P.sort((a,b)=>rank(a)-rank(b)||new Date(b.last)-new Date(a.last))}
+ const rank=p=>STAGES.indexOf(p._s);
+ if(PS==='date')return P.sort((a,b)=>new Date(b.first)-new Date(a.first));
+ if(PS==='last')return P.sort((a,b)=>new Date(b.last)-new Date(a.last));
+ return P.sort((a,b)=>rank(a)-rank(b)||new Date(b.last)-new Date(a.last))}
 function drawPeople(){const P=pplList();
  const hot=P.filter(p=>['paying','tried','picked','polish','meetings','looking'].includes(p._s.k)).length;
  $('nPpl').textContent=hot;$('nPpl').hidden=!hot;
@@ -611,6 +614,7 @@ function drawPeople(){const P=pplList();
  $('pplFilters').innerHTML='<button data-pf="all"'+(PF==='all'?' class=on':'')+'>Everyone<i>'+P.length+'</i></button>'+STAGES.filter(s=>counts[s.k]).map(s=>'<button data-pf="'+s.k+'"'+(PF===s.k?' class=on':'')+'>'+s.l+'<i>'+counts[s.k]+'</i></button>').join('');
  const reach=P.filter(p=>p.push).length;
  $('pplFilters').innerHTML+='<button data-pr=1'+(PR?' class=on':'')+' title="People a notification can reach">Notifications on<i>'+reach+'</i></button>';
+ $('pplFilters').innerHTML+=' <span class=sub style="margin-left:6px">Sort</span>'+[['date','Newest first'],['last','Last seen'],['stage','By stage']].map(x=>'<button data-ps="'+x[0]+'"'+(PS===x[0]?' class=on':'')+'>'+x[1]+'</button>').join('');
  const L=P.filter(p=>(PF==='all'||p._s.k===PF)&&(!PR||p.push)), cap=PF==='all'&&!PR&&!PALL?20:1e9;
  $('ppl').innerHTML=L.length?L.slice(0,cap).map(p=>{const s=p._s,sg=signsLine(p);return '<div class=person id="p-'+esc(p.id)+'" style="--c:'+s.c+'"><div class=hd><div class=who><span class=chip>'+esc(s.l)+'</span><span class=id>'+esc(p.id)+'</span><span class=sub>'+esc(whoLine(p))+'</span></div><button class=btn data-copy-p="'+esc(p.id)+'">Copy</button></div>'+
   '<dl><dt>Seen</dt><dd class=sub>first '+esc(when(p.first))+', last '+esc(ago(p.last))+'</dd><dt>Did</dt><dd>'+esc(didLine(p))+'</dd><dt>Buying signs</dt><dd'+(sg?'':' class="sub dim"')+'>'+esc(sg||'none yet')+'</dd>'+(giftLine(p)?'<dt>Gifts</dt><dd>'+esc(giftLine(p))+'</dd>':'')+'<dt>Next</dt><dd class=next>'+nextHtml(s.next(p))+'</dd>'+
@@ -682,6 +686,7 @@ function copy(text,what){const done=()=>toast('Copied '+what);
  if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(text).then(done,old);else old()}
 document.addEventListener('click',e=>{
  const f=e.target.closest('[data-pf]');if(f){PF=f.dataset.pf;PALL=false;drawPeople();return}
+ const ps=e.target.closest('[data-ps]');if(ps){PS=ps.dataset.ps;PALL=false;drawPeople();return}
  const r=e.target.closest('[data-pr]');if(r){PR=!PR;PALL=false;drawPeople();return}
  if(e.target.id==='pplMore'){PALL=true;drawPeople();return}
  const cp=e.target.closest('[data-copy-p]');if(cp){const p=(D.people||[]).find(x=>x.id===cp.dataset.copyP);if(p)copy(personText(p),'person '+p.id);return}
