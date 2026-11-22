@@ -545,7 +545,7 @@ const day=t=>t?new Date(t).toLocaleDateString('en-GB',{day:'numeric',month:'shor
 const NEW='needs building';
 const SOON='in the next build';
 // the launch prices end 30 Nov 23:59 Gulf time; after that the advice stops naming them
-const SALE=Date.now()<Date.parse('2026-11-30T23:59:00+04:00');
+const SALE=Date.now()<Date.parse('2026-11-23T00:00:00+04:00');
 const FIRSTYEAR=SALE?'the first year price (US $19.99 until 30 Nov)':'the yearly price';
 
 // the stage decides the colour, the order and what to do next; first match wins
