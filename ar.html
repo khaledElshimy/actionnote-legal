@@ -35,7 +35,7 @@
     "https://www.youtube.com/@ActionNote-f5"
   ],
   "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD",
-    "description": "Free for 5 notes a month; Pro $4.99 a month or $29.99 a year; Pro+ $12.99 a month or $79.99 a year; Pro Lifetime $69.99 once"},
+    "description": "3 organized notes free; Pro $4.99 a month with a 3 day free trial, or $29.99 a year with a 7 day free trial"},
   "aggregateRating": {"@type": "AggregateRating", "ratingValue": "5.0", "ratingCount": "5", "bestRating": "5"}
 }
 </script>
@@ -460,7 +460,7 @@ en: {
   labels: ['Welcome', 'The window', 'The board', 'Noto', 'The jar', 'The frames', 'His things', 'Plans'],
   roomAlt: "Noto's room at night: his corkboard, the moon in the window, his jar of paper stars and the frames for people you kept your word to",
   home: { noto: 'Welcome to my room. Let me show you around.', body: 'Talk, type or snap a page. NotoMix turns your voice to text and actions with reminders, in Arabic, English or both in one sentence.', tour: 'Walk in', stars: 'every App Store review so far', free: 'Meeting transcripts are free, written on iPhone 11 and later.', hint: 'Scroll, swipe or use the arrow keys to walk around. Tap anything in the room.' },
-  launch: { tag: 'Launch offer', kicker: 'LAUNCH OFFER', title: 'Pro yearly, $19.99 for your first year', body: 'For new subscribers, until 30 November. Then $29.99 a year. Cancel any time.', lifetime: 'And Pro Lifetime at $39.99 instead of $69.99.', ltTitle: 'Pro Lifetime, $39.99 once', ltBody: 'Instead of $69.99. Pay once, Pro for good, no subscription.', days: function (n) { return n <= 1 ? 'Last day' : n + ' days left'; }, see: 'See the plans', noto: 'Psst. Pro yearly is $19.99 for your first year, until 30 November.' },
+  launch: { tag: 'Launch offer', kicker: 'LAUNCH OFFER', title: 'Pro yearly, $19.99 for your first year', body: 'For new subscribers, until 30 November. Then $29.99 a year. Cancel any time.', days: function (n) { return n <= 1 ? 'Last day' : n + ' days left'; }, see: 'See the plans', noto: 'Psst. Pro yearly is $19.99 for your first year, until 30 November.' },
   poke: 'Poke Noto', pokes: ["Hi, I'm Noto. I keep your word.", 'That tickles.', "I'm made of paper. Gently!", 'Ok, ok, I am awake.'],
   win: { sample: '“Remind me بكرة الصبح to call the bank, and send Omar the slides.”', other: 'Read this site in العربية', sky: 'TRY MY WINDOW' },
   skies: ['Morning', 'Day', 'Evening', 'Night'],
@@ -484,7 +484,7 @@ en: {
     { q: 'What does Omar owe me?', a: 'The budget. He said he would send it; there is no date yet.', src: 'From your note on Tuesday' },
     { q: 'Who did I keep my word to?', a: 'Sara 5 times, Omar 3 and Ahmed once this month.', src: 'From your kept promises' } ] },
   things: [ { label: 'Mug', how: 'The mug comes with your first note.' }, { label: 'Frame', how: 'A frame goes up the first time you keep a promise to someone.' }, { label: 'Desk lamp', how: 'The desk lamp arrives after ten finished actions.' } ],
-  meet: { kicker: 'MEETINGS', title: 'Minutes with who said what.', body: 'Record a meeting and get the speakers named, decisions, open questions and actions for each person. Recording and the transcript are free, written on your iPhone 11 or later; cloud minutes with speakers are part of Pro+.' },
+  meet: { kicker: 'MEETINGS', title: 'Minutes with who said what.', body: 'Record a meeting and get the speakers named, decisions, open questions and actions for each person. Recording and the transcript are free, written on your iPhone 11 or later; cloud minutes with speakers come with Pro, 30 minutes a month.' },
   pages: {
     window: { kicker: 'ARABIC AND ENGLISH', title: 'Say it the way you think it.', body: 'Two languages in one sentence, kept in both. The app works in Arabic, English, Spanish and French, on your iPhone, iPad and Apple Watch.', noto: 'My window follows your time of day.', img: 'en-mixed', alt: 'Arabic and English voice to text: one note said in both languages' },
     board: { kicker: 'WHAT IS STILL OPEN', title: 'Talk, type or snap a page. It all ends up here.', body: 'Every open action is a sticky on my board, with a date and a reminder.', noto: 'Purple ones are promises. Blue ones are everything else.', img: 'en-today', alt: "Today: Noto's board with today's open actions" },
@@ -496,10 +496,8 @@ en: {
   wayImgs: ['en-today', 'en-capture', 'en-photo', 'en-mixed'],
   plans: { noto: 'Like it here? Move in.', h1: 'start free,', h2: 'upgrade when you want', period: ['Monthly', 'Yearly'], foot: 'Prices in US dollars; your App Store shows your own currency. Cancel any time in your App Store settings.', rev: 'What people say', faq: 'Questions', idea: 'Tell me what to build next' },
   planList: [
-    { n: 'Free', p: '$0', per: '', a: '', items: ['10 notes organized a month', 'Your first note needs no account', 'Meetings recorded and transcribed on your iPhone', 'Noto, his room and the jar'] },
-    { n: 'Pro', p: '$4.99', per: 'a month', a: 'or $29.99 a year', y: { p: '$29.99', per: 'a year', a: '$2.50 a month, billed yearly', intro: 'New subscribers: $19.99 for your first year, until 30 November' }, hot: true, items: ['Unlimited notes organized', 'Polish your words', '30 minutes of cloud meetings a month'] },
-    { n: 'Pro+', p: '$12.99', per: 'a month', a: 'or $79.99 a year', y: { p: '$79.99', per: 'a year', a: '$6.67 a month, billed yearly' }, items: ['Everything in Pro', 'Meetings with speakers, minutes and decisions', '900 minutes of cloud meetings a month'] },
-    { n: 'Pro Lifetime', p: '$69.99', per: 'once', a: '', launch: { p: '$39.99', a: 'Launch price, instead of $69.99' }, life: true, items: ['Pro for good, no subscription', 'Restore on any iPhone or iPad with your Apple ID'] }
+    { n: 'Free', p: '$0', per: '', a: '', items: ['Your first 3 notes organized free', 'Your first note needs no account', 'Meetings recorded and transcribed on your iPhone', 'Noto, his room and the jar'] },
+    { n: 'Pro', p: '$4.99', per: 'a month', a: 'or $29.99 a year', y: { p: '$29.99', per: 'a year', a: '$2.50 a month, billed yearly' }, hot: true, items: ['Unlimited notes organized', 'Polish your words', '30 minutes of cloud meetings a month, with the speakers named, minutes, decisions and actions for each person', 'Free for 7 days on yearly, 3 days on monthly'] }
   ],
   where: ['App Store review · Egypt', 'App Store review · UAE', 'App Store review · Egypt'],
   faq: [
@@ -526,7 +524,7 @@ ar: {
   labels: ['أهلاً', 'النافذة', 'اللوحة', 'نوتو', 'الجرّة', 'الإطارات', 'أشياؤه', 'الخطط'],
   roomAlt: 'غرفة نوتو في الليل: لوحته، والقمر في النافذة، وجرّة النجوم الورقية، وإطارات من وفيت لهم بوعدك',
   home: { noto: 'أهلاً بك في غرفتي. تعال أريك المكان.', body: 'تكلّم أو اكتب أو صوّر صفحة، فيحوّل NotoMix صوتك إلى نص ومهام بتذكيرات، بالعربية أو الإنجليزية أو بهما معاً في جملة واحدة.', tour: 'ادخل', stars: 'كل مراجعات App Store حتى الآن', free: 'نص اجتماعاتك مجاني، يُكتب على آيفون 11 وأحدث.', hint: 'مرّر أو اسحب أو استخدم الأسهم لتتجول. واضغط على أي شيء في الغرفة.' },
-  launch: { tag: 'عرض الإطلاق', kicker: 'عرض الإطلاق', title: '⁨Pro⁩ السنوي بـ ‎$19.99 لسنتك الأولى', body: 'للمشتركين الجدد حتى 30 نوفمبر، ثم ‎$29.99 سنوياً. يمكنك الإلغاء في أي وقت.', lifetime: 'و⁨Pro⁩ مدى الحياة بـ ‎$39.99 بدلاً من ‎$69.99.', ltTitle: '⁨Pro⁩ مدى الحياة بـ ‎$39.99 مرة واحدة', ltBody: 'بدلاً من ‎$69.99. ادفع مرة واحدة واحصل على ⁨Pro⁩ للأبد بلا اشتراك.', days: function (n) { return n <= 1 ? 'آخر يوم' : n === 2 ? 'باقي يومان' : n <= 10 ? 'باقي ' + n + ' أيام' : 'باقي ' + n + ' يوماً'; }, see: 'شاهد الخطط', noto: 'بيني وبينك: ⁨Pro⁩ السنوي بـ ‎$19.99 لسنتك الأولى، حتى 30 نوفمبر.', notoLt: 'بيني وبينك، حتى 30 نوفمبر: ⁨Pro⁩ السنوي بـ ‎$19.99 لسنتك الأولى، و⁨Pro⁩ مدى الحياة بـ ‎$39.99 بدلاً من ‎$69.99.', mini: '⁨Pro⁩ مدى الحياة بـ ‎$39.99 بدلاً من ‎$69.99' },
+  launch: { tag: 'عرض الإطلاق', kicker: 'عرض الإطلاق', title: '⁨Pro⁩ السنوي بـ ‎$19.99 لسنتك الأولى', body: 'للمشتركين الجدد حتى 30 نوفمبر، ثم ‎$29.99 سنوياً. يمكنك الإلغاء في أي وقت.', days: function (n) { return n <= 1 ? 'آخر يوم' : n === 2 ? 'باقي يومان' : n <= 10 ? 'باقي ' + n + ' أيام' : 'باقي ' + n + ' يوماً'; }, see: 'شاهد الخطط', noto: 'بيني وبينك: ⁨Pro⁩ السنوي بـ ‎$19.99 لسنتك الأولى، حتى 30 نوفمبر.' },
   poke: 'ألكز نوتو', pokes: ['أنا نوتو. أحفظ وعودك.', 'هذا يدغدغني.', 'أنا من ورق، بلطف من فضلك.', 'حسناً حسناً، أنا صاحٍ.'],
   win: { sample: '«ذكّرني بكرة الصبح أكلّم البنك، and send Omar the slides»', other: 'Read this site in English', sky: 'جرّب نافذتي' },
   skies: ['الصباح', 'النهار', 'المساء', 'الليل'],
@@ -550,7 +548,7 @@ ar: {
     { q: 'ماذا يدين لي عمر؟', a: 'الميزانية. قال إنه سيرسلها، ولا يوجد موعد بعد.', src: 'من ملاحظتك يوم الثلاثاء' },
     { q: 'لمن وفيت بوعدي؟', a: 'لسارة 5 مرات، ولعمر 3، ولأحمد مرة واحدة هذا الشهر.', src: 'من وعودك التي وفيت بها' } ] },
   things: [ { label: 'الكوب', how: 'يأتي الكوب مع ملاحظتك الأولى.' }, { label: 'الإطار', how: 'يُعلّق إطار أول مرة تفي فيها بوعد لأحد.' }, { label: 'مصباح المكتب', how: 'يصل مصباح المكتب بعد عشر مهام منجزة.' } ],
-  meet: { kicker: 'الاجتماعات', title: 'محضر ومن قال ماذا.', body: 'سجّل اجتماعاً واحصل على أسماء المتحدثين والقرارات والأسئلة المفتوحة ومهام كل شخص. التسجيل والنص الكامل مجانيان، يُكتبان على آيفونك (آيفون 11 وأحدث)، ومحاضر السحابة بالمتحدثين جزء من Pro+.' },
+  meet: { kicker: 'الاجتماعات', title: 'محضر ومن قال ماذا.', body: 'سجّل اجتماعاً واحصل على أسماء المتحدثين والقرارات والأسئلة المفتوحة ومهام كل شخص. التسجيل والنص الكامل مجانيان، يُكتبان على آيفونك (آيفون 11 وأحدث)، ومحاضر السحابة بأسماء المتحدثين جزء من ⁨Pro⁩، 30 دقيقة في الشهر.' },
   pages: {
     window: { kicker: 'عربي وإنجليزي', title: 'قلها كما تفكر بها.', body: 'لغتان في جملة واحدة، وتُحفظ الملاحظة بهما. التطبيق بالعربية والإنجليزية والإسبانية والفرنسية، على الآيفون والآيباد وساعة Apple.', noto: 'نافذتي تتبع وقت يومك.', img: 'ar-mixed', alt: 'تحويل الصوت إلى نص: ملاحظة بالعربية والإنجليزية' },
     board: { kicker: 'ما زال مفتوحاً', title: 'تكلّم أو اكتب أو صوّر صفحة. كلها تنتهي هنا.', body: 'كل مهمة مفتوحة ورقة على لوحتي، بموعد وتذكير.', noto: 'البنفسجية وعود، والزرقاء كل شيء آخر.', img: 'ar-today', alt: 'شاشة اليوم في NotoMix: قائمة مهام اليوم والتذكيرات' },
@@ -562,10 +560,8 @@ ar: {
   wayImgs: ['ar-today', 'ar-capture', 'en-photo', 'ar-mixed'],
   plans: { noto: 'أعجبك المكان؟ اسكن معي.', h1: 'ابدأ مجاناً،', h2: 'وطوّر خطتك متى أردت', period: ['شهري', 'سنوي'], foot: 'الأسعار بالدولار الأمريكي، ويعرض لك App Store عملتك. يمكنك الإلغاء في أي وقت من إعدادات App Store.', rev: 'ماذا يقول الناس', faq: 'أسئلة', idea: 'قل لي ماذا أبني بعد ذلك' },
   planList: [
-    { n: 'مجاني', p: '$0', per: '', a: '', items: ['10 ملاحظات منظمة في الشهر', 'ملاحظتك الأولى بلا حساب', 'تسجيل الاجتماعات ونصّها على آيفونك', 'نوتو وغرفته والجرّة'] },
-    { n: 'Pro', p: '$4.99', per: 'في الشهر', a: 'أو ‎$29.99 في السنة', y: { p: '$29.99', per: 'في السنة', a: '‎$2.50 في الشهر، تُدفع سنوياً', intro: 'للمشتركين الجدد: ‎$19.99 لسنتك الأولى، حتى 30 نوفمبر' }, hot: true, items: ['ملاحظات منظمة بلا حدود', 'تحسين صياغة كلماتك', '30 دقيقة اجتماعات سحابية في الشهر'] },
-    { n: '⁨Pro+⁩', p: '$12.99', per: 'في الشهر', a: 'أو ‎$79.99 في السنة', y: { p: '$79.99', per: 'في السنة', a: '‎$6.67 في الشهر، تُدفع سنوياً' }, items: ['كل ما في Pro', 'اجتماعات بأسماء المتحدثين ومحاضر وقرارات', '900 دقيقة اجتماعات سحابية في الشهر'] },
-    { n: 'Pro مدى الحياة', p: '$69.99', per: 'مرة واحدة', a: '', launch: { p: '$39.99', a: 'سعر الإطلاق، بدلاً من ‎$69.99' }, life: true, items: ['Pro للأبد بلا اشتراك', 'استعده على أي آيفون أو آيباد بحساب Apple نفسه'] }
+    { n: 'مجاني', p: '$0', per: '', a: '', items: ['أول 3 ملاحظات منظمة مجاناً', 'ملاحظتك الأولى بلا حساب', 'تسجيل الاجتماعات ونصّها على آيفونك', 'نوتو وغرفته والجرّة'] },
+    { n: 'Pro', p: '$4.99', per: 'في الشهر', a: 'أو ‎$29.99 في السنة', y: { p: '$29.99', per: 'في السنة', a: '‎$2.50 في الشهر، تُدفع سنوياً' }, hot: true, items: ['ملاحظات منظمة بلا حدود', 'تحسين صياغة كلماتك', '30 دقيقة اجتماعات سحابية في الشهر، بأسماء المتحدثين والمحضر والقرارات ومهام كل شخص', 'مجاناً 7 أيام مع السنوي، و3 أيام مع الشهري'] }
   ],
   where: ['مراجعة في App Store · مصر', 'مراجعة في App Store · الإمارات', 'مراجعة في App Store · مصر'],
   faq: [
@@ -595,10 +591,9 @@ if (window.ANLocale) {
 var saved = null;
 try { saved = localStorage.getItem('an.lang'); } catch (e) {}
 var qs = new URLSearchParams(location.search);
-// The launch offer (13 to 30 Nov 2026). Only what is on sale is said: Pro
-// yearly's first year at $19.99 is live in the App Store; Pro Lifetime at
-// The $39.99 launch Lifetime was taken off sale on 22 Nov 2026 (owner); Lifetime is $69.99. The yearly first year offer runs to 30 November.
-var LAUNCH = { ends: Date.parse('2026-11-23T00:00:00+04:00'), lifetime: false };
+// The launch offer ended; Pro is the only plan on sale from 23 Nov 2026 (owner).
+// Pro+ and Lifetime are no longer sold. launchOn() stays false.
+var LAUNCH = { ends: Date.parse('2026-11-23T00:00:00+04:00') };
 function launchOn() { return Date.now() < LAUNCH.ends; }
 function daysLeft() { return Math.max(1, Math.ceil((LAUNCH.ends - Date.now()) / 864e5)); }
 var st = {
@@ -698,7 +693,7 @@ function renderPanel(animate) {
     p.innerHTML = '<p class="hand">' + esc(L.home.noto) + '</p>' +
       '<h1><span class="rise">' + esc(L.l1) + '</span><br><b class="rise" style="animation-delay:.25s">' + esc(L.l2) + '</b></h1>' +
       '<p class="lead">' + esc(L.home.body) + '</p><p class="freenote">' + esc(L.home.free) + '</p>' +
-      (launchOn() ? '<button type="button" class="couponmini" data-go="' + (STOPS.length - 1) + '"><b>' + esc(L.launch.kicker) + '</b> ' + esc(L.launch.title) + (LAUNCH.lifetime ? '<i class="lt">' + esc(L.launch.mini) + '</i>' : '') + ' <span>' + esc(L.launch.days(daysLeft())) + '</span></button>' : '') +
+      (launchOn() ? '<button type="button" class="couponmini" data-go="' + (STOPS.length - 1) + '"><b>' + esc(L.launch.kicker) + '</b> ' + esc(L.launch.title) + ' <span>' + esc(L.launch.days(daysLeft())) + '</span></button>' : '') +
       '<div class="row"><button type="button" class="btn gold" data-nav="1">' + esc(L.home.tour) + '</button><a class="cta" data-umami-event="store-click" data-umami-event-place="hero" href="' + STORE + '">' + esc(L.store) + '</a></div>' +
       '<p class="stars"><span>★★★★★</span> ' + esc(L.home.stars) + '</p><p class="hint">' + esc(L.home.hint) + '</p>';
     return;
@@ -709,8 +704,7 @@ function renderPanel(animate) {
     p.innerHTML = '<p class="noto">' + esc(P.noto) + '</p><h2>' + esc(P.h1) + ' <b>' + esc(P.h2) + '</b></h2>' +
       '<div class="period" role="group">' + P.period.map(function (w, i) { return '<button type="button" data-period="' + i + '" aria-pressed="' + ((i === 1) === st.yearly) + '">' + esc(w) + '</button>'; }).join('') + '</div>' +
       '<div class="grid">' + L.planList.map(function (x) {
-        // The first year price is said only while the offer runs (13 to 30 Nov 2026).
-        var v = x.launch && LAUNCH.lifetime && launchOn() ? { p: x.launch.p, per: x.per, a: x.launch.a } : st.yearly && x.y ? x.y : x, intro = v.intro && launchOn() ? '<p class="intro">' + esc(v.intro) + '</p>' : '';
+        var v = st.yearly && x.y ? x.y : x, intro = v.intro && launchOn() ? '<p class="intro">' + esc(v.intro) + '</p>' : '';
         return '<div class="plan' + (x.hot ? ' hot' : '') + (x.life ? ' life' : '') + '"><p class="n">' + esc(x.n) + '</p><p class="p' + (v.p.length > 10 ? ' long' : v.p.length > 8 ? ' mid' : '') + '">' + esc(v.p) + ' <span>' + esc(v.per) + '</span></p><p class="a">' + esc(v.a) + '</p>' + intro + '<ul>' +
           x.items.map(function (i) { return '<li>' + esc(i) + '</li>'; }).join('') + '</ul></div>'; }).join('') + '</div>' +
       '<p class="note2">' + esc(P.foot) + '</p>' +
@@ -784,7 +778,6 @@ function renderChrome() {
   cp.hidden = !launchOn() || !(st.cpOpen === null ? STOPS[st.stop].id === 'welcome' : st.cpOpen);
   lt.setAttribute('aria-expanded', String(!cp.hidden)); lt.setAttribute('aria-controls', 'coupon');
   if (!cp.hidden) cp.innerHTML = '<span class="pin" aria-hidden="true"></span><p class="k">' + esc(L.launch.kicker) + '</p><p class="t">' + esc(L.launch.title) + '</p><p class="b">' + esc(L.launch.body) + '</p>' +
-    (LAUNCH.lifetime ? '<p class="t lt">' + esc(L.launch.ltTitle) + '</p><p class="b">' + esc(L.launch.ltBody) + '</p>' : '') +
     '<p class="d">' + esc(L.launch.days(daysLeft())) + '</p><button type="button" class="btn gold" data-go="' + (STOPS.length - 1) + '">' + esc(L.launch.see) + '</button>';
   $('trail').setAttribute('aria-label', L.trail);
   $('prev').setAttribute('aria-label', L.prev); $('prev').textContent = L.prevArrow;
@@ -838,7 +831,7 @@ document.addEventListener('click', function (e) {
   if (d.go !== undefined) { go(+d.go); return; }
   if (d.nav) { go(st.stop + 1); return; }
   if (d.tick !== undefined) { tick(+d.tick); return; }
-  if (d.poke) { var lines = launchOn() ? [LAUNCH.lifetime ? L.launch.notoLt : L.launch.noto].concat(L.pokes) : L.pokes; st.pokes++; setSay(lines[(st.pokes - 1) % lines.length]); retrigger($('pokeImg'), 'wobble'); return; }
+  if (d.poke) { var lines = launchOn() ? [L.launch.noto].concat(L.pokes) : L.pokes; st.pokes++; setSay(lines[(st.pokes - 1) % lines.length]); retrigger($('pokeImg'), 'wobble'); return; }
   if (d.sky !== undefined) { st.sky = +d.sky; setChips('skyChips', st.sky); renderWorld(); setSay(L.skyLines[st.sky]); return; }
   if (d.flip) { setLang(st.lang === 'ar' ? 'en' : 'ar'); return; }
   if (d.period !== undefined) { st.yearly = d.period === '1'; renderPanel(false); return; }
