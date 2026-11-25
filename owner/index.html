@@ -69,6 +69,7 @@ section{display:flex;flex-direction:column;gap:14px}
 table{width:100%;border-collapse:collapse;font-size:14px}
 th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top;overflow-wrap:anywhere}
 tr:last-child td{border-bottom:0}
+#elist td,#aerr td,#sref td{overflow-wrap:normal}#elist td:not(:nth-child(7)):not(:nth-child(8)){white-space:nowrap}#elist{min-width:980px}
 th{color:var(--dim);font-weight:600;font-size:12px}
 th.n,td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 td .sub{font-size:12px}
@@ -280,7 +281,16 @@ tr.zero td{color:var(--dim)}
   <div class="card tw"><h3>Recording</h3><table id="rec"></table></div>
   <div class="card tw"><h3>Server errors</h3><table id="err"></table></div>
   <div class="card tw"><h3>Errors seen in the app</h3><table id="aerr"></table></div>
+  <div class="card tw"><h3>Notes the server turned away</h3><table id="sref"></table></div>
   <div class="card tw"><h3>Meetings</h3><table id="mtg"></table></div>
+ </div>
+ <div class="card tw"><h3>Errors, one by one</h3><table id="elist"></table></div>
+ <div class="two">
+  <div class="card tw"><h3>Errors by phone</h3><table id="edev"></table></div>
+  <div class="card tw"><h3>Errors by iOS</h3><table id="eos"></table></div>
+  <div class="card tw"><h3>Errors by country</h3><table id="ectry"></table></div>
+  <div class="card tw"><h3>Errors by connection</h3><table id="enet"></table></div>
+  <div class="card tw"><h3>Errors by hour (Dubai)</h3><table id="ehr"></table></div>
  </div>
 </section>
 
@@ -348,7 +358,7 @@ const ago=t=>{if(!t)return'never';const m=Math.round((Date.now()-new Date(t))/60
 const ppl=n=>n===1?'1 person':n+' people';
 const NAMES={app_first_open:'Opened the app for the first time',onboarding_welcome_shown:'Saw the welcome',onboarding_get_started:'Tapped Get started',onboarding_have_account:'Tapped I have an account',capture_chosen:'Chose how to capture',mic_permission_result_granted:'Allowed the mic',mic_permission_result_denied:'Said no to the mic',first_note_saved:'Saved a first note',onboarding_started:'Started onboarding',try_it_now_tapped:'Tapped Try it now',first_note_recorded:'Recorded a first note',first_note_typed:'Typed a first note',magic_shown:'Saw the magic moment',sign_in_completed:'Signed in',landed_today:'Landed on Today',remind_ask_accepted:'Allowed reminders',remind_ask_declined:'Declined reminders',process_note_result_success:'A note organized',task_completed:'Ticked an action',promise_kept_shown:'Kept a promise (gold star)',paywall_shown:'Saw the paywall',purchase_completed:'Bought a plan',daily_noto_opened:'Opened The Daily Noto',brief_opened:'Opened the brief',weekly_story_opened:'Opened the Weekly Story',weekly_story_shared:'Shared the Weekly Story',insights_card_viewed:'Viewed an Insights card',noto_tapped:'Tapped Noto',calm_mode_toggled:'Switched Calm mode',overdue_option_chosen:'Sorted a slipped action',share_extension_used:'Shared into the app',note_import_result:'Imported audio',note_viewed:'Opened a note',guidance_step_completed:'Finished a guide step',guidance_stopped:'Stopped the guide',note_milestone:'Reached a note milestone',task_created:'Added an action by hand'};
 const nm=e=>NAMES[e]||e;
-const MODEL={'iPhone12,1':'iPhone 11','iPhone12,3':'iPhone 11 Pro','iPhone12,5':'iPhone 11 Pro Max','iPhone12,8':'iPhone SE (2nd)','iPhone13,1':'iPhone 12 mini','iPhone13,2':'iPhone 12','iPhone13,3':'iPhone 12 Pro','iPhone13,4':'iPhone 12 Pro Max','iPhone14,2':'iPhone 13 Pro','iPhone14,3':'iPhone 13 Pro Max','iPhone14,4':'iPhone 13 mini','iPhone14,5':'iPhone 13','iPhone14,6':'iPhone SE (3rd)','iPhone14,7':'iPhone 14','iPhone14,8':'iPhone 14 Plus','iPhone15,2':'iPhone 14 Pro','iPhone15,3':'iPhone 14 Pro Max','iPhone15,4':'iPhone 15','iPhone15,5':'iPhone 15 Plus','iPhone16,1':'iPhone 15 Pro','iPhone16,2':'iPhone 15 Pro Max','iPhone17,1':'iPhone 16 Pro','iPhone17,2':'iPhone 16 Pro Max','iPhone17,3':'iPhone 16','iPhone17,4':'iPhone 16 Plus','iPhone17,5':'iPhone 16e','iPhone18,1':'iPhone 17 Pro','iPhone18,2':'iPhone 17 Pro Max','iPhone18,3':'iPhone 17','iPhone18,4':'iPhone Air'};
+const MODEL={'iPhone10,1':'iPhone 8','iPhone10,4':'iPhone 8','iPhone10,2':'iPhone 8 Plus','iPhone10,5':'iPhone 8 Plus','iPhone10,3':'iPhone X','iPhone10,6':'iPhone X','iPhone11,2':'iPhone XS','iPhone11,4':'iPhone XS Max','iPhone11,6':'iPhone XS Max','iPhone11,8':'iPhone XR','iPhone12,1':'iPhone 11','iPhone12,3':'iPhone 11 Pro','iPhone12,5':'iPhone 11 Pro Max','iPhone12,8':'iPhone SE (2nd)','iPhone13,1':'iPhone 12 mini','iPhone13,2':'iPhone 12','iPhone13,3':'iPhone 12 Pro','iPhone13,4':'iPhone 12 Pro Max','iPhone14,2':'iPhone 13 Pro','iPhone14,3':'iPhone 13 Pro Max','iPhone14,4':'iPhone 13 mini','iPhone14,5':'iPhone 13','iPhone14,6':'iPhone SE (3rd)','iPhone14,7':'iPhone 14','iPhone14,8':'iPhone 14 Plus','iPhone15,2':'iPhone 14 Pro','iPhone15,3':'iPhone 14 Pro Max','iPhone15,4':'iPhone 15','iPhone15,5':'iPhone 15 Plus','iPhone16,1':'iPhone 15 Pro','iPhone16,2':'iPhone 15 Pro Max','iPhone17,1':'iPhone 16 Pro','iPhone17,2':'iPhone 16 Pro Max','iPhone17,3':'iPhone 16','iPhone17,4':'iPhone 16 Plus','iPhone17,5':'iPhone 16e','iPhone18,1':'iPhone 17 Pro','iPhone18,2':'iPhone 17 Pro Max','iPhone18,3':'iPhone 17','iPhone18,4':'iPhone Air'};
 const model=d=>MODEL[d]||(String(d||'').startsWith('iPad')?'iPad ('+d+')':d);
 const LANG={ar:'Arabic',en:'English',ru:'Russian',es:'Spanish',fr:'French',de:'German',tr:'Turkish',ur:'Urdu',hi:'Hindi',fa:'Persian',id:'Indonesian',pt:'Portuguese',it:'Italian',uz:'Uzbek',kk:'Kazakh',az:'Azerbaijani',bn:'Bengali',zh:'Chinese',ja:'Japanese',ko:'Korean',nl:'Dutch',pl:'Polish',uk:'Ukrainian',he:'Hebrew',ms:'Malay',sw:'Swahili',so:'Somali',ku:'Kurdish',ps:'Pashto'};
 
@@ -496,7 +506,25 @@ table('fns',['Function','Calls','Worked','Median ms','Slowest 5% ms','Fell back'
 const OUT=[['organized','Organized'],['silent','Too short or silent'],['no_connection','No connection or interrupted'],['limit','Over the free limit'],['failed','Failed']];
 table('outc',['How it ended','Notes','Share'],OUT.map(([key,l])=>[l,O[key]||0,pct(O[key]||0,oTot)]),0,0,r=>!r[1]);
 table('err',['Function','Error','Count'],(Q.errors||[]).map(x=>[esc(x.fn),esc(x.error),x.n]),[1]);
-table('aerr',['Event','Error','Count'],(Q.app_errors||[]).map(x=>[esc(x.event),esc(x.error),x.n]),[1],8);
+// Errors with where and when (owner_errors, 26 Nov). One row per failure.
+const EVN={process_note_result_failure:'Organizing a note',organization_failed:'Organizing a note',upload_failed:'Sending the recording',transcription_failed:'Writing the words',purchase_failed:'Paywall',meeting_failed:'Meeting',ask_failed:'Ask',polish_failed:'Polish'};
+const ERN={network:'No connection',server_unavailable:'Server unavailable',quota_exceeded:'Free notes used up',invalid_input:'Tried too many times or unreadable',audio_missing:'Recording file missing',no_products:'Plans missing (Pro+ and Lifetime off sale)',in_progress:'Already being organized',no_speech:'Nothing was heard',silent_local:'Silent recording',no_text:'Nothing to read in the image',interrupted:'Interrupted',too_large:'Too large',rate_limited:'Too many at once',minutes_exhausted:'Meeting minutes used up'};
+const A3={EGY:'EG',SAU:'SA',ARE:'AE',KWT:'KW',QAT:'QA',BHR:'BH',OMN:'OM',JOR:'JO',LBN:'LB',IRQ:'IQ',SYR:'SY',PSE:'PS',MAR:'MA',DZA:'DZ',TUN:'TN',LBY:'LY',SDN:'SD',YEM:'YE',PAK:'PK',IND:'IN',UZB:'UZ',TUR:'TR',USA:'US',GBR:'GB',FRA:'FR',DEU:'DE',CAN:'CA',AUS:'AU',NLD:'NL',ESP:'ES',ITA:'IT',SWE:'SE',BEL:'BE',CHE:'CH',IRL:'IE',MYS:'MY',IDN:'ID',KAZ:'KZ',AZE:'AZ',BGD:'BD',NGA:'NG',KEN:'KE',ZAF:'ZA',RUS:'RU',UKR:'UA',BRA:'BR',MEX:'MX'};
+let RN=null;try{RN=new Intl.DisplayNames(['en'],{type:'region'})}catch(e){}
+const ctry=c=>{if(!c||c==='?')return 'not sent';const a2=c.length===3?A3[c]:c;try{return a2&&RN?RN.of(a2):c}catch(e){return c}};
+const dubai=t=>t?new Date(t).toLocaleString('en-GB',{timeZone:'Asia/Dubai',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}):'';
+const local=(t,z)=>{if(!t||!z||z==='Asia/Dubai')return '';try{return '<div class=sub>'+new Date(t).toLocaleString('en-GB',{timeZone:z,hour:'2-digit',minute:'2-digit'})+' on the phone ('+esc(z)+')</div>'}catch(e){return ''}};
+const NETN={wifi:'Wi Fi',cellular:'Mobile data',wired:'Wired',other:'Other',offline:'Offline','?':'not sent'};
+const KINDS=D.errors_kinds||null;
+table('aerr',KINDS?['What failed','Times','People']:['Event','Error','Count'],KINDS?KINDS.map(x=>[esc(ERN[x.error]||x.error)+'<div class=sub>'+esc(EVN[x.event]||x.event)+', last '+dubai(x.last)+'</div>',x.n,x.people]):(Q.app_errors||[]).map(x=>[esc(x.event),esc(x.error),x.n]),[0],8);
+table('sref',['Why','Times','People'],(Q.server_refusals||[]).map(x=>[esc(ERN[x.error]||x.error),x.n,x.people]),[0],8);
+const srv=x=>{const v=x.server;let t=x.http?'answered '+x.http+(x.code?' '+esc(x.code):''):'';if(v)t+=(t?', ':'')+'server log: '+(v.ok?'worked':esc(v.error||'failed'));return t||'<span class=sub>no server trace</span>'};
+table('elist',['When (Dubai)','Person','App','Phone','Country','Connection','What failed','Server'],(D.errors_detail||[]).map(x=>[dubai(x.ts)+local(x.phone_ts||x.ts,x.tz),esc(x.who),esc(String(x.v||'').replace(/ \(.*/,'')),x.device?esc(model(x.device))+(x.os?' · iOS '+esc(x.os):''):'<span class=sub>unknown</span>',esc(ctry(x.storefront||x.region)),esc(NETN[x.net||'?']||x.net),esc(EVN[x.event]||x.event)+': '+esc(ERN[x.error]||x.error)+(x.detail?'<div class=sub>'+esc(x.detail)+'</div>':''),srv(x)]),[0,1,2,3,4,5,6,7],25);
+table('edev',['Phone','Errors','People'],(D.errors_by_device||[]).map(x=>[x.device==='?'?'unknown':esc(model(x.device)),x.n,x.people]),[0],8);
+table('eos',['iOS','Errors','People'],(D.errors_by_os||[]).map(x=>[x.os==='?'?'unknown':'iOS '+esc(x.os),x.n,x.people]),[0]);
+table('ectry',['Country','Errors','People'],(D.errors_by_country||[]).map(x=>[esc(ctry(x.country)),x.n,x.people]),[0],8);
+table('enet',['Connection','Errors'],(D.errors_by_net||[]).map(x=>[esc(NETN[x.net]||x.net),x.n]),[0]);
+table('ehr',['Hour','Errors'],(D.errors_by_hour||[]).slice().sort((a,b)=>b.n-a.n).map(x=>[String(x.h).padStart(2,'0')+':00',x.n]),[0],8);
 const RECN={recording_started:'Started',recording_completed:'Completed',recording_saved:'Saved',recording_discarded:'Discarded',recording_abandoned:'Abandoned',mic_permission_result_granted:'Mic allowed',mic_permission_result_denied:'Mic refused'};
 table('rec',['What','Count'],Object.entries(Q.recording||{}).sort((a,b)=>b[1]-a[1]).map(([key,v])=>[esc(RECN[key]||key),v]));
 table('mtg',['Budget','Meetings','Minutes'],((D.meetings||{}).minutes_by_budget||[]).map(x=>[esc(x.budget),x.meetings,x.minutes]).concat(Object.entries((D.meetings||{}).jobs||{}).map(([key,v])=>['Jobs: '+esc(key),'',v])));
