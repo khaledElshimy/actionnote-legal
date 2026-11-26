@@ -49,6 +49,7 @@ section{display:flex;flex-direction:column;gap:14px}
 .d{font-size:12px;font-weight:700;margin-left:6px;letter-spacing:0}.d.up{color:var(--gr)}.d.dn{color:var(--am)}
 
 /* needs a look */
+#attn .why{margin:6px 0 2px;padding-left:18px;color:var(--mut);font-size:.92em}#attn .why li{margin:2px 0}
 #attn{border-color:rgba(245,158,11,.55);background:linear-gradient(180deg,rgba(245,158,11,.10),rgba(245,158,11,.03))}
 #attn h3{color:var(--am)}#attn ul{margin:0;padding-left:18px}#attn li{margin:4px 0}#attn b{color:var(--am)}
 #allgood{color:var(--gr);font-weight:600}
@@ -373,6 +374,7 @@ function table(id,head,rows,left,cap,zero){const n=i=>i&&!(left||[]).includes(i)
  if(cap&&rows.length>cap){const b=document.createElement('button');b.className='more';b.dataset.t=id;b.dataset.l='Show all '+rows.length;b.textContent=b.dataset.l;el.after(b)}}
 const stat=(l,v,s,dl)=>'<div class=stat><div class=k>'+l+'</div><div class=v>'+v+(dl||'')+'</div>'+(s?'<div class=s>'+s+'</div>':'')+'</div>';
 
+const ERN={network:'No connection',server_unavailable:'Server unavailable',quota_exceeded:'Free notes used up',invalid_input:'Tried too many times or unreadable',audio_missing:'Recording file missing',no_products:'Plans missing (Pro+ and Lifetime off sale)',in_progress:'Already being organized',no_speech:'Nothing was heard',silent_local:'Silent recording',no_text:'Nothing to read in the image',interrupted:'Interrupted',too_large:'Too large',rate_limited:'Too many at once',minutes_exhausted:'Meeting minutes used up'};
 function draw(){
 const k=D.kpis,P=k.prev, AD=D.ads||{}, AT=AD.totals||{}, AS=D.appstore||{}, AST=AS.totals||{}, M=D.money||{}, F=M.funnel||{}, Q=D.quality||{}, J=D.jobs||{};
 $('per').textContent=PER[D.window]||'';
@@ -385,7 +387,7 @@ const dl=(key,lowGood)=>{if(!P||P[key]==null)return'';const d=Math.round((Number
 // ---- Overview
 const JOB={apple_ads:'Apple Ads',app_store:'App Store',dashboard:'dashboard'};
 const AT2=(D.attention||[]).map(a=>a.kind==='job'?(a.ok?'The '+JOB[a.job]+' copy has not run since '+ago(a.ts)+'.':'The '+JOB[a.job]+' copy failed '+ago(a.ts)+': '+esc(a.error||'no message')+'.')
- :a.kind==='note_failures'?'<b>'+a.failed+' of '+a.total+'</b> notes failed to organize, for '+ppl(a.people)+'. See <a href="#health" style="color:var(--bl)">Health</a>.'
+ :a.kind==='note_failures'?'<b>'+a.failed+' of '+a.total+'</b> notes failed to organize, for '+ppl(a.people)+'. See <a href="#health" style="color:var(--bl)">Health</a>.'+((a.reasons||[]).length?'<ul class=why>'+a.reasons.map(r=>'<li>'+esc(ERN[r.error]||r.error)+': <b>'+r.n+'</b>'+(r.people>1?' ('+ppl(r.people)+')':'')+'</li>').join('')+'</ul>':'')
  :a.kind==='low_review'?'A <b>'+a.rating+' star</b> review from '+esc(a.territory||'somewhere')+' on '+esc(a.ts)+': '+esc(a.title||'(no title)')
  :a.kind==='mic_denied'?ppl(a.people)+' said no to the microphone.'
  :a.kind==='ads_no_installs'?'<b>'+esc(a.campaign)+'</b> spent '+usd(a.spend)+' over the last 3 days ('+a.taps+' taps) with no install.'
@@ -508,7 +510,6 @@ table('outc',['How it ended','Notes','Share'],OUT.map(([key,l])=>[l,O[key]||0,pc
 table('err',['Function','Error','Count'],(Q.errors||[]).map(x=>[esc(x.fn),esc(x.error),x.n]),[1]);
 // Errors with where and when (owner_errors, 26 Nov). One row per failure.
 const EVN={process_note_result_failure:'Organizing a note',organization_failed:'Organizing a note',upload_failed:'Sending the recording',transcription_failed:'Writing the words',purchase_failed:'Paywall',meeting_failed:'Meeting',ask_failed:'Ask',polish_failed:'Polish'};
-const ERN={network:'No connection',server_unavailable:'Server unavailable',quota_exceeded:'Free notes used up',invalid_input:'Tried too many times or unreadable',audio_missing:'Recording file missing',no_products:'Plans missing (Pro+ and Lifetime off sale)',in_progress:'Already being organized',no_speech:'Nothing was heard',silent_local:'Silent recording',no_text:'Nothing to read in the image',interrupted:'Interrupted',too_large:'Too large',rate_limited:'Too many at once',minutes_exhausted:'Meeting minutes used up'};
 const A3={EGY:'EG',SAU:'SA',ARE:'AE',KWT:'KW',QAT:'QA',BHR:'BH',OMN:'OM',JOR:'JO',LBN:'LB',IRQ:'IQ',SYR:'SY',PSE:'PS',MAR:'MA',DZA:'DZ',TUN:'TN',LBY:'LY',SDN:'SD',YEM:'YE',PAK:'PK',IND:'IN',UZB:'UZ',TUR:'TR',USA:'US',GBR:'GB',FRA:'FR',DEU:'DE',CAN:'CA',AUS:'AU',NLD:'NL',ESP:'ES',ITA:'IT',SWE:'SE',BEL:'BE',CHE:'CH',IRL:'IE',MYS:'MY',IDN:'ID',KAZ:'KZ',AZE:'AZ',BGD:'BD',NGA:'NG',KEN:'KE',ZAF:'ZA',RUS:'RU',UKR:'UA',BRA:'BR',MEX:'MX'};
 let RN=null;try{RN=new Intl.DisplayNames(['en'],{type:'region'})}catch(e){}
 const ctry=c=>{if(!c||c==='?')return 'not sent';const a2=c.length===3?A3[c]:c;try{return a2&&RN?RN.of(a2):c}catch(e){return c}};
