@@ -31,7 +31,7 @@
 
   <div class="legal">
     <h1>Privacy Policy</h1>
-    <p class="updated">Last updated: November 26, 2026</p>
+    <p class="updated">Last updated: November 27, 2026</p>
 
     <p class="intro">NotoMix (“NotoMix,” “we,” “us”) turns your voice notes into organized summaries, tasks, and searchable notes. This policy explains what we collect, how it’s used, and the choices you have. We built NotoMix to keep your content on your own device and in your own iCloud, not on our servers.</p>
 
@@ -49,6 +49,8 @@
 
     <h2>How your recordings are processed</h2>
     <p>To transcribe and organize your notes, NotoMix uses on-device speech recognition (Apple’s Speech framework) and Google’s Gemini AI models, which we access through secure Supabase Edge Functions. When you record a note or ask a question in “Ask Your Notes,” the relevant audio and/or note text is sent to Google’s Gemini API solely to generate your transcript, summary, tasks, and answers. This content is processed to provide the feature and is not used by us to build advertising profiles or sold to third parties.</p>
+    <p><strong>Meetings and lectures.</strong> Meetings, and lectures when they are available, are transcribed by AssemblyAI, a speech to text service, in parts of about ten minutes, with Google’s Gemini as the backup. AssemblyAI receives the audio of each part and returns the words and who spoke. As soon as your phone has the words, and at the latest about a day later, we ask AssemblyAI to delete that audio and its transcript. We do not sell your recordings, and AssemblyAI handles them under its own <a href="https://www.assemblyai.com/legal/privacy-policy">privacy policy</a>.</p>
+    <p>Our own server, which passes your recordings to Gemini and AssemblyAI and keeps no copy of your notes, runs on Supabase in Tokyo, Japan.</p>
 
     <h2>How we use information</h2>
     <ul>
@@ -70,6 +72,8 @@
     <ul>
       <li><strong>Google Firebase</strong>, authentication and analytics.</li>
       <li><strong>Google Gemini API</strong> (via Supabase), transcription and AI organization.</li>
+      <li><strong>AssemblyAI</strong>, transcription of meetings and lectures.</li>
+      <li><strong>Supabase</strong> (Tokyo, Japan), the server our app talks to.</li>
       <li><strong>Apple iCloud &amp; App Store</strong>, backup and subscriptions.</li>
       <li><strong>Meta Platforms</strong> (Facebook and Instagram), measuring our ads.</li>
     </ul>
