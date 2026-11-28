@@ -6,6 +6,9 @@
 <title>Privacy Policy · NotoMix</title>
 <meta name="description" content="How NotoMix collects, uses, and protects your data." />
 <link rel="canonical" href="https://notomix.app/privacy.html" />
+<link rel="alternate" hreflang="en" href="https://notomix.app/privacy.html" />
+<link rel="alternate" hreflang="ar" href="https://notomix.app/privacy-ar.html" />
+<link rel="alternate" hreflang="x-default" href="https://notomix.app/privacy.html" />
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
 <link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png" />
 <link rel="icon" href="/assets/favicon-16.png" sizes="16x16" type="image/png" />
@@ -23,6 +26,7 @@
   <nav>
     <a class="logo" href="/"><img src="/assets/icon.png" alt="NotoMix" /> NotoMix</a>
     <div class="nav-links">
+      <a href="/privacy-ar.html" lang="ar" dir="rtl">العربية</a>
       <a href="/support">Support</a>
       <a href="/terms">Terms</a>
       <a class="nav-cta" href="https://apps.apple.com/app/id6789915282">Download</a>
@@ -31,7 +35,7 @@
 
   <div class="legal">
     <h1>Privacy Policy</h1>
-    <p class="updated">Last updated: November 27, 2026</p>
+    <p class="updated">Last updated: November 28, 2026 · <a href="/privacy-ar.html" lang="ar" dir="rtl">اقرأ بالعربية</a></p>
 
     <p class="intro">NotoMix (“NotoMix,” “we,” “us”) turns your voice notes into organized summaries, actions, and searchable notes. This policy explains what we collect, how it’s used, and the choices you have. We built NotoMix to keep your content on your own device and in your own iCloud, not on our servers.</p>
 
@@ -39,7 +43,7 @@
     <ul>
       <li><strong>Account information.</strong> When you create an account or sign in with Google or Apple, we receive your name, email address, and (for Google) profile photo through Firebase Authentication.</li>
       <li><strong>Your notes and recordings.</strong> Audio you record or import, along with the transcripts, summaries, actions, and other content generated from it.</li>
-      <li><strong>Usage &amp; device data.</strong> Basic app analytics and diagnostics (app opens, feature usage, crash information, device model, OS version) via Google Firebase. When something fails, such as a note that could not be organized, the app also sends our own server the device model, OS version, App Store country, the region and language set on your phone, the kind of connection (Wi Fi, mobile data or offline), your time zone and the server's answer, so we can find and fix the problem. This never includes your notes, your location or your IP address.</li>
+      <li><strong>Usage &amp; device data.</strong> Basic app analytics and diagnostics (app opens, feature usage, crash information, device model, OS version) via Google Firebase. When something fails, such as a note that could not be organized, the app also sends our own server the device model, OS version, App Store country, the region and language set on your phone, the kind of connection (Wi Fi, mobile data or offline), your time zone and the server's answer, so we can find and fix the problem. This never includes your notes or your location, and we do not store your IP address with it. Like any web service, Supabase, which runs our server, records the IP address of each request in its logs and keeps them for up to 7 days, for security and fixing problems. To stop misuse, our server also keeps a scrambled form of the address that does not show it, for up to 2 days.</li>
       <li><strong>Advertising measurement.</strong> A few app events (the app opened, your first note, a purchase) go to Meta so we can measure our ads on Facebook and Instagram. Never the content of your notes. See “Advertising” below.</li>
       <li><strong>Purchase data.</strong> Subscription status is managed by Apple. We learn whether you have an active subscription; we never receive your payment card details.</li>
     </ul>
@@ -50,6 +54,8 @@
     <h2>How your recordings are processed</h2>
     <p>To transcribe and organize your notes, NotoMix uses on-device speech recognition (Apple’s Speech framework) and Google’s Gemini AI models, which we access through secure Supabase Edge Functions. When you record a note or ask a question in “Ask Your Notes,” the relevant audio and/or note text is sent to Google’s Gemini API solely to generate your transcript, summary, actions, and answers. This content is processed to provide the feature and is not used by us to build advertising profiles or sold to third parties.</p>
     <p><strong>Meetings and lectures.</strong> Meetings, and lectures when they are available, are transcribed by AssemblyAI, a speech to text service, in parts of about ten minutes, with Google’s Gemini as the backup. AssemblyAI receives the audio of each part and returns the words and who spoke. As soon as your phone has the words, and at the latest about a day later, we ask AssemblyAI to delete that audio and its transcript. We do not sell your recordings, and AssemblyAI handles them under its own <a href="https://www.assemblyai.com/legal/privacy-policy">privacy policy</a>.</p>
+    <p><strong>Lecture photos.</strong> Photos you take during a lecture, such as slides or the board, are sent to Google Gemini with the lecture's words to make your study notes. The photos stay on your phone. Our server passes them to Gemini and keeps no copy. <!-- WAITING on the paid tier check before publishing --> Google does not use them to train its models.</p>
+    <p>Google keeps a record of what is sent to the Gemini API, including your recordings and photos, for up to 55 days, only to detect misuse and for legal requirements, as set out in the <a href="https://ai.google.dev/gemini-api/docs/usage-policies">Gemini API usage policies</a>.</p>
     <p>Our own server, which passes your recordings to Gemini and AssemblyAI and keeps no copy of your notes, runs on Supabase in Tokyo, Japan.</p>
 
     <h2>How we use information</h2>
@@ -71,7 +77,7 @@
     <p>We rely on a small number of trusted providers, each with its own privacy policy:</p>
     <ul>
       <li><strong>Google Firebase</strong>, authentication and analytics.</li>
-      <li><strong>Google Gemini API</strong> (via Supabase), transcription and AI organization.</li>
+      <li><strong>Google Gemini API</strong> (via Supabase), transcription and AI organization, including lecture photos.</li>
       <li><strong>AssemblyAI</strong>, transcription of meetings and lectures.</li>
       <li><strong>Supabase</strong> (Tokyo, Japan), the server our app talks to.</li>
       <li><strong>Apple iCloud &amp; App Store</strong>, backup and subscriptions.</li>
