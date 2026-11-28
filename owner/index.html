@@ -55,6 +55,8 @@ section{display:flex;flex-direction:column;gap:14px}
 #allgood{color:var(--gr);font-weight:600}
 
 /* funnel */
+#s-trials .tw{overflow-x:auto}#trLatest{min-width:560px}#trRates{min-width:440px}#trLatest td:first-child{white-space:nowrap}
+.tgl{display:flex;gap:8px;align-items:center;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap}.tgl input{width:18px;height:18px}
 .funnel{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:0;align-items:stretch}
 .fstep{padding:4px 12px;border-left:1px solid var(--line);min-width:0}
 .fstep:first-child{border-left:0;padding-left:0}
@@ -137,6 +139,7 @@ tr.zero td{color:var(--dim)}
  <a href="#people">People <span class="n" id="nPpl" hidden></span></a>
  <a href="#gifts">Gifts</a>
  <a href="#paywall">Paywall</a>
+ <a href="#trials">Trials</a>
  <a href="#meta">Meta</a>
  <a href="#newpeople">New people</a>
  <a href="#usage">Usage</a>
@@ -219,6 +222,20 @@ tr.zero td{color:var(--dim)}
  <div class="shead"><div><h2>Installs</h2><div class="sub">First opens of App Store builds, internal phones left out. Days in Gulf time.</div></div></div>
  <div class="grid" id="instKpis"></div>
  <div class="card tw"><h3>Installs day by day</h3><table id="instDays"></table></div>
+</section>
+
+<!-- TRIALS (the trial paywall, build 34) -->
+<section id="s-trials" hidden>
+ <div class="shead"><div><h2>Trials</h2><div class="sub" id="trSince">Free trials start with build 34.</div></div>
+  <label class="tgl"><input type="checkbox" id="trTests"> Show test devices and sandbox</label></div>
+ <div class="grid" id="trKpis"></div>
+ <div class="card ch"><h3>Trials started per day <span class="src">Gulf time, from the app</span></h3><div class="chart"><canvas id="cTrials"></canvas></div></div>
+ <div class="two">
+  <div class="card tw"><h3>Trial to paid by plan <span class="src" id="trRatesSrc">from Apple notifications</span></h3><table id="trRates"></table></div>
+  <div class="card tw"><h3>Where the trial started <span class="src">the paywall they saw last</span></h3><table id="trTriggers"></table></div>
+ </div>
+ <div class="grid" id="trReminders"></div>
+ <div class="card tw"><h3>Latest trials <span class="src">install id only</span></h3><table id="trLatest"></table></div>
 </section>
 
 <!-- META CAMPAIGN -->
@@ -331,7 +348,7 @@ tr.zero td{color:var(--dim)}
 const FN='https://vsqlyitcuawszzxyeueg.supabase.co/functions/v1/owner-dashboard';
 var D, CH={}, loadedAt=0;
 const PER={'24h':'Last 24 hours','7d':'Last 7 days','30d':'Last 30 days','since2':'Since 2.0 (8 Nov)'};
-const SECTIONS=['overview','people','gifts','paywall','meta','growth','newpeople','usage','money','health','audience','feedback'];
+const SECTIONS=['overview','people','gifts','paywall','trials','meta','growth','newpeople','usage','money','health','audience','feedback'];
 function getW(){try{const w=localStorage.getItem('an.owner.w');return PER[w]?w:'since2'}catch(e){return'since2'}}
 function setW(w){try{localStorage.setItem('an.owner.w',w)}catch(e){}}
 var win=getW();
@@ -573,6 +590,7 @@ drawPeople();
 drawGifts();
 drawMeta();
 drawPaywall();
+drawTrials(chart,cname);
 $('asRev').innerHTML=RV.length?RV.map(r=>'<div class=fb><div class=sub>'+esc(r.ts)+' · '+esc(r.territory||'')+' · <span class=stars>'+'★'.repeat(r.rating||0)+'</span></div><div class=m><b>'+esc(r.title||'')+'</b> '+esc(r.body||'')+'</div></div>').join(''):'<span class=sub>No written reviews yet</span>';
 $('nFb').textContent=FB.length+RV.length; $('nFb').hidden=!(FB.length+RV.length);
 
@@ -690,6 +708,38 @@ function drawPaywall(){const P=D.paywall_new||{},IN=D.installs||{};
  $('instKpis').innerHTML=stat('New in this window',IN.new_in_window??0,'')+stat('Today',IN.today_gulf??0,'Gulf time')+stat('Since 2.0',IN.total_v2??0,'from 8 Nov')+stat('Total installs',IN.total_ever??0,IN.first_ever?'since '+day(IN.first_ever):'')+stat('Apple downloads',IN.apple_downloads_since_2_0??0,appleDay?'since 2.0, Apple counts to '+appleDay:'');
  const short=d=>new Date(d+'T12:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'short'});
  table('instDays',['Day','Installs'],(IN.daily||[]).slice().reverse().map(x=>['<span style="white-space:nowrap">'+short(x.day)+'</span>',x.installs]),[0],14);
+}
+// ---- Trials: starts and triggers from the app (build 34 on), outcomes from
+// Apple's notifications. Until a Production notification has ever arrived the
+// outcomes say so, never zero. The switch adds test devices and sandbox.
+function trialTests(){try{return localStorage.getItem('an.owner.trialTests')==='1'}catch(e){return false}}
+function drawTrials(ch,cn){
+ // The chart and country helpers live inside draw(); kept for the switch's redraw.
+ ch=ch||drawTrials.ch; drawTrials.ch=ch; cn=cn||drawTrials.cn||(c=>esc(c)); drawTrials.cn=cn;
+ const tests=trialTests(),T=(tests?D.trials_tests:D.trials)||{},O=T.outcomes||{},R=T.reminders||{},wait=!!T.waiting;
+ const box=$('trTests'); box.checked=tests; box.onchange=()=>{try{localStorage.setItem('an.owner.trialTests',box.checked?'1':'0')}catch(e){};drawTrials()};
+ const W='<span class=sub title="waiting for Apple notifications">Waiting</span>';
+ const PL={yearly:'Yearly 7 day',monthly:'Monthly 3 day'},TR={free_limit:'Free limit',pro_feature:'Pro feature',settings:'Settings',other:'Other'};
+ const ST={in_trial:'In trial',converted:'Paid',cancelled:'Cancelled in trial',refunded:'Refunded',unknown:'Not known yet'};
+ $('trSince').textContent=(T.total?'Free trials from the trial paywall (build 34), first one '+day(T.since)+'. ':'Free trials start with build 34 (the trial paywall); none yet in this window. ')+(tests?'Test devices and sandbox included.':'App Store only: test devices and sandbox left out.')+(wait?' Paid, cancelled and refunded wait for Apple notifications: none from the App Store has arrived yet.':'');
+ $('trKpis').innerHTML=stat('Trials started',T.total||0,(T.yearly||0)+' yearly, '+(T.monthly||0)+' monthly')
+  +stat('Paywall to trial',pct(T.paywall_then_trial||0,T.paywall_people)||'none yet',(T.paywall_then_trial||0)+' of '+(T.paywall_people||0)+' people who saw the paywall')
+  +stat('Still in trial',wait?W:(O.in_trial||0),'')+stat('Paid after the trial',wait?W:(O.converted||0),'')
+  +stat('Cancelled in trial',wait?W:(O.cancelled||0),'')+stat('Refunded',wait?W:(O.refunded||0),'');
+ const days=T.daily||[],sh=d=>new Date(d+'T12:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'short'});
+ if(ch)ch('cTrials','bar',days.map(x=>sh(x.day)),[{l:PL.yearly,d:days.map(x=>x.yearly),c:'#8B5CF6'},{l:PL.monthly,d:days.map(x=>x.monthly),c:'#EC4899'}]);
+ $('trRatesSrc').textContent=wait?'waiting for Apple notifications':'from Apple notifications';
+ table('trRates',['Plan','Trials','Trial ended','Paid','Trial to paid'],['yearly','monthly'].map(p=>{const ended=O['ended_'+p]||0,paid=O['converted_'+p]||0;
+  return [PL[p],T[p]||0,ended,wait?W:paid,wait?W:(pct(paid,ended)||'none yet')]}),[0]);
+ table('trTriggers',['Paywall','Yearly','Monthly','Total'],(T.by_trigger||[]).map(x=>[TR[x.trigger]||esc(x.trigger),x.yearly,x.monthly,x.total]),[0]);
+ if(!(T.by_trigger||[]).length)$('trTriggers').innerHTML='<tr><td class=sub>No trials yet</td></tr>';
+ $('trReminders').innerHTML=stat('Trial reminders scheduled',R.scheduled||0,plural(R.people||0,'person','people'))
+  +stat('Turned on notifications',R.notifications_on||0,'on the trial started screen')+stat('Said no to notifications',R.notifications_no||0,'or were sent to Settings');
+ const when=t=>new Date(t).toLocaleString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit',timeZone:'Asia/Dubai'});
+ table('trLatest',['Started','Plan','Store','Paywall','Status','Install'],(T.latest||[]).map(x=>[when(x.ts),PL[x.plan]||esc(x.plan),
+  x.country?cn(x.country):'',TR[x.trigger]||esc(x.trigger),
+  wait&&x.status!=='in_trial'?'Waiting':(ST[x.status]||esc(x.status)),'<code>'+esc(x.install)+'</code>']),[0,1,2,3,4,5]);
+ if(!(T.latest||[]).length)$('trLatest').innerHTML='<tr><td class=sub>No trials yet</td></tr>';
 }
 // ---- Gifts
 // META: our own install count around the campaign start. The organic
