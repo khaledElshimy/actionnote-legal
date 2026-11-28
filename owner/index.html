@@ -297,6 +297,16 @@ tr.zero td{color:var(--dim)}
 
 <!-- AUDIENCE -->
 <section id="s-audience" hidden>
+ <div class="shead"><div><h2>Where people are</h2><div class="sub" id="plSub">From 2.2 every event says the App Store country, the phone's region, the app's language and the time zone. Older builds do not, so Apple's downloads by country are the measure until 2.2 is out.</div></div></div>
+ <div class="grid" id="plKpis"></div>
+ <div class="two">
+  <div class="card tw"><h3>Downloads by country <span class="src">Apple, App Store builds</span></h3><table id="plApple"></table></div>
+  <div class="card tw"><h3>People by App Store country <span class="src">from the app, 2.2+</span></h3><table id="plCountry"></table></div>
+  <div class="card tw"><h3>App language <span class="src">2.2+</span></h3><table id="plLang"></table></div>
+  <div class="card tw"><h3>Phone region <span class="src">2.2+</span></h3><table id="plRegion"></table></div>
+  <div class="card tw"><h3>Time zone <span class="src">2.2+</span></h3><table id="plTz"></table></div>
+ </div>
+ <div class="shead"><div><h2>Phones and notes</h2></div></div>
  <div class="two">
   <div class="card tw"><h3>Note languages</h3><table id="lang"></table></div>
   <div class="card tw"><h3>Plan</h3><table id="plan"></table></div>
@@ -537,6 +547,21 @@ table('dev',['Model','People'],(A.devices||[]).map(x=>[esc(model(x.device))+(MOD
 table('ios',['iOS','People'],(A.ios||[]).map(x=>[esc(x.ios),x.people]));
 table('lang',['Language','Notes'],(A.languages||[]).map(x=>[esc(LANG[x.lang]||x.lang),x.notes]));
 table('plan',['Plan','People'],(A.plans||[]).map(x=>[esc(x.plan),x.people]));
+// Where people are (28 Nov 2026): Apple's downloads by country for every
+// build, and from 2.2 the app's own country, language, region and zone.
+const PL=D.places||{};
+const CN=(()=>{try{return new Intl.DisplayNames(['en'],{type:'region'})}catch(e){return null}})();
+const LN=(()=>{try{return new Intl.DisplayNames(['en'],{type:'language'})}catch(e){return null}})();
+const cname=c=>{const a2=(c||'').length===3?A3[c]:c;let n='';try{n=a2&&CN?CN.of(a2):''}catch(e){}return esc(n&&n!==a2?n:(c||'unknown'))+(n&&n!==a2?' <span class=dim>'+esc(c)+'</span>':'')};
+const lname=c=>{let n='';try{n=c&&LN?LN.of(c):''}catch(e){}return esc(n||c||'unknown')};
+const plPeople=PL.people||0, withC=PL.with_country||0;
+$('plKpis').innerHTML=stat('People in this window',plPeople,'App Store builds')+stat('Say where they are',withC,plPeople?pct(withC,plPeople)+' of them, on 2.2':'on 2.2')+stat('Countries',(PL.countries||[]).length,'from the app')+stat('Apple countries',(AS.countries||[]).length,'with downloads');
+table('plApple',['Country','Downloads','Redownloads'],(AS.countries||[]).map(x=>[cname(x.country),x.downloads||0,x.redownloads||0]),0,12);
+const none=t=>'<tr><td class=sub>'+t+'</td></tr>';
+table('plCountry',['Country','People'],(PL.countries||[]).map(x=>[cname(x.code),x.people]),0,12); if(!(PL.countries||[]).length)$('plCountry').innerHTML=none('Arrives with 2.2');
+table('plLang',['Language','People'],(PL.app_languages||[]).map(x=>[lname(x.code),x.people])); if(!(PL.app_languages||[]).length)$('plLang').innerHTML=none('Arrives with 2.2');
+table('plRegion',['Region','People'],(PL.regions||[]).map(x=>[cname(x.code),x.people]),0,12); if(!(PL.regions||[]).length)$('plRegion').innerHTML=none('Arrives with 2.2');
+table('plTz',['Time zone','People'],(PL.time_zones||[]).map(x=>[esc((x.code||'').replace(/_/g,' ')),x.people]),0,12); if(!(PL.time_zones||[]).length)$('plTz').innerHTML=none('Arrives with 2.2');
 
 // ---- Feedback
 const FB=D.feedback||[], RV=AS.reviews||[];
@@ -658,7 +683,7 @@ function drawPaywall(){const P=D.paywall_new||{},IN=D.installs||{};
  $('pwSince').textContent=P.since?'The new paywall, first seen '+day(P.since)+'. People counted once, from the first time they saw it in this window.':'The new paywall ships with 2.1, so nobody has seen it yet. People are counted once, from the first time they see it in the window.';
  $('pwKpis').innerHTML=stat('Views',P.views||0,plural(P.people||0,'person','people'))+stat('Bought',P.buyers||0,'people who started a trial or paid')+stat('Closed it',P.closed||0,'times')+stat('Cancelled at Apple',P.cancelled||0,'')+stat('Purchase errors',P.failed||0,'');
  table('pwProducts',['Plan','Trial','Count'],(P.by_product||[]).map(x=>[esc(PLAN[x.product]||x.product||'unknown'),x.trial?x.trial+' days':'paid',x.count]),[0,1]);
- if(!(P.by_product||[]).length)$('pwProducts').innerHTML='<tr><td class=sub>No purchases yet</td></tr>';
+ if(!(P.by_product||[]).length)$('pwProducts').innerHTML=(P.picked||[]).length?'<tr><th>Plan they picked</th><th>People</th></tr>'+(P.picked||[]).map(x=>'<tr><td>'+esc(PLAN[x.product]||x.product)+'</td><td>'+x.people+'</td></tr>').join('')+'<tr><td class=sub colspan=2>No purchases yet</td></tr>':'<tr><td class=sub>No purchases yet</td></tr>';
  table('pwDoors',['Door','People'],(P.by_door||[]).map(x=>[esc((x.door||'unknown').replace(/_/g,' ')),x.people]),[0]);
  if(!(P.by_door||[]).length)$('pwDoors').innerHTML='<tr><td class=sub>No views yet</td></tr>';
  const appleDay=IN.apple_last_day?new Date(IN.apple_last_day+'T12:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'short'}):'';
